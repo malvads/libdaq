@@ -141,6 +141,22 @@ fi
 AM_CONDITIONAL([BUILD_AFPACKET_MODULE], [test "$enable_afpacket_module" = yes])
 AM_COND_IF([BUILD_AFPACKET_MODULE], [AC_CONFIG_FILES([modules/afpacket/libdaq_static_afpacket.pc])])
 
+# PFRING Module
+AC_ARG_ENABLE(pfring-module,
+              AS_HELP_STRING([--disable-pfring-module],[do not build the bundled pfring module]),
+              [enable_pfring_module="$enableval"], [enable_pfring_module="$DEFAULT_ENABLE"])
+if test "$enable_pfring_module" = yes; then
+    AC_CHECK_HEADERS([linux/if_ether.h linux/if_packet.h], [], [enable_pfring_module=no])
+    # AKA check for Linux 3.14
+    AC_CHECK_DECLS([PACKET_FANOUT_QM, PACKET_QDISC_BYPASS, TP_STATUS_VLAN_TPID_VALID], [],
+                   [enable_pfring_module=no], [[#include <linux/if_packet.h>]])
+    if test "$enable_pfring_module" = yes -a "$LIBPCAP_AVAILABLE" = yes ; then
+        DAQ_PFRING_LIBS="-lpcap -lpthread"
+    fi
+fi
+AM_CONDITIONAL([BUILD_PFRING_MODULE], [test "$enable_pfring_module" = yes])
+AM_COND_IF([BUILD_PFRING_MODULE], [AC_CONFIG_FILES([modules/pfring/libdaq_static_pfring.pc])])
+
 # BPF Wrapper Module
 AC_ARG_ENABLE(bpf-module,
               AS_HELP_STRING([--disable-bpf-module],[do not build the bundled BPF wrapper module]),
@@ -286,6 +302,7 @@ AM_CONDITIONAL([BUILD_MODULES], [test "$enable_afpacket_module" = yes -o \
                                       "$enable_nfq_module" = yes -o \
                                       "$enable_pcap_module" = yes -o \
                                       "$enable_trace_module" = yes -o \
+                                      "$enable_pfring_module" = yes -o \
                                       "$enable_gwlb_module" = yes])
 
 LIBS=${save_LIBS}
@@ -377,4 +394,5 @@ AC_MSG_RESULT([
     Build Savefile DAQ module.. : $enable_savefile_module
     Build Trace DAQ module..... : $enable_trace_module
     Build GWLB DAQ module...... : $enable_gwlb_module
+    Build PF_RING DAQ module... : $enable_pfring_module
 ])

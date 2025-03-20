@@ -12,6 +12,13 @@ if BUILD_SHARED_MODULES
     afpacket_daq_afpacket_la_SOURCES = afpacket/daq_afpacket.c
     afpacket_daq_afpacket_la_CPPFLAGS = $(AM_CPPFLAGS) -DBUILDING_SO
     afpacket_daq_afpacket_la_LDFLAGS = -module -export-dynamic -avoid-version -shared
+
+
+    pkglib_LTLIBRARIES += pfring/daq_pfring.la
+    pkgconfig_DATA += pfring/libdaq_static_pfring.pc
+    pfring_daq_pfring_la_SOURCES = pfring/daq_pfring.c
+    pfring_daq_pfring_la_CPPFLAGS = $(AM_CPPFLAGS) -DBUILDING_SO
+    pfring_daq_pfring_la_LDFLAGS = -module -export-dynamic -avoid-version -shared
 if LIBPCAP_AVAILABLE
     afpacket_daq_afpacket_la_CPPFLAGS += $(PCAP_CPPFLAGS)
     afpacket_daq_afpacket_la_LDFLAGS += $(PCAP_LDFLAGS)

@@ -19249,6 +19249,7 @@ fi
                                       "$enable_nfq_module" = yes -o \
                                       "$enable_pcap_module" = yes -o \
                                       "$enable_trace_module" = yes -o \
+                                      "$enable_pfring_module" = yes -o \
                                       "$enable_gwlb_module" = yes; then
   BUILD_MODULES_TRUE=
   BUILD_MODULES_FALSE='#'

@@ -88,8 +88,10 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
-@BUILD_AFPACKET_MODULE_TRUE@@BUILD_SHARED_MODULES_TRUE@am__append_1 = afpacket/daq_afpacket.la
-@BUILD_AFPACKET_MODULE_TRUE@@BUILD_SHARED_MODULES_TRUE@am__append_2 = afpacket/libdaq_static_afpacket.pc
+@BUILD_AFPACKET_MODULE_TRUE@@BUILD_SHARED_MODULES_TRUE@am__append_1 = afpacket/daq_afpacket.la \
+@BUILD_AFPACKET_MODULE_TRUE@@BUILD_SHARED_MODULES_TRUE@	pfring/daq_pfring.la
+@BUILD_AFPACKET_MODULE_TRUE@@BUILD_SHARED_MODULES_TRUE@am__append_2 = afpacket/libdaq_static_afpacket.pc \
+@BUILD_AFPACKET_MODULE_TRUE@@BUILD_SHARED_MODULES_TRUE@	pfring/libdaq_static_pfring.pc
 @BUILD_AFPACKET_MODULE_TRUE@@BUILD_SHARED_MODULES_TRUE@@LIBPCAP_AVAILABLE_TRUE@am__append_3 = $(PCAP_CPPFLAGS)
 @BUILD_AFPACKET_MODULE_TRUE@@BUILD_SHARED_MODULES_TRUE@@LIBPCAP_AVAILABLE_TRUE@am__append_4 = $(PCAP_LDFLAGS)
 @BUILD_AFPACKET_MODULE_TRUE@am__append_5 = afpacket/libdaq_static_afpacket.la
@@ -390,6 +392,17 @@ pcap_libdaq_static_pcap_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC \
 	$(LDFLAGS) -o $@
 @BUILD_PCAP_MODULE_TRUE@am_pcap_libdaq_static_pcap_la_rpath = -rpath \
 @BUILD_PCAP_MODULE_TRUE@	$(libdir)
+pfring_daq_pfring_la_LIBADD =
+am__pfring_daq_pfring_la_SOURCES_DIST = pfring/daq_pfring.c
+@BUILD_AFPACKET_MODULE_TRUE@@BUILD_SHARED_MODULES_TRUE@am_pfring_daq_pfring_la_OBJECTS = pfring/daq_pfring_la-daq_pfring.lo
+pfring_daq_pfring_la_OBJECTS = $(am_pfring_daq_pfring_la_OBJECTS)
+pfring_daq_pfring_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC \
+	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CCLD) \
+	$(AM_CFLAGS) $(CFLAGS) $(pfring_daq_pfring_la_LDFLAGS) \
+	$(LDFLAGS) -o $@
+@BUILD_AFPACKET_MODULE_TRUE@@BUILD_SHARED_MODULES_TRUE@am_pfring_daq_pfring_la_rpath =  \
+@BUILD_AFPACKET_MODULE_TRUE@@BUILD_SHARED_MODULES_TRUE@	-rpath \
+@BUILD_AFPACKET_MODULE_TRUE@@BUILD_SHARED_MODULES_TRUE@	$(pkglibdir)
 savefile_daq_savefile_la_LIBADD =
 am__savefile_daq_savefile_la_SOURCES_DIST = savefile/daq_savefile.c
 @BUILD_SAVEFILE_MODULE_TRUE@@BUILD_SHARED_MODULES_TRUE@am_savefile_daq_savefile_la_OBJECTS = savefile/daq_savefile_la-daq_savefile.lo
@@ -472,6 +485,7 @@ am__depfiles_remade =  \
 	nfq/$(DEPDIR)/libdaq_static_nfq_la-daq_nfq.Plo \
 	pcap/$(DEPDIR)/daq_pcap_la-daq_pcap.Plo \
 	pcap/$(DEPDIR)/libdaq_static_pcap_la-daq_pcap.Plo \
+	pfring/$(DEPDIR)/daq_pfring_la-daq_pfring.Plo \
 	savefile/$(DEPDIR)/daq_savefile_la-daq_savefile.Plo \
 	savefile/$(DEPDIR)/libdaq_static_savefile_la-daq_savefile.Plo \
 	trace/$(DEPDIR)/daq_trace_la-daq_trace.Plo \
@@ -528,6 +542,7 @@ SOURCES = $(afpacket_daq_afpacket_la_SOURCES) \
 	$(nfq_daq_nfq_la_SOURCES) $(nfq_libdaq_static_nfq_la_SOURCES) \
 	$(pcap_daq_pcap_la_SOURCES) \
 	$(pcap_libdaq_static_pcap_la_SOURCES) \
+	$(pfring_daq_pfring_la_SOURCES) \
 	$(savefile_daq_savefile_la_SOURCES) \
 	$(savefile_libdaq_static_savefile_la_SOURCES) \
 	$(trace_daq_trace_la_SOURCES) \
@@ -550,6 +565,7 @@ DIST_SOURCES = $(am__afpacket_daq_afpacket_la_SOURCES_DIST) \
 	$(am__nfq_libdaq_static_nfq_la_SOURCES_DIST) \
 	$(am__pcap_daq_pcap_la_SOURCES_DIST) \
 	$(am__pcap_libdaq_static_pcap_la_SOURCES_DIST) \
+	$(am__pfring_daq_pfring_la_SOURCES_DIST) \
 	$(am__savefile_daq_savefile_la_SOURCES_DIST) \
 	$(am__savefile_libdaq_static_savefile_la_SOURCES_DIST) \
 	$(am__trace_daq_trace_la_SOURCES_DIST) \
@@ -759,6 +775,9 @@ pkgconfig_DATA = $(am__append_2) $(am__append_8) $(am__append_11) \
 @BUILD_AFPACKET_MODULE_TRUE@@BUILD_SHARED_MODULES_TRUE@	-avoid-version \
 @BUILD_AFPACKET_MODULE_TRUE@@BUILD_SHARED_MODULES_TRUE@	-shared \
 @BUILD_AFPACKET_MODULE_TRUE@@BUILD_SHARED_MODULES_TRUE@	$(am__append_4)
+@BUILD_AFPACKET_MODULE_TRUE@@BUILD_SHARED_MODULES_TRUE@pfring_daq_pfring_la_SOURCES = pfring/daq_pfring.c
+@BUILD_AFPACKET_MODULE_TRUE@@BUILD_SHARED_MODULES_TRUE@pfring_daq_pfring_la_CPPFLAGS = $(AM_CPPFLAGS) -DBUILDING_SO
+@BUILD_AFPACKET_MODULE_TRUE@@BUILD_SHARED_MODULES_TRUE@pfring_daq_pfring_la_LDFLAGS = -module -export-dynamic -avoid-version -shared
 @BUILD_AFPACKET_MODULE_TRUE@@BUILD_SHARED_MODULES_TRUE@@LIBPCAP_AVAILABLE_TRUE@afpacket_daq_afpacket_la_LIBADD = $(DAQ_AFPACKET_LIBS)
 @BUILD_AFPACKET_MODULE_TRUE@afpacket_libdaq_static_afpacket_la_SOURCES = afpacket/daq_afpacket.c
 @BUILD_AFPACKET_MODULE_TRUE@afpacket_libdaq_static_afpacket_la_CPPFLAGS =  \
@@ -1089,6 +1108,17 @@ pcap/libdaq_static_pcap_la-daq_pcap.lo: pcap/$(am__dirstamp) \
 
 pcap/libdaq_static_pcap.la: $(pcap_libdaq_static_pcap_la_OBJECTS) $(pcap_libdaq_static_pcap_la_DEPENDENCIES) $(EXTRA_pcap_libdaq_static_pcap_la_DEPENDENCIES) pcap/$(am__dirstamp)
 	$(AM_V_CCLD)$(pcap_libdaq_static_pcap_la_LINK) $(am_pcap_libdaq_static_pcap_la_rpath) $(pcap_libdaq_static_pcap_la_OBJECTS) $(pcap_libdaq_static_pcap_la_LIBADD) $(LIBS)
+pfring/$(am__dirstamp):
+	@$(MKDIR_P) pfring
+	@: > pfring/$(am__dirstamp)
+pfring/$(DEPDIR)/$(am__dirstamp):
+	@$(MKDIR_P) pfring/$(DEPDIR)
+	@: > pfring/$(DEPDIR)/$(am__dirstamp)
+pfring/daq_pfring_la-daq_pfring.lo: pfring/$(am__dirstamp) \
+	pfring/$(DEPDIR)/$(am__dirstamp)
+
+pfring/daq_pfring.la: $(pfring_daq_pfring_la_OBJECTS) $(pfring_daq_pfring_la_DEPENDENCIES) $(EXTRA_pfring_daq_pfring_la_DEPENDENCIES) pfring/$(am__dirstamp)
+	$(AM_V_CCLD)$(pfring_daq_pfring_la_LINK) $(am_pfring_daq_pfring_la_rpath) $(pfring_daq_pfring_la_OBJECTS) $(pfring_daq_pfring_la_LIBADD) $(LIBS)
 savefile/$(am__dirstamp):
 	@$(MKDIR_P) savefile
 	@: > savefile/$(am__dirstamp)
@@ -1142,6 +1172,8 @@ mostlyclean-compile:
 	-rm -f nfq/*.lo
 	-rm -f pcap/*.$(OBJEXT)
 	-rm -f pcap/*.lo
+	-rm -f pfring/*.$(OBJEXT)
+	-rm -f pfring/*.lo
 	-rm -f savefile/*.$(OBJEXT)
 	-rm -f savefile/*.lo
 	-rm -f trace/*.$(OBJEXT)
@@ -1170,6 +1202,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@nfq/$(DEPDIR)/libdaq_static_nfq_la-daq_nfq.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@pcap/$(DEPDIR)/daq_pcap_la-daq_pcap.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@pcap/$(DEPDIR)/libdaq_static_pcap_la-daq_pcap.Plo@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@pfring/$(DEPDIR)/daq_pfring_la-daq_pfring.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@savefile/$(DEPDIR)/daq_savefile_la-daq_savefile.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@savefile/$(DEPDIR)/libdaq_static_savefile_la-daq_savefile.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@trace/$(DEPDIR)/daq_trace_la-daq_trace.Plo@am__quote@ # am--include-marker
@@ -1317,6 +1350,13 @@ pcap/libdaq_static_pcap_la-daq_pcap.lo: pcap/daq_pcap.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pcap_libdaq_static_pcap_la_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o pcap/libdaq_static_pcap_la-daq_pcap.lo `test -f 'pcap/daq_pcap.c' || echo '$(srcdir)/'`pcap/daq_pcap.c
 
+pfring/daq_pfring_la-daq_pfring.lo: pfring/daq_pfring.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pfring_daq_pfring_la_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT pfring/daq_pfring_la-daq_pfring.lo -MD -MP -MF pfring/$(DEPDIR)/daq_pfring_la-daq_pfring.Tpo -c -o pfring/daq_pfring_la-daq_pfring.lo `test -f 'pfring/daq_pfring.c' || echo '$(srcdir)/'`pfring/daq_pfring.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) pfring/$(DEPDIR)/daq_pfring_la-daq_pfring.Tpo pfring/$(DEPDIR)/daq_pfring_la-daq_pfring.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='pfring/daq_pfring.c' object='pfring/daq_pfring_la-daq_pfring.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(pfring_daq_pfring_la_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o pfring/daq_pfring_la-daq_pfring.lo `test -f 'pfring/daq_pfring.c' || echo '$(srcdir)/'`pfring/daq_pfring.c
+
 savefile/daq_savefile_la-daq_savefile.lo: savefile/daq_savefile.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(savefile_daq_savefile_la_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT savefile/daq_savefile_la-daq_savefile.lo -MD -MP -MF savefile/$(DEPDIR)/daq_savefile_la-daq_savefile.Tpo -c -o savefile/daq_savefile_la-daq_savefile.lo `test -f 'savefile/daq_savefile.c' || echo '$(srcdir)/'`savefile/daq_savefile.c
 @am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) savefile/$(DEPDIR)/daq_savefile_la-daq_savefile.Tpo savefile/$(DEPDIR)/daq_savefile_la-daq_savefile.Plo
@@ -1411,6 +1451,7 @@ clean-libtool:
 	-rm -rf netmap/.libs netmap/_libs
 	-rm -rf nfq/.libs nfq/_libs
 	-rm -rf pcap/.libs pcap/_libs
+	-rm -rf pfring/.libs pfring/_libs
 	-rm -rf savefile/.libs savefile/_libs
 	-rm -rf trace/.libs trace/_libs
 install-pkgconfigDATA: $(pkgconfig_DATA)
@@ -1571,6 +1612,8 @@ distclean-generic:
 	-rm -f nfq/$(am__dirstamp)
 	-rm -f pcap/$(DEPDIR)/$(am__dirstamp)
 	-rm -f pcap/$(am__dirstamp)
+	-rm -f pfring/$(DEPDIR)/$(am__dirstamp)
+	-rm -f pfring/$(am__dirstamp)
 	-rm -f savefile/$(DEPDIR)/$(am__dirstamp)
 	-rm -f savefile/$(am__dirstamp)
 	-rm -f trace/$(DEPDIR)/$(am__dirstamp)
@@ -1605,6 +1648,7 @@ distclean: distclean-am
 	-rm -f nfq/$(DEPDIR)/libdaq_static_nfq_la-daq_nfq.Plo
 	-rm -f pcap/$(DEPDIR)/daq_pcap_la-daq_pcap.Plo
 	-rm -f pcap/$(DEPDIR)/libdaq_static_pcap_la-daq_pcap.Plo
+	-rm -f pfring/$(DEPDIR)/daq_pfring_la-daq_pfring.Plo
 	-rm -f savefile/$(DEPDIR)/daq_savefile_la-daq_savefile.Plo
 	-rm -f savefile/$(DEPDIR)/libdaq_static_savefile_la-daq_savefile.Plo
 	-rm -f trace/$(DEPDIR)/daq_trace_la-daq_trace.Plo
@@ -1674,6 +1718,7 @@ maintainer-clean: maintainer-clean-am
 	-rm -f nfq/$(DEPDIR)/libdaq_static_nfq_la-daq_nfq.Plo
 	-rm -f pcap/$(DEPDIR)/daq_pcap_la-daq_pcap.Plo
 	-rm -f pcap/$(DEPDIR)/libdaq_static_pcap_la-daq_pcap.Plo
+	-rm -f pfring/$(DEPDIR)/daq_pfring_la-daq_pfring.Plo
 	-rm -f savefile/$(DEPDIR)/daq_savefile_la-daq_savefile.Plo
 	-rm -f savefile/$(DEPDIR)/libdaq_static_savefile_la-daq_savefile.Plo
 	-rm -f trace/$(DEPDIR)/daq_trace_la-daq_trace.Plo
