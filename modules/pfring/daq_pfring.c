@@ -87,24 +87,30 @@ static int pfring_daq_get_variable_descs(const DAQ_VariableDesc_t **var_desc_tab
     return NULL;
 }
 
-static int pfring_daq_instantiate(const DAQ_ModuleConfig_h modcfg, DAQ_ModuleInstance_h modinst, void **ctxt_ptr)
-{
+static int pfring_daq_instantiate(const DAQ_ModuleConfig_h modcfg, DAQ_ModuleInstance_h modinst, void **ctxt_ptr) {
+    pfring *ring;
+    ring = pfring_open(NULL, 1500, PF_RING_PROMISC);
+    if (!ring) {
+        return DAQ_ERROR;
+    }
+    *ctxt_ptr = (void *)ring;
     return DAQ_SUCCESS;
 }
 
-static void pfring_daq_destroy(void *handle)
-{
-  return NULL;
+static void pfring_daq_destroy(void *handle) {
+    if (handle) {
+        pfring_close((pfring *)handle);
+    }
 }
 
-static int pfring_daq_install_filter(const char *filter)
-{
-  return NULL;
-}
-
-static int pfring_daq_set_filter(void *handle, const char *filter)
-{
-  return NULL;
+static int pfring_daq_set_filter(void *handle, const char *filter) {
+    if (!handle || !filter) {
+        return DAQ_ERROR;
+    }
+    if (pfring_set_bpf_filter((pfring *)handle, filter) != 0) {
+        return DAQ_ERROR;
+    }
+    return DAQ_SUCCESS;
 }
 
 static int pfring_daq_start(void *handle)
