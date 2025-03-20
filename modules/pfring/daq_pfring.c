@@ -1,7 +1,6 @@
 /*
-** Copyright (C) 2014-2025 Cisco and/or its affiliates. All rights reserved.
-** Copyright (C) 2010-2013 Sourcefire, Inc.
-** Author: Michael R. Altizer <mialtize@cisco.com>
+** Copyright (C) 2025 ENEO TECNOLOGIA S.L, Inc.
+** Author: Miguel Álvarez <malvarez@redborder.com>
 **
 ** This program is free software; you can redistribute it and/or modify
 ** it under the terms of the GNU General Public License Version 2 as
@@ -30,23 +29,19 @@
 #include <stdlib.h>
 #include <string.h>
 
+/* include pfring */
+#include <pfring.h>
+
 #include "daq_module_api.h"
 
 #define DAQ_PF_RING_VERSION 1
 
 #define PCAP_DEFAULT_POOL_SIZE 16
-#define DAQ_PCAP_ROLLOVER_LIM 1000000000 //Check for rollover every billionth packet
 
 #define SET_ERROR(modinst, ...)    daq_base_api.set_errbuf(modinst, __VA_ARGS__)
 
 static void pfring_daq_reset_stats(void *handle);
 
-static DAQ_VariableDesc_t pcap_variable_descriptions[] = {
-    { "buffer_size", "Packet buffer space to allocate in bytes", DAQ_VAR_DESC_REQUIRES_ARGUMENT },
-    { "no_promiscuous", "Disables opening the interface in promiscuous mode", DAQ_VAR_DESC_FORBIDS_ARGUMENT },
-    { "no_immediate", "Disables immediate mode for traffic capture (may cause unbounded blocking)", DAQ_VAR_DESC_FORBIDS_ARGUMENT },
-    { "readback_timeout", "Return timeout receive status in file readback mode", DAQ_VAR_DESC_FORBIDS_ARGUMENT },
-};
 
 static DAQ_BaseAPI_t daq_base_api;
 static pthread_mutex_t bpf_mutex = PTHREAD_MUTEX_INITIALIZER;
@@ -181,7 +176,7 @@ const DAQ_ModuleAPI_t pfring_daq_module_data =
     /* .api_version = */ DAQ_MODULE_API_VERSION,
     /* .api_size = */ sizeof(DAQ_ModuleAPI_t),
     /* .module_version = */ DAQ_PF_RING_VERSION,
-    /* .name = */ "pfring",
+    /* .name = */ "rb_pfring",
     /* .type = */ DAQ_TYPE_FILE_CAPABLE | DAQ_TYPE_INTF_CAPABLE | DAQ_TYPE_MULTI_INSTANCE,
     /* .load = */ pfring_daq_module_load,
     /* .unload = */ pfring_daq_module_unload,
