@@ -1,0 +1,15 @@
+# libdaq_pfring_pfring pkg-config file
+
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+libdir=@libdir@
+includedir=@includedir@
+
+Name: libpfring_
+Description: redBorder PFRING DAQ module
+URL: https://snort.org/downloads
+Version: @VERSION@
+Requires:
+Conflicts:
+Libs: -L${libdir} -ldaq_static_pfring
+Cflags:

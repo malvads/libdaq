@@ -1,0 +1,15 @@
+# libdaq_static_pcap pkg-config file
+
+prefix=/usr/local
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: libdaq_static_pcap
+Description: PCAP static DAQ module
+URL: https://snort.org/downloads
+Version: 3.0.19
+Requires:
+Conflicts:
+Libs: -L${libdir} -ldaq_static_pcap -lpcap -lpthread
+Cflags:
