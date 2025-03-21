@@ -29,289 +29,396 @@
 #include <stdlib.h>
 #include <string.h>
 
-/* include pfring module with dependencies */
 #include <pfring.h>
 #include <net/ethernet.h>
 
 #include "daq_module_api.h"
+#include <pfring.h>
 
-typedef struct _pfring_pkt_desc {
+#define DAQ_PFRING_VERSION 1
+#define PF_RING_CLUSTER_ID 0
+#define DEFAULT_POOL_SIZE 32
+
+typedef struct {
     DAQ_Msg_t msg;
     DAQ_PktHdr_t pkthdr;
     uint8_t *data;
-    struct _pfring_packet_instance *instance;
-    unsigned int length;
     struct _pfring_pkt_desc *next;
-} PFRINGPktDesc;
+} PfringPktDesc;
 
-typedef struct _pfring_context {
-    pfring *ring;
+typedef struct {
+    PfringPktDesc *pool;
+    PfringPktDesc *freelist;
+    DAQ_MsgPoolInfo_t info;
+} PfringMsgPool;
+
+typedef struct {
     char *device;
-    u_char *pkt_buffer;
-    PFRINGPktDesc *pending_desc;
-    DAQ_Stats_t stats;
-    struct {
-        PFRINGPktDesc *freelist;
-        struct {
-            unsigned available;
-        } info;
-    } pool;
-} PFRINGContext;
-
-typedef struct _pfring_packet_instance {
+    char *filter;
+    unsigned snaplen;
+    int promisc;
+    int buffer_size;
+    DAQ_Mode mode;
+    
     pfring *ring;
-    uint8_t direction;
-} PFRINGpacketInstance;
-
-static const DAQ_Verdict verdict_translation_table[MAX_DAQ_VERDICT] = {
-    DAQ_VERDICT_PASS,       /* 0: PASS */
-    DAQ_VERDICT_BLOCK,      /* 1: BLOCK */
-    DAQ_VERDICT_PASS,       /* 2: REPLACE */
-    DAQ_VERDICT_PASS,       /* 3: WHITELIST */
-    DAQ_VERDICT_BLOCK,      /* 4: BLACKLIST */
-    DAQ_VERDICT_PASS        /* 5: IGNORE */
-};
-
-#define DAQ_PKT_FLAG_CHECKSUM_ERROR    0x0001  /* Packet has invalid checksum */
-#define DAQ_PKT_FLAG_STREAM_EST        0x0002  /* Stream establishment */
-#define DAQ_PKT_FLAG_STREAM_MID        0x0004  /* Mid-stream packet */
-#define DAQ_PKT_FLAG_STREAM_END        0x0008  /* Stream termination */
-#define DAQ_PKT_FLAG_OUTBOUND          0x0010  /* Packet is egress/outbound */
-#define DAQ_PKT_FLAG_VLAN_STRIPPED     0x0020  /* VLAN tag was stripped */
-#define DAQ_PKT_FLAG_MORE_FRAGMENTS    0x0040  /* More IP fragments coming */
-#define DAQ_PKT_FLAG_FRAGMENT          0x0080  /* IP fragment */
-#define DAQ_PKT_FLAG_IPV6              0x0100  /* IPv6 packet */
-#define DAQ_PKT_FLAG_TRUNCATED         0x0200  /* Packet was truncated */
-#define DAQ_PKT_FLAG_WIRE_LENGTH       0x0400  /* pktlen is wire length */
-#define DAQ_PKT_FLAG_PSEUDO_CHECKSUM   0x0800  /* Checksum needs recalculation */
-#define DAQ_PKT_FLAG_SESSION_KEY       0x1000  /* Contains session key material */
-
-#define DAQ_PF_RING_VERSION 1
-
-#define PCAP_DEFAULT_POOL_SIZE 16
-
-#define SET_ERROR(modinst, ...)    daq_base_api.set_errbuf(modinst, __VA_ARGS__)
-
-static int pfring_daq_reset_stats(void *handle);
-
+    uint32_t cluster_id;
+    uint32_t cluster_type;
+    
+    DAQ_ModuleInstance_h modinst;
+    DAQ_Stats_t stats;
+    PfringMsgPool pool;
+    volatile bool interrupted;
+} PfringContext;
 
 static DAQ_BaseAPI_t daq_base_api;
-static pthread_mutex_t bpf_mutex = PTHREAD_MUTEX_INITIALIZER;
 
-static int pfring_daq_get_variable_descs(const DAQ_VariableDesc_t **var_desc_table) {
-    *var_desc_table = NULL;
-    return 0;
-}
+/*
 
-static int pfring_daq_reset_stats(void *handle)
-{
-    if (!handle) return DAQ_ERROR;
-    PFRINGContext *ctx = (PFRINGContext *)handle;
-    memset(&ctx->stats, 0, sizeof(ctx->stats));
-    return DAQ_SUCCESS;
-}
+    Malvads magic below
 
-static int pfring_daq_get_snaplen(void *handle) {
-    return (handle ? 1500 : 0);
-}
-
-static int pfring_daq_module_load(const DAQ_BaseAPI_t *base_api)
-{
-    if (base_api->api_version != DAQ_BASE_API_VERSION || base_api->api_size != sizeof(DAQ_BaseAPI_t))
-        return DAQ_ERROR;
-
-    daq_base_api = *base_api;
-
-    return DAQ_SUCCESS;
-}
-
-static int pfring_daq_module_unload(void)
-{
-    memset(&daq_base_api, 0, sizeof(daq_base_api));
-    return DAQ_SUCCESS;
-}
-
-static int pfring_daq_instantiate(const DAQ_ModuleConfig_h modcfg,
-                                  DAQ_ModuleInstance_h modinst,
-                                  void **ctxt_ptr) {
-    unsigned snaplen = 1500;
-    unsigned promisc = PF_RING_PROMISC;
-    int cluster_id = 0;
-    int cluster_per_flow = 0;
-
-    PFRINGContext *ctx = malloc(sizeof(PFRINGContext));
-    if (!ctx) {
+    !!!! EXPERIMENTAL MODULE !!!!!
+*/
+static int create_packet_pool(PfringContext *pc, unsigned size) {
+    printf("\n=== Creating packet pool ===\n");
+    printf("| Pool size: %u\n", size);
+    printf("| Snaplen: %u\n", pc->snaplen);
+    
+    PfringMsgPool *pool = &pc->pool;
+    memset(pool, 0, sizeof(PfringMsgPool));
+    
+    printf("| Allocating descriptor array...\n");
+    pool->pool = calloc(size, sizeof(PfringPktDesc));
+    if (!pool->pool) {
+        printf("!!! ERROR: Failed to allocate %zu bytes for descriptors\n", 
+              size * sizeof(PfringPktDesc));
         return DAQ_ERROR_NOMEM;
     }
-    memset(ctx, 0, sizeof(PFRINGContext));
+    
+    pool->info.size = size;
+    pool->info.available = size;
+    pool->info.mem_size = size * sizeof(PfringPktDesc);
+    printf("| Initial pool info: size=%u, available=%u, mem_size=%zu\n",
+          pool->info.size, pool->info.available, pool->info.mem_size);
 
-    const char *input = daq_base_api.config_get_input(modcfg);
-    if (!input) {
-        free(ctx);
-        return DAQ_ERROR;
-    }
-
-    ctx->device = strdup(input);
-    if (!ctx->device) {
-        free(ctx);
-        return DAQ_ERROR_NOMEM;
-    }
-    fprintf(stdout, "Malvads got device on daq context -> %s", ctx->device);
-
-    pfring *ring = pfring_open(ctx->device, snaplen, promisc);
-    if (!ring) {
-        free(ctx->device);
-        free(ctx);
-        return DAQ_ERROR;
-    }
-    pfring_set_application_name(ring, "malvads_libdaq_pfring");
-    pfring_set_socket_mode(ring, recv_only_mode);
-
-    if (cluster_id > 0) {
-        if (pfring_set_cluster(ring, cluster_id,
-                               cluster_per_flow ? cluster_per_flow : cluster_id) != 0) {
-            pfring_close(ring);
-            free(ctx->device);
-            free(ctx);
-            return DAQ_ERROR;
+    for (unsigned i = 0; i < size; i++) {
+        PfringPktDesc *desc = &pool->pool[i];
+        printf("| [Descriptor %u] Allocating data buffer...\n", i);
+        desc->data = malloc(pc->snaplen);
+        if (!desc->data) {
+            printf("!!! ERROR: Failed to allocate %u bytes for data buffer %u\n",
+                  pc->snaplen, i);
+            printf("| Cleaning up %u previously allocated buffers...\n", i);
+            while (i-- > 0) {
+                printf("| Freeing buffer %u...\n", i);
+                free(pool->pool[i].data);
+            }
+            printf("| Freeing descriptor array...\n");
+            free(pool->pool);
+            return DAQ_ERROR_NOMEM;
         }
+        pool->info.mem_size += pc->snaplen;
+
+        printf("| [Descriptor %u] Initializing message structure...\n", i);
+        desc->msg.type = DAQ_MSG_TYPE_PACKET;
+        desc->msg.hdr_len = sizeof(DAQ_PktHdr_t);
+        desc->msg.hdr = &desc->pkthdr;
+        desc->msg.data = desc->data;
+        desc->msg.owner = pc->modinst;
+        desc->msg.priv = desc;
+
+        printf("| [Descriptor %u] Adding to free list...\n", i);
+        desc->next = pool->freelist;
+        pool->freelist = desc;
     }
 
-    ctx->ring = ring;
-    memset(&ctx->stats, 0, sizeof(ctx->stats));
-
-    *ctxt_ptr = ctx;
+    printf("=== Pool created successfully ===\n");
+    printf("| Total descriptors: %u\n", pool->info.size);
+    printf("| Total memory: %zu bytes\n", pool->info.mem_size);
+    printf("| First free descriptor: %p\n", (void*)pool->freelist);
     return DAQ_SUCCESS;
 }
 
-static void pfring_daq_destroy(void *handle) {
-    if (handle) {
-        PFRINGContext *ctx = (PFRINGContext *)handle;
-        if (ctx->ring)
-            pfring_close(ctx->ring);
-        free(ctx);
-    }
-}
 
-static int pfring_daq_set_filter(void *handle, const char *filter) {
-    if (!handle || !filter) {
-        return DAQ_ERROR;
-    }
-    PFRINGContext *ctx = (PFRINGContext *)handle;
-    if (pfring_set_bpf_filter(ctx->ring, filter) != 0) {
-        return DAQ_ERROR;
-    }
+static int pfring_daq_module_load(const DAQ_BaseAPI_t *base_api) {
+    daq_base_api = *base_api;
     return DAQ_SUCCESS;
 }
+
+static int pfring_daq_instantiate(const DAQ_ModuleConfig_h modcfg, 
+                                 DAQ_ModuleInstance_h modinst,
+                                 void **ctxt_ptr) {
+    printf("\n=== Instantiating module ===\n");
+    
+    printf("| Allocating context...\n");
+    PfringContext *pc = calloc(1, sizeof(PfringContext));
+    if (!pc) {
+        printf("!!! ERROR: Failed to allocate %zu bytes for context\n",
+              sizeof(PfringContext));
+        return DAQ_ERROR_NOMEM;
+    }
+    
+    pc->modinst = modinst;
+    pc->snaplen = daq_base_api.config_get_snaplen(modcfg);
+    pc->promisc = PF_RING_PROMISC;
+    pc->cluster_id = PF_RING_CLUSTER_ID;
+    
+    const char *input = daq_base_api.config_get_input(modcfg);
+    printf("| Input device: %s\n", input);
+    
+    printf("| Duplicating device string...\n");
+    pc->device = strdup(input);
+    if (!pc->device) {
+        printf("!!! ERROR: Failed to duplicate device string\n");
+        printf("| Freeing context...\n");
+        free(pc);
+        return DAQ_ERROR_NOMEM;
+    }
+    
+    printf("| Creating packet pool...\n");
+    int rc = create_packet_pool(pc, DEFAULT_POOL_SIZE);
+    if (rc != DAQ_SUCCESS) {
+        printf("!!! ERROR: Packet pool creation failed\n");
+        printf("| Cleaning up device string...\n");
+        free(pc->device);
+        printf("| Freeing context...\n");
+        free(pc);
+        return rc;
+    }
+    
+    *ctxt_ptr = pc;
+    printf("=== Instance created successfully ===\n");
+    printf("| Context pointer: %p\n", pc);
+    return DAQ_SUCCESS;
+}
+
+
 
 static int pfring_daq_start(void *handle) {
-    if (!handle) {
+    printf("\n=== Starting module ===\n");
+    PfringContext *pc = (PfringContext *)handle;
+    
+    if (!pc) {
+        printf("!!! ERROR: Null context pointer!\n");
         return DAQ_ERROR;
     }
-    PFRINGContext *ctx = (PFRINGContext *)handle;
-    if (pfring_enable_ring(ctx->ring) != 0) {
-        pfring_close(ctx->ring);
+    
+    printf("| Opening PF_RING on %s\n", pc->device);
+    printf("| Snaplen: %u, Promisc: %d\n", pc->snaplen, pc->promisc);
+    pc->ring = pfring_open(pc->device, pc->snaplen, pc->promisc);
+    
+    if (!pc->ring) {
+        printf("!!! ERROR: pfring_open failed\n");
+        printf("| Last error: %s\n");
+        daq_base_api.set_errbuf(pc->modinst, "pfring_open failed");
         return DAQ_ERROR;
     }
-
+    
+    printf("| Configuring application name...\n");
+    pfring_set_application_name(pc->ring, "daq_pfring");
+    pfring_set_socket_mode(pc->ring, recv_only_mode);
+    
+    printf("| Setting cluster ID: %u, Type: %u\n", 
+          pc->cluster_id, pc->cluster_type);
+    pfring_set_cluster(pc->ring, pc->cluster_id, pc->cluster_type);
+    
+    printf("| Enabling ring...\n");
+    if (pfring_enable_ring(pc->ring) != 0) {
+        printf("!!! ERROR: Failed to enable ring\n");
+        printf("| Last error: %s\n");
+        printf("| Closing ring...\n");
+        pfring_close(pc->ring);
+        pc->ring = NULL;
+        return DAQ_ERROR;
+    }
+    
+    printf("=== Module started successfully ===\n");
     return DAQ_SUCCESS;
 }
-
-static int pfring_daq_inject(void *handle, DAQ_MsgType type, const void *hdr, const uint8_t *data, uint32_t data_len) {
-  return DAQ_SUCCESS;
+static unsigned pfring_daq_msg_receive(void *handle, const unsigned max_recv,
+                                      const DAQ_Msg_t *msgs[], DAQ_RecvStatus *rstat) {
+    printf("\n=== Receiving messages ===\n");
+    PfringContext *pc = (PfringContext *)handle;
+    
+    if (!pc || !pc->ring) {
+        printf("!!! ERROR: Invalid context or ring not initialized\n");
+        *rstat = DAQ_RSTAT_ERROR;
+        return 0;
+    }
+    
+    printf("| Max messages to receive: %u\n", max_recv);
+    printf("| Current free descriptors: %u\n", pc->pool.info.available);
+    
+    unsigned count = 0;
+    struct pfring_pkthdr hdr;
+    u_char *pkt_data;
+    
+    while (count < max_recv) {
+        printf("\n| Receive loop iteration: %u/%u\n", count+1, max_recv);
+        
+        if (pc->interrupted) {
+            printf("!!! INTERRUPTED: Breaking receive loop\n");
+            *rstat = DAQ_RSTAT_INTERRUPTED;
+            pc->interrupted = false;
+            break;
+        }
+        
+        printf("| Calling pfring_recv...\n");
+        int rc = pfring_recv(pc->ring, &pkt_data, 0, &hdr, 1);
+        printf("| pfring_recv returned: %d\n", rc);
+        
+        if (rc == 1) {
+            printf("| Received packet: len=%u, caplen=%u\n", hdr.len, hdr.caplen);
+            printf("| Timestamp: %ld.%06ld\n", hdr.ts.tv_sec, hdr.ts.tv_usec);
+            
+            PfringPktDesc *desc = pc->pool.freelist;
+            if (!desc) {
+                printf("!!! NO BUFFERS: Free list empty\n");
+                *rstat = DAQ_RSTAT_NOBUF;
+                break;
+            }
+            
+            printf("| Using descriptor: %p\n", desc);
+            printf("| Copying %u bytes to buffer...\n", hdr.caplen);
+            memcpy(desc->data, pkt_data, hdr.caplen);
+            
+            printf("| Updating headers...\n");
+            desc->pkthdr.ts.tv_sec = hdr.ts.tv_sec;
+            desc->pkthdr.ts.tv_usec = hdr.ts.tv_usec;
+            desc->pkthdr.pktlen = hdr.len;
+            desc->msg.data_len = hdr.caplen;
+            
+            printf("| Updating free list...\n");
+            pc->pool.freelist = desc->next;
+            desc->next = NULL;
+            
+            printf("| Adding message to result array\n");
+            msgs[count++] = &desc->msg;
+            pc->stats.packets_received++;
+            pc->pool.info.available--;
+            
+            printf("| New available descriptors: %u\n", pc->pool.info.available);
+        }
+        else if (rc == 0) {
+            printf("| Timeout occurred\n");
+            *rstat = DAQ_RSTAT_TIMEOUT;
+            break;
+        }
+        else {
+            printf("!!! RECEIVE ERROR: %s\n");
+            *rstat = DAQ_RSTAT_ERROR;
+            break;
+        }
+    }
+    
+    printf("=== Returning %u messages ===\n", count);
+    return count;
 }
 
-static int pfring_daq_stop(void *handle) {
-  PFRINGContext *context =(PFRINGContext *) handle;
+static int pfring_daq_msg_finalize(void *handle, const DAQ_Msg_t *msg, 
+                                  DAQ_Verdict verdict) {
+    PfringContext *pc = (PfringContext *)handle;
+    PfringPktDesc *desc = (PfringPktDesc *)msg->priv;
 
-  pfring_close(context->ring);
-  context->ring = NULL;
-
-  return DAQ_SUCCESS;
+    desc->next = pc->pool.freelist;
+    pc->pool.freelist = desc;
+    pc->stats.verdicts[verdict]++;
+    
+    return DAQ_SUCCESS;
 }
 
 static int pfring_daq_get_stats(void *handle, DAQ_Stats_t *stats) {
+    PfringContext *pc = (PfringContext *)handle;
     return DAQ_SUCCESS;
 }
 
-static int pfring_daq_interrupt(void *handle) {
-  return DAQ_SUCCESS;
+static int pfring_daq_stop(void *handle) {
+    PfringContext *pc = (PfringContext *)handle;
+    if (pc->ring) {
+        pfring_close(pc->ring);
+        pc->ring = NULL;
+    }
+    return DAQ_SUCCESS;
 }
 
-static uint32_t pfring_daq_get_capabilities(void *handle)
-{
-    return DAQ_CAPA_BLOCK |          // Supports blocking mode
-           DAQ_CAPA_INJECT |         // Supports packet injection
-           DAQ_CAPA_BPF |            // Supports BPF filtering
-           DAQ_CAPA_INTERRUPT;       // Can interrupt packet processing
-}
 
-static int pfring_daq_get_datalink_type(void *handle)
-{
-  return DLT_EN10MB;
-}
-
-void pfring_debug_print_mac_address(const u_char *addr) {
-    printf("%02x:%02x:%02x:%02x:%02x:%02x", 
-           addr[0], addr[1], addr[2], addr[3], addr[4], addr[5]);
-}
-
-#include <arpa/inet.h>
-
-void pfring_decode_ring_packet(const struct pfring_pkthdr *h, const u_char *p, const u_char *user_bytes) {
-    if (h->len < sizeof(struct ether_header)) {
+static void pfring_daq_destroy(void *handle) {
+    printf("\n=== Destroying module ===\n");
+    PfringContext *pc = (PfringContext *)handle;
+    
+    if (!pc) {
+        printf("!!! WARNING: Null context pointer\n");
         return;
     }
-
-    struct ether_header *eth = (struct ether_header *)p;
-    printf("\nEthernet Header:\n");
-    printf("   Destination: ");
-    pfring_debug_print_mac_address(eth->ether_dhost);
-    printf("\n   Source: ");
-    pfring_debug_print_mac_address(eth->ether_shost);
-    printf("\n   EtherType: 0x%04x\n", ntohs(eth->ether_type));
-
-
-    printf("Packet Data (%d bytes):\n", h->len);
-    for (int i = 0; i < h->len; i++) {
-        printf("%02x ", p[i]);
-        if ((i + 1) % 16 == 0)
-            printf("\n");
+    
+    printf("| Stopping module...\n");
+    pfring_daq_stop(handle);
+    
+    if (pc->device) {
+        printf("| Freeing device string: %s\n", pc->device);
+        free(pc->device);
     }
-    if (h->len % 16 != 0)
-        printf("\n");
+    
+    if (pc->pool.pool) {
+        printf("| Cleaning up packet pool:\n");
+        printf("  - Total descriptors: %u\n", pc->pool.info.size);
+        
+        for (unsigned i = 0; i < pc->pool.info.size; i++) {
+            if (pc->pool.pool[i].data) {
+                printf("  | Freeing data buffer %u...\n", i);
+                free(pc->pool.pool[i].data);
+            }
+        }
+        
+        printf("| Freeing descriptor array...\n");
+        free(pc->pool.pool);
+    }
+    
+    printf("| Freeing context...\n");
+    free(pc);
+    printf("=== Destruction complete ===\n");
 }
 
 
-static int pfring_daq_msg_receive(void *handle, const unsigned max_recv, const DAQ_Msg_t *msgs[], DAQ_RecvStatus *rstat){
-    PFRINGContext *pc = (PFRINGContext *)handle;
-    struct pfring_pkthdr pfring_packet;
-    const u_char *packet;
-    unsigned idx;
+static int pfring_daq_get_datalink_type(void *handle) {
+    PfringContext *pc = (PfringContext *)handle;
+    return DLT_EN10MB;
+}
 
-    int rc = pfring_recv(pc->ring, &packet, 0, &pfring_packet, 1);
+static uint32_t pfring_daq_get_capabilities(void *handle) {
+    return DAQ_CAPA_BPF | DAQ_CAPA_INTERRUPT | DAQ_CAPA_INJECT;
+}
 
-    if (rc > 0) {
-        pfring_decode_ring_packet(&pfring_packet, packet, NULL);
-    } else if (rc == 0) {
-        usleep(1000);
-    } else {
-        fprintf(stderr, "Packet receive error: %d\n", rc);
+static int pfring_daq_get_msg_pool_info(void *handle, DAQ_MsgPoolInfo_t *info) {
+    printf("\n=== Getting pool info ===\n");
+    
+    if (!handle || !info) {
+        printf("!!! ERROR: Null handle (%p) or info (%p)\n", handle, info);
+        return DAQ_ERROR_INVAL;
     }
-
-    *rstat = DAQ_RSTAT_OK;
-
+    
+    PfringContext *pc = (PfringContext *)handle;
+    printf("| Context valid: %s\n", pc ? "yes" : "no");
+    
+    if (!pc->pool.pool) {
+        printf("!!! ERROR: Pool not initialized\n");
+        return DAQ_ERROR;
+    }
+    
+    printf("| Current pool status:\n");
+    printf("  - Total descriptors: %u\n", pc->pool.info.size);
+    printf("  - Available descriptors: %u\n", pc->pool.info.available);
+    printf("  - Memory used: %zu bytes\n", pc->pool.info.mem_size);
+    
+    *info = pc->pool.info;
+    printf("=== Pool info retrieved ===\n");
     return DAQ_SUCCESS;
 }
 
-static int pfring_daq_msg_finalize(void *handle, const DAQ_Msg_t *msg, DAQ_Verdict verdict) {
-  return 0;
-}
 
-static int pfring_daq_get_msg_pool_info(void *handle, DAQ_MsgPoolInfo_t *info)
-{
-    return DAQ_SUCCESS;
-}
+static DAQ_VariableDesc_t pfring_variable_descs[] = {
+    { "cluster_id", "PF_RING cluster ID", DAQ_VAR_DESC_REQUIRES_ARGUMENT },
+    { "no_promisc", "Disable promiscuous mode", DAQ_VAR_DESC_FORBIDS_ARGUMENT },
+};
 
 #ifdef BUILDING_SO
 DAQ_SO_PUBLIC const DAQ_ModuleAPI_t DAQ_MODULE_DATA =
@@ -319,32 +426,28 @@ DAQ_SO_PUBLIC const DAQ_ModuleAPI_t DAQ_MODULE_DATA =
 const DAQ_ModuleAPI_t pfring_daq_module_data =
 #endif
 {
-    /* .api_version = */ DAQ_MODULE_API_VERSION,
-    /* .api_size = */ sizeof(DAQ_ModuleAPI_t),
-    /* .module_version = */ DAQ_PF_RING_VERSION,
-    /* .name = */ "rb_pfring",
-    /* .type = */ DAQ_TYPE_FILE_CAPABLE | DAQ_TYPE_INTF_CAPABLE | DAQ_TYPE_MULTI_INSTANCE,
-    /* .load = */ pfring_daq_module_load,
-    /* .unload = */ pfring_daq_module_unload,
-    /* .get_variable_descs = */ pfring_daq_get_variable_descs,
-    /* .instantiate = */ pfring_daq_instantiate,
-    /* .destroy = */ pfring_daq_destroy,
-    /* .set_filter = */ pfring_daq_set_filter,
-    /* .start = */ pfring_daq_start,
-    /* .inject = */ pfring_daq_inject,
-    /* .inject_relative = */ NULL,
-    /* .interrupt = */ pfring_daq_interrupt,
-    /* .stop = */ pfring_daq_stop,
-    /* .ioctl = */ NULL,
-    /* .get_stats = */ pfring_daq_get_stats,
-    /* .reset_stats = */ pfring_daq_reset_stats,
-    /* .get_snaplen = */ pfring_daq_get_snaplen,
-    /* .get_capabilities = */ pfring_daq_get_capabilities,
-    /* .get_datalink_type = */ pfring_daq_get_datalink_type,
-    /* .config_load = */ NULL,
-    /* .config_swap = */ NULL,
-    /* .config_free = */ NULL,
-    /* .msg_receive = */ pfring_daq_msg_receive,
-    /* .msg_finalize = */ pfring_daq_msg_finalize,
-    /* .get_msg_pool_info = */ pfring_daq_get_msg_pool_info,
+    .api_version = DAQ_MODULE_API_VERSION,
+    .api_size = sizeof(DAQ_ModuleAPI_t),
+    .module_version = DAQ_PFRING_VERSION,
+    .name = "redborder_pfring",
+    .type = DAQ_TYPE_INTF_CAPABLE | DAQ_TYPE_MULTI_INSTANCE,
+    .load = pfring_daq_module_load,
+    .unload = NULL,
+    .get_variable_descs = NULL,
+    .instantiate = pfring_daq_instantiate,
+    .destroy = pfring_daq_destroy,
+    .start = pfring_daq_start,
+    .stop = pfring_daq_stop,
+    .ioctl = NULL,
+    .get_stats = pfring_daq_get_stats,
+    .reset_stats = NULL,
+    .get_snaplen = NULL,
+    .get_capabilities = NULL,
+    .get_datalink_type = pfring_daq_get_datalink_type,
+    .config_load = NULL,
+    .config_swap = NULL,
+    .config_free = NULL,
+    .msg_receive = pfring_daq_msg_receive,
+    .msg_finalize = pfring_daq_msg_finalize,
+    .get_msg_pool_info = pfring_daq_get_msg_pool_info,
 };
