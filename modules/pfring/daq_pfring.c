@@ -81,25 +81,17 @@ static int create_packet_pool(PfringContext *pc, unsigned size) {
     
     pool->pool = calloc(size, sizeof(PfringPktDesc));
     if (!pool->pool) {
-        DEBUG_PRINT("!!! ERROR: Failed to allocate %zu bytes for descriptors\n", 
-              size * sizeof(PfringPktDesc));
         return DAQ_ERROR_NOMEM;
     }
     
     pool->info.size = size;
     pool->info.available = size;
     pool->info.mem_size = size * sizeof(PfringPktDesc);
-    DEBUG_PRINT("| Initial pool info: size=%u, available=%u, mem_size=%zu\n",
-          pool->info.size, pool->info.available, pool->info.mem_size);
 
     for (unsigned i = 0; i < size; i++) {
         PfringPktDesc *desc = &pool->pool[i];
         desc->data = malloc(pc->snaplen);
         if (!desc->data) {
-            DEBUG_PRINT("!!! ERROR: Failed to allocate %u bytes for data buffer %u\n",
-                  pc->snaplen, i);
-            
-
             for (unsigned j = 0; j < i; j++) {
                 free(pool->pool[j].data);
                 pool->pool[j].data = NULL;
@@ -108,7 +100,6 @@ static int create_packet_pool(PfringContext *pc, unsigned size) {
             return DAQ_ERROR_NOMEM;
         }
         pool->info.mem_size += pc->snaplen;
-
         
         desc->msg.type = DAQ_MSG_TYPE_PACKET;
         desc->msg.hdr_len = sizeof(DAQ_PktHdr_t);
@@ -117,7 +108,6 @@ static int create_packet_pool(PfringContext *pc, unsigned size) {
         desc->msg.owner = pc->modinst;
         desc->msg.priv = desc;
 
-        
         desc->next = pool->freelist;
         pool->freelist = desc;
     }
@@ -135,8 +125,6 @@ static int pfring_daq_instantiate(const DAQ_ModuleConfig_h modcfg,
                                  void **ctxt_ptr) {
     PfringContext *pc = calloc(1, sizeof(PfringContext));
     if (!pc) {
-        DEBUG_PRINT("!!! ERROR: Failed to allocate %zu bytes for context\n",
-              sizeof(PfringContext));
         return DAQ_ERROR_NOMEM;
     }
     
@@ -269,10 +257,6 @@ static int pfring_daq_msg_finalize(void *handle, const DAQ_Msg_t *msg, DAQ_Verdi
     desc->next = pc->pool.freelist;
     pc->pool.freelist = desc;
     pc->pool.info.available++;
-
-    DEBUG_PRINT("| Recycled descriptor %p, available now: %u\n",
-          desc, pc->pool.info.available);
-
     return DAQ_SUCCESS;
 }
 
