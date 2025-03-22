@@ -196,6 +196,7 @@ static unsigned pfring_daq_msg_receive(void *handle, const unsigned max_recv,
     u_char *pkt_data;
     unsigned count = 0;
     DAQ_RecvStatus status = DAQ_RSTAT_OK;
+    
     while (count < max_recv) 
     {
         if (pc->interrupted) {
@@ -232,6 +233,7 @@ static unsigned pfring_daq_msg_receive(void *handle, const unsigned max_recv,
             break;
         }
     }
+
     *rstat = status;
     return count;
 }
@@ -246,14 +248,9 @@ static int pfring_daq_msg_finalize(void *handle, const DAQ_Msg_t *msg, DAQ_Verdi
 
     pc->stats.verdicts[verdict]++;
 
-    if (pc->mode == DAQ_MODE_INLINE && verdict == DAQ_VERDICT_PASS) {
-        int send_mode = pc->use_fast_tx ? -1 : 0;
-        if (pfring_send(pc->ring, desc->data, desc->msg.data_len, send_mode) < 0) {
-            pc->stats.hw_packets_dropped++;
-        } else {
-            pc->stats.packets_injected++;
-        }
-    }
+    if(verdict == DAQ_VERDICT_PASS)
+      pfring_transmit_packet(pc->ring, desc->data, des->msg.data_len, send_mode);
+    
     desc->next = pc->pool.freelist;
     pc->pool.freelist = desc;
     pc->pool.info.available++;
