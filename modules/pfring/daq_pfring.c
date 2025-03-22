@@ -238,20 +238,18 @@ static unsigned pfring_daq_msg_receive(void *handle, const unsigned max_recv,
     struct pfring_pkthdr hdr;
     u_char *pkt_data;
     unsigned count = 0;
-    
-    *rstat = DAQ_RSTAT_OK;
-    
+    DAQ_RecvStatus status = DAQ_RSTAT_OK;
     while (count < max_recv) 
     {
         if (pc->interrupted) {
             pc->interrupted = false;
-            *rstat = count ? DAQ_RSTAT_OK : DAQ_RSTAT_INTERRUPTED;
+            status = DAQ_RSTAT_INTERRUPTED;
             break;
         }
 
         PfringPktDesc *desc = pc->pool.freelist;
         if (!desc) {
-            *rstat = count ? DAQ_RSTAT_OK : DAQ_RSTAT_NOBUF;
+            *rstat = DAQ_RSTAT_NOBUF;
             break;
         }
 
@@ -272,14 +270,15 @@ static unsigned pfring_daq_msg_receive(void *handle, const unsigned max_recv,
             
         } else if (rc == 0) {
             if (count == 0) 
-                *rstat = DAQ_RSTAT_TIMEOUT;
+                status = DAQ_RSTAT_TIMEOUT;
             break;
         } else {
-            *rstat = count ? DAQ_RSTAT_OK : DAQ_RSTAT_ERROR;
+            status = DAQ_RSTAT_ERROR;
             break;
         }
     }
-    
+    *rstat = status;
+
     return count;
 }
 
@@ -323,6 +322,14 @@ static int pfring_daq_stop(void *handle) {
         pfring_close(pc->ring);
         pc->ring = NULL;
     }
+    return DAQ_SUCCESS;
+}
+
+static void pfring_daq_interrupt(void *handle){
+    PfringContext *pfring = (PfringContext *) handle;
+
+    pfring->interrupted = true;
+
     return DAQ_SUCCESS;
 }
 
@@ -415,6 +422,7 @@ const DAQ_ModuleAPI_t pfring_daq_module_data =
     .name = "redborder_pfring",
     .type = DAQ_TYPE_INTF_CAPABLE | DAQ_TYPE_MULTI_INSTANCE,
     .load = pfring_daq_module_load,
+    .interrupt = pfring_daq_interrupt,
     .unload = NULL,
     .get_variable_descs = NULL,
     .instantiate = pfring_daq_instantiate,
