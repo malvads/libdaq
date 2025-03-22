@@ -35,13 +35,6 @@
 #include "daq_module_api.h"
 #include <pfring.h>
 
-/* Debug macro */
-#ifdef DEBUG
-#define DEBUG_PRINT(...) printf(__VA_ARGS__)
-#else
-#define DEBUG_PRINT(...)
-#endif
-
 #define DAQ_PFRING_VERSION 1
 #define PF_RING_CLUSTER_ID 0
 #define DEFAULT_POOL_SIZE 32
@@ -61,7 +54,6 @@ typedef struct {
 
 typedef struct {
     char *device;
-    char *filter;
     unsigned snaplen;
     int promisc;
     int buffer_size;
@@ -75,19 +67,18 @@ typedef struct {
     DAQ_Stats_t stats;
     PfringMsgPool pool;
     volatile bool interrupted;
+
+    int watermark;
+    u_int8_t use_fast_tx;
+    pfring_stat hw_stats;
 } PfringContext;
 
 static DAQ_BaseAPI_t daq_base_api;
 
 static int create_packet_pool(PfringContext *pc, unsigned size) {
-    DEBUG_PRINT("\n=== Creating packet pool ===\n");
-    DEBUG_PRINT("| Pool size: %u\n", size);
-    DEBUG_PRINT("| Snaplen: %u\n", pc->snaplen);
-    
     PfringMsgPool *pool = &pc->pool;
     memset(pool, 0, sizeof(PfringMsgPool));
     
-    DEBUG_PRINT("| Allocating descriptor array...\n");
     pool->pool = calloc(size, sizeof(PfringPktDesc));
     if (!pool->pool) {
         DEBUG_PRINT("!!! ERROR: Failed to allocate %zu bytes for descriptors\n", 
@@ -103,23 +94,22 @@ static int create_packet_pool(PfringContext *pc, unsigned size) {
 
     for (unsigned i = 0; i < size; i++) {
         PfringPktDesc *desc = &pool->pool[i];
-        DEBUG_PRINT("| [Descriptor %u] Allocating data buffer...\n", i);
         desc->data = malloc(pc->snaplen);
         if (!desc->data) {
             DEBUG_PRINT("!!! ERROR: Failed to allocate %u bytes for data buffer %u\n",
                   pc->snaplen, i);
-            DEBUG_PRINT("| Cleaning up %u previously allocated buffers...\n", i);
-            while (i-- > 0) {
-                DEBUG_PRINT("| Freeing buffer %u...\n", i);
-                free(pool->pool[i].data);
+            
+
+            for (unsigned j = 0; j < i; j++) {
+                free(pool->pool[j].data);
+                pool->pool[j].data = NULL;
             }
-            DEBUG_PRINT("| Freeing descriptor array...\n");
             free(pool->pool);
             return DAQ_ERROR_NOMEM;
         }
         pool->info.mem_size += pc->snaplen;
 
-        DEBUG_PRINT("| [Descriptor %u] Initializing message structure...\n", i);
+        
         desc->msg.type = DAQ_MSG_TYPE_PACKET;
         desc->msg.hdr_len = sizeof(DAQ_PktHdr_t);
         desc->msg.hdr = &desc->pkthdr;
@@ -127,15 +117,11 @@ static int create_packet_pool(PfringContext *pc, unsigned size) {
         desc->msg.owner = pc->modinst;
         desc->msg.priv = desc;
 
-        DEBUG_PRINT("| [Descriptor %u] Adding to free list...\n", i);
+        
         desc->next = pool->freelist;
         pool->freelist = desc;
     }
-
-    DEBUG_PRINT("=== Pool created successfully ===\n");
-    DEBUG_PRINT("| Total descriptors: %u\n", pool->info.size);
-    DEBUG_PRINT("| Total memory: %zu bytes\n", pool->info.mem_size);
-    DEBUG_PRINT("| First free descriptor: %p\n", (void*)pool->freelist);
+    
     return DAQ_SUCCESS;
 }
 
@@ -147,9 +133,6 @@ static int pfring_daq_module_load(const DAQ_BaseAPI_t *base_api) {
 static int pfring_daq_instantiate(const DAQ_ModuleConfig_h modcfg, 
                                  DAQ_ModuleInstance_h modinst,
                                  void **ctxt_ptr) {
-    DEBUG_PRINT("\n=== Instantiating module ===\n");
-    
-    DEBUG_PRINT("| Allocating context...\n");
     PfringContext *pc = calloc(1, sizeof(PfringContext));
     if (!pc) {
         DEBUG_PRINT("!!! ERROR: Failed to allocate %zu bytes for context\n",
@@ -160,74 +143,60 @@ static int pfring_daq_instantiate(const DAQ_ModuleConfig_h modcfg,
     pc->modinst = modinst;
     pc->snaplen = daq_base_api.config_get_snaplen(modcfg);
     pc->promisc = PF_RING_PROMISC;
-    pc->cluster_id = PF_RING_CLUSTER_ID;
-    
+    const char *cluster_id_str = daq_base_api.config_get_variable(modcfg, "cluster_id");
+    if (cluster_id_str) pc->cluster_id = atoi(cluster_id_str);
+
+    const char *no_promisc = daq_base_api.config_get_variable(modcfg, "no_promisc");
+    pc->promisc = no_promisc ? 0 : PF_RING_PROMISC;
+
+    const char *cluster_mode_str = daq_base_api.config_get_variable(modcfg, "cluster_mode");
+    if (cluster_mode_str) pc->cluster_type = atoi(cluster_mode_str);
+
+    const char *watermark_str = daq_base_api.config_get_variable(modcfg, "watermark");
+    if (watermark_str) pc->watermark = atoi(watermark_str);
+
+    const char *fast_tx_str = daq_base_api.config_get_variable(modcfg, "fast_tx");
+    pc->use_fast_tx = fast_tx_str ? 1 : 0;
+    pc->mode = daq_base_api.config_get_mode(modcfg);
+
     const char *input = daq_base_api.config_get_input(modcfg);
-    DEBUG_PRINT("| Input device: %s\n", input);
-    
-    DEBUG_PRINT("| Duplicating device string...\n");
+
     pc->device = strdup(input);
     if (!pc->device) {
-        DEBUG_PRINT("!!! ERROR: Failed to duplicate device string\n");
-        DEBUG_PRINT("| Freeing context...\n");
+        
         free(pc);
         return DAQ_ERROR_NOMEM;
     }
     
-    DEBUG_PRINT("| Creating packet pool...\n");
     int rc = create_packet_pool(pc, DEFAULT_POOL_SIZE);
     if (rc != DAQ_SUCCESS) {
-        DEBUG_PRINT("!!! ERROR: Packet pool creation failed\n");
-        DEBUG_PRINT("| Cleaning up device string...\n");
         free(pc->device);
-        DEBUG_PRINT("| Freeing context...\n");
         free(pc);
         return rc;
     }
-    
     *ctxt_ptr = pc;
-    DEBUG_PRINT("=== Instance created successfully ===\n");
-    DEBUG_PRINT("| Context pointer: %p\n", pc);
     return DAQ_SUCCESS;
 }
 
 static int pfring_daq_start(void *handle) {
-    DEBUG_PRINT("\n=== Starting module ===\n");
     PfringContext *pc = (PfringContext *)handle;
-    
     if (!pc) {
-        DEBUG_PRINT("!!! ERROR: Null context pointer!\n");
         return DAQ_ERROR;
     }
-    
-    DEBUG_PRINT("| Opening PF_RING on %s\n", pc->device);
-    DEBUG_PRINT("| Snaplen: %u, Promisc: %d\n", pc->snaplen, pc->promisc);
     pc->ring = pfring_open(pc->device, pc->snaplen, pc->promisc);
-    
-    if (!pc->ring) {
-        DEBUG_PRINT("!!! ERROR: pfring_open failed\n");
+    if (!pc->ring) { 
         daq_base_api.set_errbuf(pc->modinst, "pfring_open failed");
         return DAQ_ERROR;
     }
-    
-    DEBUG_PRINT("| Configuring application name...\n");
+    pfring_set_cluster(pc->ring, pc->cluster_id, pc->cluster_type);
+    pfring_set_poll_watermark(pc->ring, pc->watermark);
     pfring_set_application_name(pc->ring, "daq_pfring");
     pfring_set_socket_mode(pc->ring, recv_only_mode);
-    
-    DEBUG_PRINT("| Setting cluster ID: %u, Type: %u\n", 
-          pc->cluster_id, pc->cluster_type);
-    pfring_set_cluster(pc->ring, pc->cluster_id, pc->cluster_type);
-    
-    DEBUG_PRINT("| Enabling ring...\n");
     if (pfring_enable_ring(pc->ring) != 0) {
-        DEBUG_PRINT("!!! ERROR: Failed to enable ring\n");
-        DEBUG_PRINT("| Closing ring...\n");
         pfring_close(pc->ring);
         pc->ring = NULL;
         return DAQ_ERROR;
     }
-    
-    DEBUG_PRINT("=== Module started successfully ===\n");
     return DAQ_SUCCESS;
 }
 
@@ -246,21 +215,19 @@ static unsigned pfring_daq_msg_receive(void *handle, const unsigned max_recv,
             status = DAQ_RSTAT_INTERRUPTED;
             break;
         }
-
         PfringPktDesc *desc = pc->pool.freelist;
         if (!desc) {
             *rstat = DAQ_RSTAT_NOBUF;
             break;
         }
-
-        int rc = pfring_recv(pc->ring, &pkt_data, 0, &hdr, 1);
-        
+        int rc = pfring_recv(pc->ring, &pkt_data, 0, &hdr, 0); 
         if (rc == 1) {
-            memcpy(desc->data, pkt_data, hdr.caplen);
+            uint32_t copy_len = (hdr.caplen > pc->snaplen) ? pc->snaplen : hdr.caplen;
+            memcpy(desc->data, pkt_data, copy_len);
             desc->pkthdr.ts = hdr.ts;
             desc->pkthdr.pktlen = hdr.len;
-            desc->msg.data_len = hdr.caplen;
-            
+            desc->msg.data_len = copy_len;
+
             pc->pool.freelist = desc->next;
             desc->next = NULL;
             
@@ -278,7 +245,6 @@ static unsigned pfring_daq_msg_receive(void *handle, const unsigned max_recv,
         }
     }
     *rstat = status;
-
     return count;
 }
 
@@ -293,14 +259,13 @@ static int pfring_daq_msg_finalize(void *handle, const DAQ_Msg_t *msg, DAQ_Verdi
     pc->stats.verdicts[verdict]++;
 
     if (pc->mode == DAQ_MODE_INLINE && verdict == DAQ_VERDICT_PASS) {
-        if (pfring_send(pc->ring, desc->data, desc->msg.data_len, 1) < 0) {
-            DEBUG_PRINT("!!! ERROR: Failed to reinject packet!\n");
+        int send_mode = pc->use_fast_tx ? -1 : 0;
+        if (pfring_send(pc->ring, desc->data, desc->msg.data_len, send_mode) < 0) {
             pc->stats.hw_packets_dropped++;
         } else {
             pc->stats.packets_injected++;
         }
     }
-
     desc->next = pc->pool.freelist;
     pc->pool.freelist = desc;
     pc->pool.info.available++;
@@ -313,6 +278,10 @@ static int pfring_daq_msg_finalize(void *handle, const DAQ_Msg_t *msg, DAQ_Verdi
 
 static int pfring_daq_get_stats(void *handle, DAQ_Stats_t *stats) {
     PfringContext *pc = (PfringContext *)handle;
+    *stats = pc->stats;
+    pfring_stats(pc->ring, &pc->hw_stats);
+    stats->hw_packets_received = pc->hw_stats.recv;
+    stats->hw_packets_dropped = pc->hw_stats.drop;
     return DAQ_SUCCESS;
 }
 
@@ -325,53 +294,30 @@ static int pfring_daq_stop(void *handle) {
     return DAQ_SUCCESS;
 }
 
-static void pfring_daq_interrupt(void *handle){
-    PfringContext *pfring = (PfringContext *) handle;
-
-    pfring->interrupted = true;
-
-    return DAQ_SUCCESS;
+static void pfring_daq_interrupt(void *handle) {
+    PfringContext *pc = (PfringContext *)handle;
+    pc->interrupted = true;
 }
 
 static void pfring_daq_destroy(void *handle) {
-    DEBUG_PRINT("\n=== Destroying module ===\n");
     PfringContext *pc = (PfringContext *)handle;
-    
     if (!pc) {
-        DEBUG_PRINT("!!! WARNING: Null context pointer\n");
         return;
     }
-    
-    DEBUG_PRINT("| Stopping module...\n");
     pfring_daq_stop(handle);
-    
     if (pc->device) {
-        DEBUG_PRINT("| Freeing device string: %s\n", pc->device);
         free(pc->device);
     }
-    
     if (pc->pool.pool) {
-        DEBUG_PRINT("| Cleaning up packet pool:\n");
-        DEBUG_PRINT("  - Total descriptors: %u\n", pc->pool.info.size);
-        
         for (unsigned i = 0; i < pc->pool.info.size; i++) {
-            if (pc->pool.pool[i].data) {
-                DEBUG_PRINT("  | Freeing data buffer %u...\n", i);
-                free(pc->pool.pool[i].data);
-            }
+            free(pc->pool.pool[i].data);
         }
-        
-        DEBUG_PRINT("| Freeing descriptor array...\n");
         free(pc->pool.pool);
     }
-    
-    DEBUG_PRINT("| Freeing context...\n");
     free(pc);
-    DEBUG_PRINT("=== Destruction complete ===\n");
 }
 
 static int pfring_daq_get_datalink_type(void *handle) {
-    PfringContext *pc = (PfringContext *)handle;
     return DLT_EN10MB;
 }
 
@@ -380,34 +326,38 @@ static uint32_t pfring_daq_get_capabilities(void *handle) {
 }
 
 static int pfring_daq_get_msg_pool_info(void *handle, DAQ_MsgPoolInfo_t *info) {
-    DEBUG_PRINT("\n=== Getting pool info ===\n");
-    
-    if (!handle || !info) {
-        DEBUG_PRINT("!!! ERROR: Null handle (%p) or info (%p)\n", handle, info);
+    if (!handle || !info)
         return DAQ_ERROR_INVAL;
-    }
-    
     PfringContext *pc = (PfringContext *)handle;
-    DEBUG_PRINT("| Context valid: %s\n", pc ? "yes" : "no");
-    
-    if (!pc->pool.pool) {
-        DEBUG_PRINT("!!! ERROR: Pool not initialized\n");
+    *info = pc->pool.info;
+    return DAQ_SUCCESS;
+}
+
+static int pfring_daq_set_filter(void *handle, const char *filter) {
+    PfringContext *pc = (PfringContext *)handle;
+    struct bpf_program fcode;
+    char errbuf[PCAP_ERRBUF_SIZE];
+    if (pcap_compile_nopcap(pc->snaplen, DLT_EN10MB, &fcode,
+                            filter, 1, PCAP_NETMASK_UNKNOWN) < 0) {
+        daq_base_api.set_errbuf(pc->modinst, "BPF compilation failed");
         return DAQ_ERROR;
     }
-    
-    DEBUG_PRINT("| Current pool status:\n");
-    DEBUG_PRINT("  - Total descriptors: %u\n", pc->pool.info.size);
-    DEBUG_PRINT("  - Available descriptors: %u\n", pc->pool.info.available);
-    DEBUG_PRINT("  - Memory used: %zu bytes\n", pc->pool.info.mem_size);
-    
-    *info = pc->pool.info;
-    DEBUG_PRINT("=== Pool info retrieved ===\n");
+    if (pfring_set_bpf_filter(pc->ring, &fcode) < 0) {
+        pcap_freecode(&fcode);
+        daq_base_api.set_errbuf(pc->modinst, "Failed to set BPF filter");
+        return DAQ_ERROR;
+    }
+    pcap_freecode(&fcode);
     return DAQ_SUCCESS;
 }
 
 static DAQ_VariableDesc_t pfring_variable_descs[] = {
-    { "cluster_id", "PF_RING cluster ID", DAQ_VAR_DESC_REQUIRES_ARGUMENT },
     { "no_promisc", "Disable promiscuous mode", DAQ_VAR_DESC_FORBIDS_ARGUMENT },
+    { "cluster_id", "PF_RING cluster ID", DAQ_VAR_DESC_REQUIRES_ARGUMENT },
+    { "cluster_mode", "Cluster mode (2,4,5,6)", DAQ_VAR_DESC_REQUIRES_ARGUMENT },
+    { "watermark", "Poll watermark", DAQ_VAR_DESC_REQUIRES_ARGUMENT },
+    { "fast_tx", "Enable fast TX mode", DAQ_VAR_DESC_FORBIDS_ARGUMENT },
+    { NULL, NULL, 0 }
 };
 
 #ifdef BUILDING_SO
@@ -429,6 +379,7 @@ const DAQ_ModuleAPI_t pfring_daq_module_data =
     .destroy = pfring_daq_destroy,
     .start = pfring_daq_start,
     .stop = pfring_daq_stop,
+    .set_filter = pfring_daq_set_filter,
     .ioctl = NULL,
     .get_stats = pfring_daq_get_stats,
     .reset_stats = NULL,
