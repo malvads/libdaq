@@ -28,6 +28,7 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include <string.h>
+#include <poll.h>
 
 #include <pfring.h>
 #include <net/ethernet.h>
@@ -392,6 +393,7 @@ static unsigned pfring_daq_msg_receive(void *handle, const unsigned max_recv,
     u_char *pkt_data;
     unsigned count = 0;
     DAQ_RecvStatus status = DAQ_RSTAT_OK;
+    struct pollfd pfd[MAX_DEVICE_PAIRS * 2];
     
     while (count < max_recv) 
     {
@@ -416,6 +418,29 @@ static unsigned pfring_daq_msg_receive(void *handle, const unsigned max_recv,
         int rc = pfring_recv(device->ring, &pkt_data, 0, &hdr, 0);
         
         if (rc == 0) {
+            /* No packet to read: let's poll */
+            for (uint32_t i = 0; i < pc->device_count; i++) {
+                pfd[i].fd = pfring_get_selectable_fd(pc->devices[i].ring);
+                pfd[i].events = POLLIN;
+                pfd[i].revents = 0;
+            }
+
+            int poll_rc = poll(pfd, pc->device_count, 1000);
+            if (poll_rc < 0) {
+                if (errno == EINTR) {
+                    status = DAQ_RSTAT_INTERRUPTED;
+                    break;
+                }
+                daq_base_api.set_errbuf(pc->modinst, "Poll failed");
+                status = DAQ_RSTAT_ERROR;
+                break;
+            }
+            if (poll_rc == 0) {
+                status = DAQ_RSTAT_TIMEOUT;
+                break;
+            }
+
+            /* Try to receive from all devices after poll */
             uint32_t start_index = pc->curr_device_index;
             do {
                 pc->curr_device_index = (pc->curr_device_index + 1) % pc->device_count;
@@ -433,6 +458,11 @@ static unsigned pfring_daq_msg_receive(void *handle, const unsigned max_recv,
             
             desc->pkthdr.ts = hdr.ts;
             desc->pkthdr.pktlen = hdr.len;
+            desc->pkthdr.ingress_index = pc->curr_device_index;
+            desc->pkthdr.egress_index = -1;
+            desc->pkthdr.ingress_group = -1;
+            desc->pkthdr.egress_group = -1;
+            desc->pkthdr.flags = 0;
             desc->msg.data_len = copy_len;
             desc->msg.priv = desc;
 
@@ -540,7 +570,9 @@ static int pfring_daq_get_datalink_type(void *handle) {
 }
 
 static uint32_t pfring_daq_get_capabilities(void *handle) {
-    return DAQ_CAPA_BPF | DAQ_CAPA_INTERRUPT | DAQ_CAPA_INJECT | DAQ_CAPA_REPLACE;
+    return DAQ_CAPA_BPF | DAQ_CAPA_INTERRUPT | DAQ_CAPA_INJECT | DAQ_CAPA_REPLACE |
+           DAQ_CAPA_UNPRIV_START | DAQ_CAPA_DEVICE_INDEX | DAQ_CAPA_BLOCK |
+           DAQ_CAPA_WHITELIST | DAQ_CAPA_BLACKLIST;
 }
 
 static int pfring_daq_get_msg_pool_info(void *handle, DAQ_MsgPoolInfo_t *info) {
@@ -620,6 +652,58 @@ static void destroy_instance(PfringInstance *instance) {
         }
         free(instance);
     }
+}
+
+static const DAQ_Verdict verdict_translation_table[MAX_DAQ_VERDICT] = {
+    DAQ_VERDICT_PASS,       /* DAQ_VERDICT_PASS */
+    DAQ_VERDICT_BLOCK,      /* DAQ_VERDICT_BLOCK */
+    DAQ_VERDICT_PASS,       /* DAQ_VERDICT_REPLACE */
+    DAQ_VERDICT_PASS,       /* DAQ_VERDICT_WHITELIST */
+    DAQ_VERDICT_BLOCK,      /* DAQ_VERDICT_BLACKLIST */
+    DAQ_VERDICT_PASS        /* DAQ_VERDICT_IGNORE */
+};
+
+static int pfring_daq_inject(void *handle, DAQ_MsgType type, const void *hdr, const uint8_t *data, uint32_t data_len)
+{
+    PfringContext *pc = (PfringContext *)handle;
+
+    if (type != DAQ_MSG_TYPE_PACKET)
+        return DAQ_ERROR_NOTSUP;
+
+    const DAQ_PktHdr_t *pkthdr = (const DAQ_PktHdr_t *)hdr;
+    if (pkthdr->ingress_index >= pc->device_count)
+        return DAQ_ERROR;
+
+    PfringDevice *device = &pc->devices[pkthdr->ingress_index];
+    int send_mode = pc->use_fast_tx ? -1 : 0;
+
+    if (pfring_send(device->ring, data, data_len, send_mode) < 0) {
+        pc->stats.hw_packets_dropped++;
+        return DAQ_ERROR;
+    }
+
+    pc->stats.packets_injected++;
+    return DAQ_SUCCESS;
+}
+
+static int pfring_daq_inject_relative(void *handle, const DAQ_Msg_t *msg, const uint8_t *data, uint32_t data_len, int reverse)
+{
+    PfringContext *pc = (PfringContext *)handle;
+    PfringPktDesc *desc = (PfringPktDesc *)msg->priv;
+    PfringDevice *device = &pc->devices[pc->curr_device_index];
+    PfringDevice *target_device = reverse ? device : &pc->devices[device->peer_index];
+
+    if (target_device->peer_index < 0)
+        return DAQ_ERROR;
+
+    int send_mode = pc->use_fast_tx ? -1 : 0;
+    if (pfring_send(target_device->ring, data, data_len, send_mode) < 0) {
+        pc->stats.hw_packets_dropped++;
+        return DAQ_ERROR;
+    }
+
+    pc->stats.packets_injected++;
+    return DAQ_SUCCESS;
 }
 
 #ifdef BUILDING_SO
