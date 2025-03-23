@@ -226,34 +226,6 @@ static int add_device(PfringContext *pc, const char *device_name) {
         return DAQ_ERROR;
     }
 
-    pfring_set_filtering_mode(dev->ring, software_only);
-
-    if (pc->mode == DAQ_MODE_INLINE) {
-        pfring_set_direction(dev->ring, rx_only_direction);
-    } else if (pc->mode == DAQ_MODE_PASSIVE) {
-        pfring_set_direction(dev->ring, rx_and_tx_direction);
-        pfring_set_socket_mode(dev->ring, recv_only_mode);
-    }
-
-    if (pc->cluster_id > 0) {
-        char app_name[32];
-        snprintf(app_name, sizeof(app_name), "snort-cluster-%d-socket-%d", 
-                pc->cluster_id, pc->device_count);
-        pfring_set_application_name(dev->ring, app_name);
-        
-        if (pfring_set_cluster(dev->ring, pc->cluster_id, pc->cluster_type) != 0) {
-            daq_base_api.set_errbuf(pc->modinst, "pfring_set_cluster failed for device '%s'", device_name);
-            pfring_close(dev->ring);
-            return DAQ_ERROR;
-        }
-    } else {
-        char app_name[32];
-        snprintf(app_name, sizeof(app_name), "snort-socket-%d", pc->device_count);
-        pfring_set_application_name(dev->ring, app_name);
-    }
-
-    pfring_set_poll_watermark(dev->ring, pc->watermark);
-
     dev->index = pc->device_count;
     dev->active = false;
     dev->peer_index = -1;
@@ -438,20 +410,58 @@ static int pfring_daq_start(void *handle) {
     if (!pc) {
         return DAQ_ERROR;
     }
-    
-    for (uint32_t i = 0; i < pc->device_count; i++) {
-        pfring_set_cluster(pc->devices[i].ring, pc->cluster_id, pc->cluster_type);
-        pfring_set_poll_watermark(pc->devices[i].ring, pc->watermark);
-        pfring_set_application_name(pc->devices[i].ring, "daq_pfring");
-        pfring_set_socket_mode(pc->devices[i].ring, recv_only_mode);
 
-        if (pfring_enable_ring(pc->devices[i].ring) != 0) {
+    for (uint32_t i = 0; i < pc->device_count; i++) {
+        PfringDevice *device = &pc->devices[i];
+        
+        if (pc->cluster_id > 0) {
+            char app_name[32];
+            snprintf(app_name, sizeof(app_name), "snort-cluster-%d-socket-%d", 
+                    pc->cluster_id, i);
+            pfring_set_application_name(device->ring, app_name);
+            
+            if (pfring_set_cluster(device->ring, pc->cluster_id, pc->cluster_type) != 0) {
+                daq_base_api.set_errbuf(pc->modinst, "pfring_set_cluster failed for device '%s'", device->name);
+                return DAQ_ERROR;
+            }
+        } else {
+            char app_name[32];
+            snprintf(app_name, sizeof(app_name), "snort-socket-%d", i);
+            pfring_set_application_name(device->ring, app_name);
+        }
+
+        pfring_set_poll_watermark(device->ring, pc->watermark);
+
+        if (pc->mode == DAQ_MODE_PASSIVE) {
+            pfring_set_socket_mode(device->ring, recv_only_mode);
+        }
+
+        pfring_set_filtering_mode(device->ring, software_only);
+
+        if (pc->mode == DAQ_MODE_INLINE) {
+            pfring_set_direction(device->ring, rx_only_direction);
+        } else if (pc->mode == DAQ_MODE_PASSIVE) {
+            pfring_set_direction(device->ring, rx_and_tx_direction);
+        }
+    }
+
+    for (uint32_t i = 0; i < pc->device_count; i++) {
+        PfringDevice *device = &pc->devices[i];
+        
+        if (pfring_enable_ring(device->ring) != 0) {
+            daq_base_api.set_errbuf(pc->modinst, "Failed to enable ring for device '%s'", device->name);
+            for (uint32_t j = 0; j < i; j++) {
+                pfring_disable_ring(pc->devices[j].ring);
+            }
             return DAQ_ERROR;
         }
         
-        pc->devices[i].active = true;
+        device->active = true;
     }
 
+    /* Reset statistics */
+    memset(&pc->stats, 0, sizeof(DAQ_Stats_t));
+    
     return DAQ_SUCCESS;
 }
 
