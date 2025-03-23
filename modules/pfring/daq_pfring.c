@@ -42,6 +42,7 @@
 #define DEFAULT_POOL_SIZE 32
 #define MAX_DEVICE_PAIRS 16
 #define MAX_DEVICE_NAME_LEN 16
+#define PFRING_MAX_APP_NAME_LEN 32
 
 typedef struct {
     DAQ_Msg_t msg;
@@ -416,7 +417,7 @@ static int pfring_daq_start(void *handle) {
         PfringDevice *device = &pc->devices[i];
         
         if (pc->cluster_id > 0) {
-            char app_name[32];
+            char app_name[PFRING_MAX_APP_NAME_LEN];
             snprintf(app_name, sizeof(app_name), "snort-cluster-%d-socket-%d", 
                     pc->cluster_id, i);
             pfring_set_application_name(device->ring, app_name);
@@ -426,7 +427,7 @@ static int pfring_daq_start(void *handle) {
                 return DAQ_ERROR;
             }
         } else {
-            char app_name[32];
+            char app_name[PFRING_MAX_APP_NAME_LEN];
             snprintf(app_name, sizeof(app_name), "snort-socket-%d", i);
             pfring_set_application_name(device->ring, app_name);
         }
@@ -696,16 +697,23 @@ static int pfring_daq_set_filter(void *handle, const char *filter) {
     PfringContext *pc = (PfringContext *)handle;
     struct bpf_program fcode;
     char errbuf[PCAP_ERRBUF_SIZE];
+    
     if (pcap_compile_nopcap(pc->snaplen, DLT_EN10MB, &fcode,
                             filter, 1, PCAP_NETMASK_UNKNOWN) < 0) {
         daq_base_api.set_errbuf(pc->modinst, "BPF compilation failed");
         return DAQ_ERROR;
     }
-    if (pfring_set_bpf_filter(pc->devices[0].ring, &fcode) < 0) {
-        pcap_freecode(&fcode);
-        daq_base_api.set_errbuf(pc->modinst, "Failed to set BPF filter");
-        return DAQ_ERROR;
+
+    for (uint32_t i = 0; i < pc->device_count; i++) {
+        if (pc->devices[i].active && pc->devices[i].ring) {
+            if (pfring_set_bpf_filter(pc->devices[i].ring, &fcode) < 0) {
+                pcap_freecode(&fcode);
+                daq_base_api.set_errbuf(pc->modinst, "Failed to set BPF filter on device %s", pc->devices[i].name);
+                return DAQ_ERROR;
+            }
+        }
     }
+
     pcap_freecode(&fcode);
     return DAQ_SUCCESS;
 }
