@@ -103,7 +103,7 @@ static PfringInstance *create_instance(PfringContext *pc, const char *device);
 static void destroy_instance(PfringInstance *instance);
 static int parse_interface_name(const char *input, char *intf, size_t intf_size, size_t *consumed);
 static int add_device(PfringContext *pc, const char *device_name);
-static int create_bridge(PfringContext *pc, int dev1_index, int dev2_index);
+static int create_bridge(PfringContext *pc, const int *device_indices, size_t num_devices);
 static int validate_interface_config(PfringContext *pc);
 
 static DAQ_BaseAPI_t daq_base_api;
@@ -220,16 +220,36 @@ static int add_device(PfringContext *pc, const char *device_name) {
     return DAQ_SUCCESS;
 }
 
-static int create_bridge(PfringContext *pc, int dev1_index, int dev2_index) {
-    if (dev1_index < 0 || dev2_index < 0 || 
-        dev1_index >= pc->device_count || dev2_index >= pc->device_count) {
+static int create_bridge(PfringContext *pc, const int *device_indices, size_t num_devices) {
+    if (!pc || !device_indices || num_devices < 2) {
         return DAQ_ERROR;
     }
 
-    pc->devices[dev1_index].peer_index = dev2_index;
-    pc->devices[dev2_index].peer_index = dev1_index;
+    for (size_t i = 0; i < num_devices; i++) {
+        if (device_indices[i] < 0 || device_indices[i] >= pc->device_count) {
+            return DAQ_ERROR;
+        }
+    }
+
+    for (size_t i = 0; i < num_devices; i++) {
+        if (pc->devices[device_indices[i]].peer_index != -1) {
+            return DAQ_ERROR;
+        }
+    }
+
+    for (size_t i = 0; i < num_devices; i++) {
+        if (!pc->devices[device_indices[i]].active) {
+            return DAQ_ERROR;
+        }
+    }
+
+    for (size_t i = 0; i < num_devices; i++) {
+        int next_index = (i + 1) % num_devices;
+        pc->devices[device_indices[i]].peer_index = device_indices[next_index];
+    }
     
     pc->pair_count++;
+    
     return DAQ_SUCCESS;
 }
 
@@ -309,8 +329,8 @@ static int pfring_daq_instantiate(const DAQ_ModuleConfig_h modcfg,
     }
 
     dev_ptr = pc->device;
-    int current_pair[2] = {-1, -1};
-    int pair_index = 0;
+    int current_pair[MAX_DEVICE_PAIRS];
+    int pair_count = 0;
 
     while (*dev_ptr) {
         ret = parse_interface_name(dev_ptr, intf, sizeof(intf), &consumed);
@@ -327,23 +347,31 @@ static int pfring_daq_instantiate(const DAQ_ModuleConfig_h modcfg,
             return DAQ_ERROR;
         }
 
-        current_pair[pair_index] = pc->device_count - 1;
-        pair_index++;
+        current_pair[pair_count++] = pc->device_count - 1;
 
-        if (pair_index == 2) {
-            if (pc->mode == DAQ_MODE_INLINE) {
-                ret = create_bridge(pc, current_pair[0], current_pair[1]);
+        dev_ptr += consumed;
+        if (*dev_ptr == ':') {
+            dev_ptr++;
+            if (pc->mode == DAQ_MODE_INLINE && pair_count >= 2) {
+                ret = create_bridge(pc, current_pair, pair_count);
                 if (ret != DAQ_SUCCESS) {
                     daq_base_api.set_errbuf(modinst, "Failed to create bridge between interfaces");
                     free(pc);
                     return DAQ_ERROR;
                 }
+                pair_count = 0;
             }
-            pair_index = 0;
         }
+    }
 
-        dev_ptr += consumed;
-        if (*dev_ptr == ':') dev_ptr++;
+    /* Handle any remaining devices in the last pair */
+    if (pc->mode == DAQ_MODE_INLINE && pair_count >= 2) {
+        ret = create_bridge(pc, current_pair, pair_count);
+        if (ret != DAQ_SUCCESS) {
+            daq_base_api.set_errbuf(modinst, "Failed to create bridge between interfaces");
+            free(pc);
+            return DAQ_ERROR;
+        }
     }
 
     if (validate_interface_config(pc) != DAQ_SUCCESS) {
