@@ -38,6 +38,8 @@
 #define DAQ_PFRING_VERSION 1
 #define PF_RING_CLUSTER_ID 0
 #define DEFAULT_POOL_SIZE 32
+#define MAX_DEVICE_PAIRS 16
+#define MAX_DEVICE_NAME_LEN 16
 
 typedef struct {
     DAQ_Msg_t msg;
@@ -53,14 +55,24 @@ typedef struct {
 } PfringMsgPool;
 
 typedef struct {
+    char name[MAX_DEVICE_NAME_LEN];
+    int index;
+    pfring *ring;
+    bool active;
+    int peer_index;
+} PfringDevice;
+
+typedef struct {
     char *device;
     unsigned snaplen;
     int promisc;
     int buffer_size;
     DAQ_Mode mode;
     
-    pfring *ring;
-    pfring *peer_ring;  // For inline mode
+    PfringDevice devices[MAX_DEVICE_PAIRS * 2];
+    uint32_t device_count;
+    uint32_t pair_count;
+    
     uint32_t cluster_id;
     uint32_t cluster_type;
     
@@ -73,10 +85,7 @@ typedef struct {
     u_int8_t use_fast_tx;
     pfring_stat hw_stats;
 
-    // New fields for multiple device pairs
-    struct _pfring_instance *instances;
-    uint32_t intf_count;
-    struct _pfring_instance *curr_instance;
+    int curr_device_index;
 } PfringContext;
 
 typedef struct _pfring_instance {
@@ -92,8 +101,9 @@ typedef struct _pfring_instance {
 static PfringInstance *create_instance(PfringContext *pc, const char *device);
 static void destroy_instance(PfringInstance *instance);
 static int parse_interface_name(const char *input, char *intf, size_t intf_size, size_t *consumed);
-static int add_instance(PfringContext *pc, const char *intf);
-static int validate_interface_config(PfringContext *pc, int num_intfs);
+static int add_device(PfringContext *pc, const char *device_name);
+static int create_bridge(PfringContext *pc, int dev1_index, int dev2_index);
+static int validate_interface_config(PfringContext *pc);
 
 static DAQ_BaseAPI_t daq_base_api;
 
@@ -101,8 +111,7 @@ static int create_packet_pool(PfringContext *pc, unsigned size) {
     PfringMsgPool *pool = &pc->pool;
     memset(pool, 0, sizeof(PfringMsgPool));
     
-    // Increase pool size to handle high packet volumes
-    size = size * 4;  // Quadruple the pool size for better handling of high packet volumes
+    size = size * 4;
     
     pool->pool = calloc(size, sizeof(PfringPktDesc));
     if (!pool->pool) {
@@ -132,7 +141,7 @@ static int create_packet_pool(PfringContext *pc, unsigned size) {
         desc->msg.data = desc->data;
         desc->msg.owner = pc->modinst;
         desc->msg.priv = desc;
-        desc->next = NULL;  // Initialize next pointer to NULL
+        desc->next = NULL;
 
         desc->next = pool->freelist;
         pool->freelist = desc;
@@ -144,16 +153,14 @@ static int create_packet_pool(PfringContext *pc, unsigned size) {
 static void destroy_packet_pool(PfringContext *pc) {
     PfringMsgPool *pool = &pc->pool;
     if (pool->pool) {
-        // First, ensure all descriptors are in the free list
         for (unsigned i = 0; i < pool->info.size; i++) {
             PfringPktDesc *desc = &pool->pool[i];
-            if (desc->next == NULL) {  // If not in free list
+            if (desc->next == NULL) {
                 desc->next = pool->freelist;
                 pool->freelist = desc;
             }
         }
         
-        // Now free all descriptors
         for (unsigned i = 0; i < pool->info.size; i++) {
             if (pool->pool[i].data) {
                 free(pool->pool[i].data);
@@ -170,25 +177,6 @@ static void destroy_packet_pool(PfringContext *pc) {
 
 static int pfring_daq_module_load(const DAQ_BaseAPI_t *base_api) {
     daq_base_api = *base_api;
-    return DAQ_SUCCESS;
-}
-
-static int create_bridge(PfringContext *pc, const char *device_name1, const char *device_name2) {
-    PfringInstance *peer1 = NULL, *peer2 = NULL;
-    for (PfringInstance *instance = pc->instances; instance; instance = instance->next) {
-        if (!strcmp(instance->name, device_name1))
-            peer1 = instance;
-        else if (!strcmp(instance->name, device_name2))
-            peer2 = instance;
-    }
-
-    if (!peer1 || !peer2) {
-        return DAQ_ERROR_NODEV;
-    }
-
-    peer1->peer = peer2;
-    peer2->peer = peer1;
-
     return DAQ_SUCCESS;
 }
 
@@ -209,38 +197,58 @@ static int parse_interface_name(const char *input, char *intf, size_t intf_size,
     return DAQ_SUCCESS;
 }
 
-static int add_instance(PfringContext *pc, const char *intf) {
-    PfringInstance *instance = create_instance(pc, intf);
-    if (!instance) {
+static int add_device(PfringContext *pc, const char *device_name) {
+    if (pc->device_count >= MAX_DEVICE_PAIRS * 2) {
         return DAQ_ERROR;
     }
 
-    instance->next = pc->instances;
-    pc->instances = instance;
-    pc->intf_count++;
+    PfringDevice *dev = &pc->devices[pc->device_count];
+    strncpy(dev->name, device_name, MAX_DEVICE_NAME_LEN - 1);
+    dev->name[MAX_DEVICE_NAME_LEN - 1] = '\0';
     
+    dev->ring = pfring_open(device_name, pc->snaplen, pc->promisc);
+    if (!dev->ring) {
+        return DAQ_ERROR;
+    }
+
+    dev->index = pc->device_count;
+    dev->active = false;
+    dev->peer_index = -1;
+    
+    pc->device_count++;
     return DAQ_SUCCESS;
 }
 
-static int validate_interface_config(PfringContext *pc, int num_intfs)
-{
-    if (!pc->instances) {
+static int create_bridge(PfringContext *pc, int dev1_index, int dev2_index) {
+    if (dev1_index < 0 || dev2_index < 0 || 
+        dev1_index >= pc->device_count || dev2_index >= pc->device_count) {
+        return DAQ_ERROR;
+    }
+
+    pc->devices[dev1_index].peer_index = dev2_index;
+    pc->devices[dev2_index].peer_index = dev1_index;
+    
+    pc->pair_count++;
+    return DAQ_SUCCESS;
+}
+
+static int validate_interface_config(PfringContext *pc) {
+    if (pc->device_count == 0) {
         return DAQ_ERROR;
     }
 
     if (pc->mode == DAQ_MODE_INLINE) {
-        if (num_intfs != 2) {
+        if (pc->device_count % 2 != 0) {
             return DAQ_ERROR;
         }
-
-        PfringInstance *instances[2] = {pc->instances, pc->instances->next};
-        
-        if (!instances[0] || !instances[1] || !instances[0]->name || !instances[1]->name) {
-            return DAQ_ERROR;
+        for (uint32_t i = 0; i < pc->device_count; i++) {
+            if (pc->devices[i].peer_index == -1) {
+                return DAQ_ERROR;
+            }
         }
     }
     else if (pc->mode == DAQ_MODE_PASSIVE) {
-        if (num_intfs < 1) {
+        if (pc->device_count == 0) {
             return DAQ_ERROR;
         }
     }
@@ -256,7 +264,6 @@ static int pfring_daq_instantiate(const DAQ_ModuleConfig_h modcfg,
     const char *dev_ptr;
     size_t consumed;
     char intf[IFNAMSIZ];
-    int num_intfs = 0;
     int ret;
 
     pc = calloc(1, sizeof(PfringContext));
@@ -265,7 +272,6 @@ static int pfring_daq_instantiate(const DAQ_ModuleConfig_h modcfg,
         return DAQ_ERROR_NOMEM;
     }
 
-    // Initialize context
     pc->modinst = modinst;
     pc->snaplen = daq_base_api.config_get_snaplen(modcfg);
     pc->mode = daq_base_api.config_get_mode(modcfg);
@@ -274,12 +280,11 @@ static int pfring_daq_instantiate(const DAQ_ModuleConfig_h modcfg,
     pc->cluster_type = 0;
     pc->watermark = 0;
     pc->use_fast_tx = 0;
-    pc->intf_count = 0;
-    pc->instances = NULL;
-    pc->curr_instance = NULL;
+    pc->device_count = 0;
+    pc->pair_count = 0;
+    pc->curr_device_index = 0;
     pc->interrupted = false;
 
-    // Parse configuration parameters
     const char *cluster_id_str = daq_base_api.config_get_variable(modcfg, "cluster_id");
     if (cluster_id_str) pc->cluster_id = atoi(cluster_id_str);
 
@@ -302,8 +307,10 @@ static int pfring_daq_instantiate(const DAQ_ModuleConfig_h modcfg,
         return DAQ_ERROR_NOMEM;
     }
 
-    // Parse and add instances
     dev_ptr = pc->device;
+    int current_pair[2] = {-1, -1};
+    int pair_index = 0;
+
     while (*dev_ptr) {
         ret = parse_interface_name(dev_ptr, intf, sizeof(intf), &consumed);
         if (ret != DAQ_SUCCESS) {
@@ -312,36 +319,38 @@ static int pfring_daq_instantiate(const DAQ_ModuleConfig_h modcfg,
             return DAQ_ERROR;
         }
 
-        ret = add_instance(pc, intf);
+        ret = add_device(pc, intf);
         if (ret != DAQ_SUCCESS) {
             daq_base_api.set_errbuf(modinst, "Failed to add interface");
             free(pc);
             return DAQ_ERROR;
         }
 
-        num_intfs++;
+        current_pair[pair_index] = pc->device_count - 1;
+        pair_index++;
+
+        if (pair_index == 2) {
+            if (pc->mode == DAQ_MODE_INLINE) {
+                ret = create_bridge(pc, current_pair[0], current_pair[1]);
+                if (ret != DAQ_SUCCESS) {
+                    daq_base_api.set_errbuf(modinst, "Failed to create bridge between interfaces");
+                    free(pc);
+                    return DAQ_ERROR;
+                }
+            }
+            pair_index = 0;
+        }
+
         dev_ptr += consumed;
-        if (*dev_ptr == ':') dev_ptr++; // Skip the colon separator
+        if (*dev_ptr == ':') dev_ptr++;
     }
 
-    // First validate the interface configuration
-    if (validate_interface_config(pc, num_intfs) != DAQ_SUCCESS) {
+    if (validate_interface_config(pc) != DAQ_SUCCESS) {
         daq_base_api.set_errbuf(modinst, "Invalid interface configuration");
         free(pc);
         return DAQ_ERROR;
     }
 
-    // Then create bridges if in inline mode
-    if (pc->mode == DAQ_MODE_INLINE) {
-        PfringInstance *instances[2] = {pc->instances, pc->instances->next};
-        if (create_bridge(pc, instances[0]->name, instances[1]->name) != DAQ_SUCCESS) {
-            daq_base_api.set_errbuf(modinst, "Failed to create bridge between interfaces");
-            free(pc);
-            return DAQ_ERROR;
-        }
-    }
-
-    // Create packet pool
     ret = create_packet_pool(pc, DEFAULT_POOL_SIZE);
     if (ret != DAQ_SUCCESS) {
         daq_base_api.set_errbuf(modinst, "Failed to create packet pool");
@@ -349,7 +358,6 @@ static int pfring_daq_instantiate(const DAQ_ModuleConfig_h modcfg,
         return ret;
     }
 
-    pc->curr_instance = pc->instances;
     *ctxt_ptr = pc;
     return DAQ_SUCCESS;
 }
@@ -360,17 +368,17 @@ static int pfring_daq_start(void *handle) {
         return DAQ_ERROR;
     }
     
-    for (PfringInstance *instance = pc->instances; instance; instance = instance->next) {
-        pfring_set_cluster(instance->ring, pc->cluster_id, pc->cluster_type);
-        pfring_set_poll_watermark(instance->ring, pc->watermark);
-        pfring_set_application_name(instance->ring, "daq_pfring");
-        pfring_set_socket_mode(instance->ring, recv_only_mode);
+    for (uint32_t i = 0; i < pc->device_count; i++) {
+        pfring_set_cluster(pc->devices[i].ring, pc->cluster_id, pc->cluster_type);
+        pfring_set_poll_watermark(pc->devices[i].ring, pc->watermark);
+        pfring_set_application_name(pc->devices[i].ring, "daq_pfring");
+        pfring_set_socket_mode(pc->devices[i].ring, recv_only_mode);
 
-        if (pfring_enable_ring(instance->ring) != 0) {
+        if (pfring_enable_ring(pc->devices[i].ring) != 0) {
             return DAQ_ERROR;
         }
         
-        instance->active = true;
+        pc->devices[i].active = true;
     }
 
     return DAQ_SUCCESS;
@@ -404,21 +412,19 @@ static unsigned pfring_daq_msg_receive(void *handle, const unsigned max_recv,
             break;
         }
 
-        PfringInstance *instance = pc->curr_instance;
-        int rc = pfring_recv(instance->ring, &pkt_data, 0, &hdr, 0);
+        PfringDevice *device = &pc->devices[pc->curr_device_index];
+        int rc = pfring_recv(device->ring, &pkt_data, 0, &hdr, 0);
         
         if (rc == 0) {
-            PfringInstance *start = instance;
+            uint32_t start_index = pc->curr_device_index;
             do {
-                instance = instance->next ? instance->next : pc->instances;
-                if (instance != start) {
-                    rc = pfring_recv(instance->ring, &pkt_data, 0, &hdr, 0);
-                    if (rc == 1) {
-                        pc->curr_instance = instance;
-                        break;
-                    }
+                pc->curr_device_index = (pc->curr_device_index + 1) % pc->device_count;
+                if (pc->curr_device_index == start_index) {
+                    break;
                 }
-            } while (instance != start);
+                device = &pc->devices[pc->curr_device_index];
+                rc = pfring_recv(device->ring, &pkt_data, 0, &hdr, 0);
+            } while (rc == 0);
         }
         
         if (rc == 1) {
@@ -465,10 +471,10 @@ static int pfring_daq_msg_finalize(void *handle, const DAQ_Msg_t *msg, DAQ_Verdi
     pc->stats.packets_outstanding--;
 
     if (pc->mode == DAQ_MODE_INLINE && verdict == DAQ_VERDICT_PASS) {
-        PfringInstance *instance = pc->curr_instance;
-        if (instance && instance->peer) {
+        PfringDevice *device = &pc->devices[pc->curr_device_index];
+        if (device->peer_index >= 0) {
             int send_mode = pc->use_fast_tx ? -1 : 0;
-            if (pfring_send(instance->peer->ring, desc->data, desc->msg.data_len, send_mode) < 0) {
+            if (pfring_send(pc->devices[device->peer_index].ring, desc->data, desc->msg.data_len, send_mode) < 0) {
                 pc->stats.hw_packets_dropped++;
             } else {
                 pc->stats.packets_injected++;
@@ -486,7 +492,7 @@ static int pfring_daq_msg_finalize(void *handle, const DAQ_Msg_t *msg, DAQ_Verdi
 static int pfring_daq_get_stats(void *handle, DAQ_Stats_t *stats) {
     PfringContext *pc = (PfringContext *)handle;
     *stats = pc->stats;
-    pfring_stats(pc->ring, &pc->hw_stats);
+    pfring_stats(pc->devices[0].ring, &pc->hw_stats);
     stats->hw_packets_received = pc->hw_stats.recv;
     stats->hw_packets_dropped = pc->hw_stats.drop;
     return DAQ_SUCCESS;
@@ -498,9 +504,9 @@ static int pfring_daq_stop(void *handle) {
         return DAQ_ERROR;
     }
     
-    for (PfringInstance *instance = pc->instances; instance; instance = instance->next) {
-        if (instance->active) {
-            instance->active = false;
+    for (uint32_t i = 0; i < pc->device_count; i++) {
+        if (pc->devices[i].active) {
+            pc->devices[i].active = false;
         }
     }
 
@@ -518,10 +524,11 @@ static void pfring_daq_destroy(void *handle) {
         return;
     }
     
-    while (pc->instances) {
-        PfringInstance *instance = pc->instances;
-        pc->instances = instance->next;
-        destroy_instance(instance);
+    for (uint32_t i = 0; i < pc->device_count; i++) {
+        if (pc->devices[i].ring) {
+            pfring_close(pc->devices[i].ring);
+            pc->devices[i].ring = NULL;
+        }
     }
     
     destroy_packet_pool(pc);
@@ -553,7 +560,7 @@ static int pfring_daq_set_filter(void *handle, const char *filter) {
         daq_base_api.set_errbuf(pc->modinst, "BPF compilation failed");
         return DAQ_ERROR;
     }
-    if (pfring_set_bpf_filter(pc->ring, &fcode) < 0) {
+    if (pfring_set_bpf_filter(pc->devices[0].ring, &fcode) < 0) {
         pcap_freecode(&fcode);
         daq_base_api.set_errbuf(pc->modinst, "Failed to set BPF filter");
         return DAQ_ERROR;
@@ -593,7 +600,7 @@ static PfringInstance *create_instance(PfringContext *pc, const char *device) {
         return NULL;
     }
 
-    instance->index = pc->intf_count;
+    instance->index = pc->device_count;
     instance->active = false;
     instance->next = NULL;
     instance->peer = NULL;
@@ -625,7 +632,7 @@ const DAQ_ModuleAPI_t pfring_daq_module_data =
     .api_size = sizeof(DAQ_ModuleAPI_t),
     .module_version = DAQ_PFRING_VERSION,
     .name = "redborder_pfring",
-    .type = DAQ_TYPE_INTF_CAPABLE | DAQ_TYPE_MULTI_INSTANCE,
+    .type = DAQ_TYPE_INTF_CAPABLE | DAQ_TYPE_MULTI_INSTANCE | DAQ_MODE_INLINE,
     .load = pfring_daq_module_load,
     .interrupt = pfring_daq_interrupt,
     .unload = NULL,
