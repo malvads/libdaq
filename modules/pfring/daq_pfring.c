@@ -1,4 +1,5 @@
 /*
+
 ** Copyright (C) 2025 ENEO TECNOLOGIA S.L.
 ** Author: Miguel Álvarez <malvarez@redborder.com>
 **
@@ -599,6 +600,34 @@ static int pfring_daq_msg_finalize(void *handle, const DAQ_Msg_t *msg, DAQ_Verdi
     return DAQ_SUCCESS;
 }
 
+static int pfring_daq_ioctl(void *handle, DAQ_IoctlCmd cmd, void *arg, size_t arglen)
+{
+    PfringContext *pc = (PfringContext *)handle;
+
+    /* Only supports GET_DEVICE_INDEX for now */
+    if (cmd != DIOCTL_GET_DEVICE_INDEX || arglen != sizeof(DIOCTL_QueryDeviceIndex))
+        return DAQ_ERROR_NOTSUP;
+
+    DIOCTL_QueryDeviceIndex *qdi = (DIOCTL_QueryDeviceIndex *)arg;
+
+    if (!qdi->device)
+    {
+        daq_base_api.set_errbuf(pc->modinst, "No device name to find the index of!");
+        return DAQ_ERROR_INVAL;
+    }
+
+    for (uint32_t i = 0; i < pc->device_count; i++)
+    {
+        if (!strcmp(qdi->device, pc->devices[i].name))
+        {
+            qdi->index = pc->devices[i].index;
+            return DAQ_SUCCESS;
+        }
+    }
+
+    return DAQ_ERROR_NODEV;
+}
+
 static int pfring_daq_get_stats(void *handle, DAQ_Stats_t *stats) {
     PfringContext *pc = (PfringContext *)handle;
     *stats = pc->stats;
@@ -690,6 +719,13 @@ static DAQ_VariableDesc_t pfring_variable_descs[] = {
     { NULL, NULL, 0 }
 };
 
+static int pfring_daq_get_variable_descs(const DAQ_VariableDesc_t **var_desc_table)
+{
+    *var_desc_table = pfring_variable_descs;
+
+    return sizeof(pfring_variable_descs) / sizeof(DAQ_VariableDesc_t);
+}
+
 static PfringInstance *create_instance(PfringContext *pc, const char *device) {
     PfringInstance *instance = calloc(1, sizeof(PfringInstance));
     if (!instance) {
@@ -734,6 +770,30 @@ static void destroy_instance(PfringInstance *instance) {
     }
 }
 
+static void pfring_daq_reset_stats(void *handle) {
+    PfringContext *pc = (PfringContext *)handle;
+    pfring_stat ps;
+
+    memset(&pc->stats, 0, sizeof(DAQ_Stats_t));
+    memset(&ps, 0, sizeof(pfring_stat));
+
+    for (uint32_t i = 0; i < pc->device_count; i++) {
+        if (pc->devices[i].ring) {
+            pfring_stats(pc->devices[i].ring, &ps);
+        }
+    }
+}
+
+static int pfring_daq_get_snaplen(void *handle) {
+    PfringContext *pc = (PfringContext *)handle;
+    
+    if (!pc) {
+        return DAQ_ERROR;
+    }
+    
+    return pc->snaplen;
+}
+
 static const DAQ_Verdict verdict_translation_table[MAX_DAQ_VERDICT] = {
     DAQ_VERDICT_PASS,       /* DAQ_VERDICT_PASS */
     DAQ_VERDICT_BLOCK,      /* DAQ_VERDICT_BLOCK */
@@ -766,6 +826,11 @@ static int pfring_daq_inject(void *handle, DAQ_MsgType type, const void *hdr, co
     return DAQ_SUCCESS;
 }
 
+static int unload(void *handle) {
+    memset(&daq_base_api, 0, sizeof(daq_base_api));
+    return DAQ_SUCCESS;
+}
+
 static int pfring_daq_inject_relative(void *handle, const DAQ_Msg_t *msg, const uint8_t *data, uint32_t data_len, int reverse)
 {
     PfringContext *pc = (PfringContext *)handle;
@@ -795,21 +860,21 @@ const DAQ_ModuleAPI_t pfring_daq_module_data =
     .api_version = DAQ_MODULE_API_VERSION,
     .api_size = sizeof(DAQ_ModuleAPI_t),
     .module_version = DAQ_PFRING_VERSION,
-    .name = "redborder_pfring",
+    .name = "rb_pfring",
     .type = DAQ_TYPE_INTF_CAPABLE | DAQ_TYPE_MULTI_INSTANCE | DAQ_MODE_INLINE,
     .load = pfring_daq_module_load,
     .interrupt = pfring_daq_interrupt,
-    .unload = NULL,
-    .get_variable_descs = NULL,
+    .unload = unload,
+    .get_variable_descs = pfring_daq_get_variable_descs,
     .instantiate = pfring_daq_instantiate,
     .destroy = pfring_daq_destroy,
     .start = pfring_daq_start,
     .stop = pfring_daq_stop,
     .set_filter = pfring_daq_set_filter,
-    .ioctl = NULL,
+    .ioctl = pfring_daq_ioctl,
     .get_stats = pfring_daq_get_stats,
-    .reset_stats = NULL,
-    .get_snaplen = NULL,
+    .reset_stats = pfring_daq_reset_stats,
+    .get_snaplen = pfring_daq_get_snaplen,
     .get_capabilities = pfring_daq_get_capabilities,
     .get_datalink_type = pfring_daq_get_datalink_type,
     .config_load = NULL,
