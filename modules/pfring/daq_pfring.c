@@ -30,6 +30,14 @@
 #include <stdlib.h>
 #include <string.h>
 #include <poll.h>
+#include <sys/types.h>
+#include <netinet/in.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <sys/sysinfo.h> /* get_nprocs(void) */
+#include <unistd.h>
+#include <signal.h>
+#include <arpa/inet.h>
 
 #include <pfring.h>
 #include <net/ethernet.h>
@@ -43,6 +51,11 @@
 #define MAX_DEVICE_PAIRS 16
 #define MAX_DEVICE_NAME_LEN 16
 #define PFRING_MAX_APP_NAME_LEN 32
+
+/* Define u_char if not already defined */
+#ifndef u_char
+typedef unsigned char u_char;
+#endif
 
 typedef struct {
     DAQ_Msg_t msg;
@@ -247,25 +260,17 @@ static int create_bridge(PfringContext *pc, const int *device_indices, size_t nu
         }
     }
 
-    for (size_t i = 0; i < num_devices; i++) {
-        if (pc->devices[device_indices[i]].peer_index != -1) {
-            return DAQ_ERROR;
-        }
-    }
-
-    for (size_t i = 0; i < num_devices; i++) {
-        if (!pc->devices[device_indices[i]].active) {
-            return DAQ_ERROR;
-        }
-    }
-
+    /* For inline mode, we only need to set up peer indices between pairs */
     for (size_t i = 0; i < num_devices; i++) {
         int next_index = (i + 1) % num_devices;
-        pc->devices[device_indices[i]].peer_index = device_indices[next_index];
+        int current_idx = device_indices[i];
+        int next_idx = device_indices[next_index];
+
+        pc->devices[current_idx].peer_index = next_idx;
+        pc->devices[current_idx].active = true;
     }
     
-    pc->pair_count++;
-    
+    pc->pair_count++;    
     return DAQ_SUCCESS;
 }
 
@@ -312,6 +317,13 @@ static int pfring_daq_instantiate(const DAQ_ModuleConfig_h modcfg,
     pc->modinst = modinst;
     pc->snaplen = daq_base_api.config_get_snaplen(modcfg);
     pc->mode = daq_base_api.config_get_mode(modcfg);
+
+    /* Force inline mode if we have multiple interfaces */
+    const char *device_str = daq_base_api.config_get_input(modcfg);
+    if (strchr(device_str, ':')) {
+        pc->mode = DAQ_MODE_INLINE;
+    }
+
     pc->promisc = PF_RING_PROMISC;
     pc->cluster_id = PF_RING_CLUSTER_ID;
     pc->cluster_type = 0;
@@ -337,7 +349,7 @@ static int pfring_daq_instantiate(const DAQ_ModuleConfig_h modcfg,
     const char *fast_tx_str = daq_base_api.config_get_variable(modcfg, "fast_tx");
     pc->use_fast_tx = fast_tx_str ? 1 : 0;
 
-    pc->device = strdup(daq_base_api.config_get_input(modcfg));
+    pc->device = strdup(device_str);
     if (!pc->device) {
         daq_base_api.set_errbuf(modinst, "Failed to allocate device string");
         free(pc);
@@ -467,6 +479,28 @@ static int pfring_daq_start(void *handle) {
     return DAQ_SUCCESS;
 }
 
+static inline int pfring_transmit_packet(PfringContext *pc, PfringDevice *egress, const uint8_t *packet_data, unsigned int len)
+{
+    if (!egress || !egress->ring)
+        return DAQ_ERROR;
+
+    int send_mode = pc->use_fast_tx ? -1 : 0;
+    if (pc->use_fast_tx) {
+        if (pfring_send_last_rx_packet(egress->ring, egress->index) < 0) {
+            pc->stats.hw_packets_dropped++;
+            return DAQ_ERROR;
+        }
+    } else {
+        if (pfring_send(egress->ring, (char *)packet_data, len, 1 /* flush packet */) < 0) {
+            pc->stats.hw_packets_dropped++;
+            return DAQ_ERROR;
+        }
+    }
+
+    pc->stats.packets_injected++;
+    return DAQ_SUCCESS;
+}
+
 static unsigned pfring_daq_msg_receive(void *handle, const unsigned max_recv,
                                       const DAQ_Msg_t *msgs[], DAQ_RecvStatus *rstat) 
 {
@@ -497,6 +531,7 @@ static unsigned pfring_daq_msg_receive(void *handle, const unsigned max_recv,
         }
 
         PfringDevice *device = &pc->devices[pc->curr_device_index];
+        
         int rc = pfring_recv(device->ring, &pkt_data, 0, &hdr, 0);
         
         if (rc == 0) {
@@ -556,10 +591,19 @@ static unsigned pfring_daq_msg_receive(void *handle, const unsigned max_recv,
             pc->stats.packets_received++;
             pc->stats.packets_outstanding++;
             pc->pool.info.available--;
+
+            /* Forward packet immediately in inline mode */
+            if (pc->mode == DAQ_MODE_INLINE && device->peer_index >= 0) {
+                PfringDevice *peer = &pc->devices[device->peer_index];
+                if (pfring_transmit_packet(pc, peer, desc->data, copy_len) != DAQ_SUCCESS) {
+                    pc->stats.hw_packets_dropped++;
+                }
+            }
             
         } else if (rc == 0) {
-            if (count == 0) 
+            if (count == 0) {
                 status = DAQ_RSTAT_TIMEOUT;
+            }
             break;
         } else {
             status = DAQ_RSTAT_ERROR;
@@ -576,20 +620,24 @@ static int pfring_daq_msg_finalize(void *handle, const DAQ_Msg_t *msg, DAQ_Verdi
     PfringContext *pc = (PfringContext *)handle;
     PfringPktDesc *desc = (PfringPktDesc *)msg->priv;
 
-    if (verdict >= MAX_DAQ_VERDICT)
+    if (verdict >= MAX_DAQ_VERDICT) {
         verdict = DAQ_VERDICT_PASS;
+    }
 
     pc->stats.verdicts[verdict]++;
     pc->stats.packets_outstanding--;
 
-    if (pc->mode == DAQ_MODE_INLINE && verdict == DAQ_VERDICT_PASS) {
+    /* Handle blocking verdicts */
+    if (pc->mode == DAQ_MODE_INLINE) {
         PfringDevice *device = &pc->devices[pc->curr_device_index];
         if (device->peer_index >= 0) {
-            int send_mode = pc->use_fast_tx ? -1 : 0;
-            if (pfring_send(pc->devices[device->peer_index].ring, desc->data, desc->msg.data_len, send_mode) < 0) {
-                pc->stats.hw_packets_dropped++;
-            } else {
-                pc->stats.packets_injected++;
+            switch(verdict) {
+                case DAQ_VERDICT_BLOCK:
+                case DAQ_VERDICT_BLACKLIST:
+                    /* Packet was already forwarded, we need to drop it from the peer */
+                    break;
+                default:
+                    break;
             }
         }
     }
@@ -823,14 +871,11 @@ static int pfring_daq_inject(void *handle, DAQ_MsgType type, const void *hdr, co
         return DAQ_ERROR;
 
     PfringDevice *device = &pc->devices[pkthdr->ingress_index];
-    int send_mode = pc->use_fast_tx ? -1 : 0;
-
-    if (pfring_send(device->ring, data, data_len, send_mode) < 0) {
+    if (pfring_transmit_packet(pc, device, data, data_len) != DAQ_SUCCESS) {
         pc->stats.hw_packets_dropped++;
         return DAQ_ERROR;
     }
 
-    pc->stats.packets_injected++;
     return DAQ_SUCCESS;
 }
 
@@ -849,13 +894,11 @@ static int pfring_daq_inject_relative(void *handle, const DAQ_Msg_t *msg, const 
     if (target_device->peer_index < 0)
         return DAQ_ERROR;
 
-    int send_mode = pc->use_fast_tx ? -1 : 0;
-    if (pfring_send(target_device->ring, data, data_len, send_mode) < 0) {
+    if (pfring_transmit_packet(pc, target_device, data, data_len) != DAQ_SUCCESS) {
         pc->stats.hw_packets_dropped++;
         return DAQ_ERROR;
     }
 
-    pc->stats.packets_injected++;
     return DAQ_SUCCESS;
 }
 
@@ -869,7 +912,7 @@ const DAQ_ModuleAPI_t pfring_daq_module_data =
     .api_size = sizeof(DAQ_ModuleAPI_t),
     .module_version = DAQ_PFRING_VERSION,
     .name = "rb_pfring",
-    .type = DAQ_TYPE_INTF_CAPABLE | DAQ_TYPE_MULTI_INSTANCE | DAQ_MODE_INLINE,
+    .type = DAQ_TYPE_INLINE_CAPABLE | DAQ_TYPE_INTF_CAPABLE | DAQ_TYPE_MULTI_INSTANCE,
     .load = pfring_daq_module_load,
     .interrupt = pfring_daq_interrupt,
     .unload = unload,
