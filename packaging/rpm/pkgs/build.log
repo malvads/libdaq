@@ -1,0 +1,944 @@
+Mock Version: 5.9
+ENTER ['do_with_status'](['bash', '--login', '-c', '/usr/bin/rpmbuild -bs  --target x86_64 --nodeps /builddir/build/SPECS/libdaq.spec'], chrootPath='/var/lib/mock/sdk9/root'env={'TERM': 'vt100', 'SHELL': '/bin/bash', 'HOME': '/builddir', 'HOSTNAME': 'mock', 'PATH': '/usr/bin:/bin:/usr/sbin:/sbin', 'PROMPT_COMMAND': 'printf "\\033]0;<mock-chroot>\\007"', 'PS1': '<mock-chroot> \\s-\\v\\$ ', 'LANG': 'C.UTF-8'}shell=Falselogger=<mockbuild.trace_decorator.getLog object at 0x7f7efdef5460>timeout=0uid=0gid=135user='mockbuild'unshare_net=FalseprintOutput=Truenspawn_args=['--capability=cap_ipc_lock', '--bind=/tmp/mock-resolv.a24o50t_:/etc/resolv.conf', '--bind=/dev/mapper/control', '--bind=/dev/fuse', '--bind=/dev/loop-control', '--bind=/dev/loop0', '--bind=/dev/loop1', '--bind=/dev/loop2', '--bind=/dev/loop3', '--bind=/dev/loop4', '--bind=/dev/loop5', '--bind=/dev/loop6', '--bind=/dev/loop7', '--bind=/dev/loop8', '--bind=/dev/loop9', '--bind=/dev/loop10', '--bind=/dev/loop11'])
+Using nspawn with args ['--capability=cap_ipc_lock', '--bind=/tmp/mock-resolv.a24o50t_:/etc/resolv.conf', '--bind=/dev/mapper/control', '--bind=/dev/fuse', '--bind=/dev/loop-control', '--bind=/dev/loop0', '--bind=/dev/loop1', '--bind=/dev/loop2', '--bind=/dev/loop3', '--bind=/dev/loop4', '--bind=/dev/loop5', '--bind=/dev/loop6', '--bind=/dev/loop7', '--bind=/dev/loop8', '--bind=/dev/loop9', '--bind=/dev/loop10', '--bind=/dev/loop11']
+Executing command: ['/usr/bin/systemd-nspawn', '-q', '-M', '838a80e9a787405f901cb5d1c840154e', '-D', '/var/lib/mock/sdk9/root', '-a', '-u', 'mockbuild', '--capability=cap_ipc_lock', '--bind=/tmp/mock-resolv.a24o50t_:/etc/resolv.conf', '--bind=/dev/mapper/control', '--bind=/dev/fuse', '--bind=/dev/loop-control', '--bind=/dev/loop0', '--bind=/dev/loop1', '--bind=/dev/loop2', '--bind=/dev/loop3', '--bind=/dev/loop4', '--bind=/dev/loop5', '--bind=/dev/loop6', '--bind=/dev/loop7', '--bind=/dev/loop8', '--bind=/dev/loop9', '--bind=/dev/loop10', '--bind=/dev/loop11', '--console=pipe', '--setenv=TERM=vt100', '--setenv=SHELL=/bin/bash', '--setenv=HOME=/builddir', '--setenv=HOSTNAME=mock', '--setenv=PATH=/usr/bin:/bin:/usr/sbin:/sbin', '--setenv=PROMPT_COMMAND=printf "\\033]0;<mock-chroot>\\007"', '--setenv=PS1=<mock-chroot> \\s-\\v\\$ ', '--setenv=LANG=C.UTF-8', '--resolv-conf=off', 'bash', '--login', '-c', '/usr/bin/rpmbuild -bs  --target x86_64 --nodeps /builddir/build/SPECS/libdaq.spec'] with env {'TERM': 'vt100', 'SHELL': '/bin/bash', 'HOME': '/builddir', 'HOSTNAME': 'mock', 'PATH': '/usr/bin:/bin:/usr/sbin:/sbin', 'PROMPT_COMMAND': 'printf "\\033]0;<mock-chroot>\\007"', 'PS1': '<mock-chroot> \\s-\\v\\$ ', 'LANG': 'C.UTF-8', 'SYSTEMD_NSPAWN_TMPFS_TMP': '0', 'SYSTEMD_SECCOMP': '0'} and shell False
+Building target platforms: x86_64
+Building for target x86_64
+Wrote: /builddir/build/SRPMS/libdaq-9999.9.9-1.el9.rb.src.rpm
+Child return code was: 0
+Mock Version: 5.9
+ENTER ['do_with_status'](['bash', '--login', '-c', '/usr/bin/rpmbuild -bs  --target x86_64 --nodeps /builddir/build/SPECS/libdaq.spec'], chrootPath='/var/lib/mock/sdk9/root'env={'TERM': 'vt100', 'SHELL': '/bin/bash', 'HOME': '/builddir', 'HOSTNAME': 'mock', 'PATH': '/usr/bin:/bin:/usr/sbin:/sbin', 'PROMPT_COMMAND': 'printf "\\033]0;<mock-chroot>\\007"', 'PS1': '<mock-chroot> \\s-\\v\\$ ', 'LANG': 'C.UTF-8'}shell=Falselogger=<mockbuild.trace_decorator.getLog object at 0x7f5b6b69a460>timeout=0uid=0gid=135user='mockbuild'unshare_net=FalseprintOutput=Truenspawn_args=['--capability=cap_ipc_lock', '--bind=/tmp/mock-resolv.uljd_om0:/etc/resolv.conf', '--bind=/dev/mapper/control', '--bind=/dev/fuse', '--bind=/dev/loop-control', '--bind=/dev/loop0', '--bind=/dev/loop1', '--bind=/dev/loop2', '--bind=/dev/loop3', '--bind=/dev/loop4', '--bind=/dev/loop5', '--bind=/dev/loop6', '--bind=/dev/loop7', '--bind=/dev/loop8', '--bind=/dev/loop9', '--bind=/dev/loop10', '--bind=/dev/loop11'])
+Using nspawn with args ['--capability=cap_ipc_lock', '--bind=/tmp/mock-resolv.uljd_om0:/etc/resolv.conf', '--bind=/dev/mapper/control', '--bind=/dev/fuse', '--bind=/dev/loop-control', '--bind=/dev/loop0', '--bind=/dev/loop1', '--bind=/dev/loop2', '--bind=/dev/loop3', '--bind=/dev/loop4', '--bind=/dev/loop5', '--bind=/dev/loop6', '--bind=/dev/loop7', '--bind=/dev/loop8', '--bind=/dev/loop9', '--bind=/dev/loop10', '--bind=/dev/loop11']
+Executing command: ['/usr/bin/systemd-nspawn', '-q', '-M', 'ac1892aa4860438c817ee4159b03e5bd', '-D', '/var/lib/mock/sdk9/root', '-a', '-u', 'mockbuild', '--capability=cap_ipc_lock', '--bind=/tmp/mock-resolv.uljd_om0:/etc/resolv.conf', '--bind=/dev/mapper/control', '--bind=/dev/fuse', '--bind=/dev/loop-control', '--bind=/dev/loop0', '--bind=/dev/loop1', '--bind=/dev/loop2', '--bind=/dev/loop3', '--bind=/dev/loop4', '--bind=/dev/loop5', '--bind=/dev/loop6', '--bind=/dev/loop7', '--bind=/dev/loop8', '--bind=/dev/loop9', '--bind=/dev/loop10', '--bind=/dev/loop11', '--console=pipe', '--setenv=TERM=vt100', '--setenv=SHELL=/bin/bash', '--setenv=HOME=/builddir', '--setenv=HOSTNAME=mock', '--setenv=PATH=/usr/bin:/bin:/usr/sbin:/sbin', '--setenv=PROMPT_COMMAND=printf "\\033]0;<mock-chroot>\\007"', '--setenv=PS1=<mock-chroot> \\s-\\v\\$ ', '--setenv=LANG=C.UTF-8', '--resolv-conf=off', 'bash', '--login', '-c', '/usr/bin/rpmbuild -bs  --target x86_64 --nodeps /builddir/build/SPECS/libdaq.spec'] with env {'TERM': 'vt100', 'SHELL': '/bin/bash', 'HOME': '/builddir', 'HOSTNAME': 'mock', 'PATH': '/usr/bin:/bin:/usr/sbin:/sbin', 'PROMPT_COMMAND': 'printf "\\033]0;<mock-chroot>\\007"', 'PS1': '<mock-chroot> \\s-\\v\\$ ', 'LANG': 'C.UTF-8', 'SYSTEMD_NSPAWN_TMPFS_TMP': '0', 'SYSTEMD_SECCOMP': '0'} and shell False
+Building target platforms: x86_64
+Building for target x86_64
+Wrote: /builddir/build/SRPMS/libdaq-9999.9.9-1.el9.rb.src.rpm
+Child return code was: 0
+ENTER ['do_with_status'](['bash', '--login', '-c', '/usr/bin/rpmbuild -bb  --target x86_64 --nodeps /builddir/build/SPECS/libdaq.spec'], chrootPath='/var/lib/mock/sdk9/root'env={'TERM': 'vt100', 'SHELL': '/bin/bash', 'HOME': '/builddir', 'HOSTNAME': 'mock', 'PATH': '/usr/bin:/bin:/usr/sbin:/sbin', 'PROMPT_COMMAND': 'printf "\\033]0;<mock-chroot>\\007"', 'PS1': '<mock-chroot> \\s-\\v\\$ ', 'LANG': 'C.UTF-8'}shell=Falselogger=<mockbuild.trace_decorator.getLog object at 0x7f5b6b69a460>timeout=0uid=0gid=135user='mockbuild'unshare_net=FalseprintOutput=Truenspawn_args=['--capability=cap_ipc_lock', '--bind=/tmp/mock-resolv.uljd_om0:/etc/resolv.conf', '--bind=/dev/mapper/control', '--bind=/dev/fuse', '--bind=/dev/loop-control', '--bind=/dev/loop0', '--bind=/dev/loop1', '--bind=/dev/loop2', '--bind=/dev/loop3', '--bind=/dev/loop4', '--bind=/dev/loop5', '--bind=/dev/loop6', '--bind=/dev/loop7', '--bind=/dev/loop8', '--bind=/dev/loop9', '--bind=/dev/loop10', '--bind=/dev/loop11'])
+Using nspawn with args ['--capability=cap_ipc_lock', '--bind=/tmp/mock-resolv.uljd_om0:/etc/resolv.conf', '--bind=/dev/mapper/control', '--bind=/dev/fuse', '--bind=/dev/loop-control', '--bind=/dev/loop0', '--bind=/dev/loop1', '--bind=/dev/loop2', '--bind=/dev/loop3', '--bind=/dev/loop4', '--bind=/dev/loop5', '--bind=/dev/loop6', '--bind=/dev/loop7', '--bind=/dev/loop8', '--bind=/dev/loop9', '--bind=/dev/loop10', '--bind=/dev/loop11']
+Executing command: ['/usr/bin/systemd-nspawn', '-q', '-M', '4cf61c6034f64d38a64993e3caf21fa3', '-D', '/var/lib/mock/sdk9/root', '-a', '-u', 'mockbuild', '--capability=cap_ipc_lock', '--bind=/tmp/mock-resolv.uljd_om0:/etc/resolv.conf', '--bind=/dev/mapper/control', '--bind=/dev/fuse', '--bind=/dev/loop-control', '--bind=/dev/loop0', '--bind=/dev/loop1', '--bind=/dev/loop2', '--bind=/dev/loop3', '--bind=/dev/loop4', '--bind=/dev/loop5', '--bind=/dev/loop6', '--bind=/dev/loop7', '--bind=/dev/loop8', '--bind=/dev/loop9', '--bind=/dev/loop10', '--bind=/dev/loop11', '--console=pipe', '--setenv=TERM=vt100', '--setenv=SHELL=/bin/bash', '--setenv=HOME=/builddir', '--setenv=HOSTNAME=mock', '--setenv=PATH=/usr/bin:/bin:/usr/sbin:/sbin', '--setenv=PROMPT_COMMAND=printf "\\033]0;<mock-chroot>\\007"', '--setenv=PS1=<mock-chroot> \\s-\\v\\$ ', '--setenv=LANG=C.UTF-8', '--resolv-conf=off', 'bash', '--login', '-c', '/usr/bin/rpmbuild -bb  --target x86_64 --nodeps /builddir/build/SPECS/libdaq.spec'] with env {'TERM': 'vt100', 'SHELL': '/bin/bash', 'HOME': '/builddir', 'HOSTNAME': 'mock', 'PATH': '/usr/bin:/bin:/usr/sbin:/sbin', 'PROMPT_COMMAND': 'printf "\\033]0;<mock-chroot>\\007"', 'PS1': '<mock-chroot> \\s-\\v\\$ ', 'LANG': 'C.UTF-8', 'SYSTEMD_NSPAWN_TMPFS_TMP': '0', 'SYSTEMD_SECCOMP': '0'} and shell False
+Building target platforms: x86_64
+Building for target x86_64
+Executing(%prep): /bin/sh -e /var/tmp/rpm-tmp.mua75f
++ umask 022
++ cd /builddir/build/BUILD
++ cd /builddir/build/BUILD
++ rm -rf libdaq-9999.9.9
++ /usr/bin/gzip -dc /builddir/build/SOURCES/libdaq-9999.9.9.tar.gz
++ /usr/bin/tar -xof -
++ STATUS=0
++ '[' 0 -ne 0 ']'
++ cd libdaq-9999.9.9
++ /usr/bin/chmod -Rf a+rX,u+w,g-w,o-w .
++ autoreconf -ivf -Wobsolete
+autoreconf: Entering directory `.'
+autoreconf: configure.ac: not using Gettext
+autoreconf: running: aclocal --force --warnings=obsolete -I m4
+autoreconf: configure.ac: tracing
+autoreconf: running: libtoolize --copy --force
+libtoolize: putting auxiliary files in '.'.
+libtoolize: copying file './ltmain.sh'
+libtoolize: putting macros in AC_CONFIG_MACRO_DIRS, 'm4'.
+libtoolize: copying file 'm4/libtool.m4'
+libtoolize: copying file 'm4/ltoptions.m4'
+libtoolize: copying file 'm4/ltsugar.m4'
+libtoolize: copying file 'm4/ltversion.m4'
+libtoolize: copying file 'm4/lt~obsolete.m4'
+autoreconf: running: /usr/bin/autoconf --force --warnings=obsolete
+autoreconf: running: /usr/bin/autoheader --force --warnings=obsolete
+autoreconf: running: automake --add-missing --copy --force-missing --warnings=obsolete
+configure.ac:29: installing './ar-lib'
+configure.ac:26: installing './compile'
+configure.ac:34: installing './config.guess'
+configure.ac:34: installing './config.sub'
+configure.ac:19: installing './install-sh'
+configure.ac:19: installing './missing'
+api/Makefile.am: installing './depcomp'
+parallel-tests: installing './test-driver'
+autoreconf: Leaving directory `.'
++ RPM_EC=0
+++ jobs -p
++ exit 0
+Executing(%build): /bin/sh -e /var/tmp/rpm-tmp.K4VBnw
++ umask 022
++ cd /builddir/build/BUILD
++ cd libdaq-9999.9.9
++ CFLAGS='-O2 -flto=auto -ffat-lto-objects -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1  -m64 -march=x86-64-v2 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection'
++ export CFLAGS
++ CXXFLAGS='-O2 -flto=auto -ffat-lto-objects -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1  -m64 -march=x86-64-v2 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection'
++ export CXXFLAGS
++ FFLAGS='-O2 -flto=auto -ffat-lto-objects -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1  -m64 -march=x86-64-v2 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -I/usr/lib64/gfortran/modules'
++ export FFLAGS
++ FCFLAGS='-O2 -flto=auto -ffat-lto-objects -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1  -m64 -march=x86-64-v2 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -I/usr/lib64/gfortran/modules'
++ export FCFLAGS
++ LDFLAGS='-Wl,-z,relro -Wl,--as-needed  -Wl,-z,now -specs=/usr/lib/rpm/redhat/redhat-hardened-ld -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1 '
++ export LDFLAGS
++ LT_SYS_LIBRARY_PATH=/usr/lib64:
++ export LT_SYS_LIBRARY_PATH
++ CC=gcc
++ export CC
++ CXX=g++
++ export CXX
++ '[' '-flto=auto -ffat-lto-objectsx' '!=' x ']'
+++ find . -type f -name configure -print
++ for file in $(find . -type f -name configure -print)
++ /usr/bin/sed -r --in-place=.backup 's/^char \(\*f\) \(\) = /__attribute__ ((used)) char (*f) () = /g' ./configure
++ diff -u ./configure.backup ./configure
++ mv ./configure.backup ./configure
++ /usr/bin/sed -r --in-place=.backup 's/^char \(\*f\) \(\);/__attribute__ ((used)) char (*f) ();/g' ./configure
++ diff -u ./configure.backup ./configure
++ mv ./configure.backup ./configure
++ /usr/bin/sed -r --in-place=.backup 's/^char \$2 \(\);/__attribute__ ((used)) char \$2 ();/g' ./configure
++ diff -u ./configure.backup ./configure
+--- ./configure.backup	2025-03-24 11:14:00.002605708 +0000
++++ ./configure	2025-03-24 11:14:00.690637935 +0000
+@@ -1926,7 +1926,7 @@
+ #ifdef __cplusplus
+ extern "C"
+ #endif
+-char $2 ();
++__attribute__ ((used)) char $2 ();
+ /* The GNU C library defines this for functions which it implements
+     to always fail with ENOSYS.  Some functions are actually named
+     something starting with __ and the normal name is an alias.  */
++ /usr/bin/sed --in-place=.backup '1{$!N;$!N};$!N;s/int x = 1;\nint y = 0;\nint z;\nint nan;/volatile int x = 1; volatile int y = 0; volatile int z, nan;/;P;D' ./configure
++ diff -u ./configure.backup ./configure
++ mv ./configure.backup ./configure
++ /usr/bin/sed --in-place=.backup 's#^lt_cv_sys_global_symbol_to_cdecl=.*#lt_cv_sys_global_symbol_to_cdecl="sed -n -e '\''s/^T .* \\(.*\\)$/extern int \\1();/p'\'' -e '\''s/^$symcode* .* \\(.*\\)$/extern char \\1;/p'\''"#' ./configure
++ diff -u ./configure.backup ./configure
+--- ./configure.backup	2025-03-24 11:14:00.690637935 +0000
++++ ./configure	2025-03-24 11:14:00.702638497 +0000
+@@ -7873,7 +7873,7 @@
+ # Transform an extracted symbol line into a proper C declaration.
+ # Some systems (esp. on ia64) link data and code symbols differently,
+ # so use this general approach.
+-lt_cv_sys_global_symbol_to_cdecl="sed -n"\
++lt_cv_sys_global_symbol_to_cdecl="sed -n -e 's/^T .* \(.*\)$/extern int \1();/p' -e 's/^$symcode* .* \(.*\)$/extern char \1;/p'"
+ $lt_cdecl_hook\
+ " -e 's/^T .* \(.*\)$/extern int \1();/p'"\
+ " -e 's/^$symcode$symcode* .* \(.*\)$/extern char \1;/p'"
+@@ -20595,7 +20595,7 @@
+ compiler='`$ECHO "$compiler" | $SED "$delay_single_quote_subst"`'
+ GCC='`$ECHO "$GCC" | $SED "$delay_single_quote_subst"`'
+ lt_cv_sys_global_symbol_pipe='`$ECHO "$lt_cv_sys_global_symbol_pipe" | $SED "$delay_single_quote_subst"`'
+-lt_cv_sys_global_symbol_to_cdecl='`$ECHO "$lt_cv_sys_global_symbol_to_cdecl" | $SED "$delay_single_quote_subst"`'
++lt_cv_sys_global_symbol_to_cdecl="sed -n -e 's/^T .* \(.*\)$/extern int \1();/p' -e 's/^$symcode* .* \(.*\)$/extern char \1;/p'"
+ lt_cv_sys_global_symbol_to_import='`$ECHO "$lt_cv_sys_global_symbol_to_import" | $SED "$delay_single_quote_subst"`'
+ lt_cv_sys_global_symbol_to_c_name_address='`$ECHO "$lt_cv_sys_global_symbol_to_c_name_address" | $SED "$delay_single_quote_subst"`'
+ lt_cv_sys_global_symbol_to_c_name_address_lib_prefix='`$ECHO "$lt_cv_sys_global_symbol_to_c_name_address_lib_prefix" | $SED "$delay_single_quote_subst"`'
++ '[' 1 = 1 ']'
++++ dirname ./configure
+++ find . -name config.guess -o -name config.sub
++ for i in $(find $(dirname ./configure) -name config.guess -o -name config.sub)
+++ basename ./config.guess
++ '[' -f /usr/lib/rpm/redhat/config.guess ']'
++ /usr/bin/rm -f ./config.guess
+++ basename ./config.guess
++ /usr/bin/cp -fv /usr/lib/rpm/redhat/config.guess ./config.guess
+'/usr/lib/rpm/redhat/config.guess' -> './config.guess'
++ for i in $(find $(dirname ./configure) -name config.guess -o -name config.sub)
+++ basename ./config.sub
++ '[' -f /usr/lib/rpm/redhat/config.sub ']'
++ /usr/bin/rm -f ./config.sub
+++ basename ./config.sub
++ /usr/bin/cp -fv /usr/lib/rpm/redhat/config.sub ./config.sub
+'/usr/lib/rpm/redhat/config.sub' -> './config.sub'
++ '[' 1 = 1 ']'
++ '[' x '!=' 'x-Wl,-z,now -specs=/usr/lib/rpm/redhat/redhat-hardened-ld' ']'
+++ find . -name ltmain.sh
++ for i in $(find . -name ltmain.sh)
++ /usr/bin/sed -i.backup -e 's~compiler_flags=$~compiler_flags="-Wl,-z,now -specs=/usr/lib/rpm/redhat/redhat-hardened-ld"~' ./ltmain.sh
++ ./configure --build=x86_64-redhat-linux-gnu --host=x86_64-redhat-linux-gnu --program-prefix= --disable-dependency-tracking --prefix=/usr --exec-prefix=/usr --bindir=/usr/bin --sbindir=/usr/sbin --sysconfdir=/etc --datadir=/usr/share --includedir=/usr/include --libdir=/usr/lib64 --libexecdir=/usr/libexec --localstatedir=/var --sharedstatedir=/var/lib --mandir=/usr/share/man --infodir=/usr/share/info --includedir=/usr/include/daq
+checking for a BSD-compatible install... /usr/bin/install -c
+checking whether build environment is sane... yes
+checking for a thread-safe mkdir -p... /usr/bin/mkdir -p
+checking for gawk... gawk
+checking whether make sets $(MAKE)... yes
+checking whether make supports nested variables... yes
+checking for x86_64-redhat-linux-gnu-gcc... gcc
+checking whether the C compiler works... yes
+checking for C compiler default output file name... a.out
+checking for suffix of executables... 
+checking whether we are cross compiling... no
+checking for suffix of object files... o
+checking whether we are using the GNU C compiler... yes
+checking whether gcc accepts -g... yes
+checking for gcc option to accept ISO C89... none needed
+checking whether gcc understands -c and -o together... yes
+checking whether make supports the include directive... yes (GNU style)
+checking dependency style of gcc... none
+checking for gcc option to accept ISO C99... none needed
+checking whether we are using the GNU C++ compiler... yes
+checking whether g++ accepts -g... yes
+checking dependency style of g++... none
+checking for x86_64-redhat-linux-gnu-ar... no
+checking for x86_64-redhat-linux-gnu-lib... no
+checking for x86_64-redhat-linux-gnu-link... no
+checking for ar... ar
+checking the archiver (ar) interface... ar
+checking for a sed that does not truncate output... /usr/bin/sed
+checking whether g++ supports C++11 features with -std=gnu++11... yes
+checking build system type... x86_64-redhat-linux-gnu
+checking host system type... x86_64-redhat-linux-gnu
+checking how to print strings... printf
+checking for a sed that does not truncate output... (cached) /usr/bin/sed
+checking for grep that handles long lines and -e... /usr/bin/grep
+checking for egrep... /usr/bin/grep -E
+checking for fgrep... /usr/bin/grep -F
+checking for ld used by gcc... /usr/bin/ld
+checking if the linker (/usr/bin/ld) is GNU ld... yes
+checking for BSD- or MS-compatible name lister (nm)... /usr/bin/nm -B
+checking the name lister (/usr/bin/nm -B) interface... BSD nm
+checking whether ln -s works... yes
+checking the maximum length of command line arguments... 1572864
+checking how to convert x86_64-redhat-linux-gnu file names to x86_64-redhat-linux-gnu format... func_convert_file_noop
+checking how to convert x86_64-redhat-linux-gnu file names to toolchain format... func_convert_file_noop
+checking for /usr/bin/ld option to reload object files... -r
+checking for x86_64-redhat-linux-gnu-objdump... no
+checking for objdump... objdump
+checking how to recognize dependent libraries... pass_all
+checking for x86_64-redhat-linux-gnu-dlltool... no
+checking for dlltool... no
+checking how to associate runtime and link libraries... printf %s\n
+checking for x86_64-redhat-linux-gnu-ar... ar
+checking for archiver @FILE support... @
+checking for x86_64-redhat-linux-gnu-strip... no
+checking for strip... strip
+checking for x86_64-redhat-linux-gnu-ranlib... no
+checking for ranlib... ranlib
+checking command to parse /usr/bin/nm -B output from gcc object... ./configure: line 7879:  -e 's/^T .* \(.*\)$/extern int \1();/p' -e 's/^[ABCDGIRSTW][ABCDGIRSTW]* .* \(.*\)$/extern char \1;/p': No such file or directory
+ok
+checking for sysroot... no
+checking for a working dd... /usr/bin/dd
+checking how to truncate binary pipes... /usr/bin/dd bs=4096 count=1
+checking for x86_64-redhat-linux-gnu-mt... no
+checking for mt... no
+checking if : is a manifest tool... no
+checking how to run the C preprocessor... gcc -E
+checking for ANSI C header files... yes
+checking for sys/types.h... yes
+checking for sys/stat.h... yes
+checking for stdlib.h... yes
+checking for string.h... yes
+checking for memory.h... yes
+checking for strings.h... yes
+checking for inttypes.h... yes
+checking for stdint.h... yes
+checking for unistd.h... yes
+checking for dlfcn.h... yes
+checking for objdir... .libs
+checking if gcc supports -fno-rtti -fno-exceptions... no
+checking for gcc option to produce PIC... -fPIC -DPIC
+checking if gcc PIC flag -fPIC -DPIC works... yes
+checking if gcc static flag -static works... no
+checking if gcc supports -c -o file.o... yes
+checking if gcc supports -c -o file.o... (cached) yes
+checking whether the gcc linker (/usr/bin/ld -m elf_x86_64) supports shared libraries... yes
+checking whether -lc should be explicitly linked in... no
+checking dynamic linker characteristics... GNU/Linux ld.so
+checking how to hardcode library paths into programs... immediate
+checking whether stripping libraries is possible... yes
+checking if libtool supports shared libraries... yes
+checking whether to build shared libraries... yes
+checking whether to build static libraries... yes
+checking how to run the C++ preprocessor... g++ -std=gnu++11 -E
+checking for ld used by g++ -std=gnu++11... /usr/bin/ld -m elf_x86_64
+checking if the linker (/usr/bin/ld -m elf_x86_64) is GNU ld... yes
+checking whether the g++ -std=gnu++11 linker (/usr/bin/ld -m elf_x86_64) supports shared libraries... yes
+checking for g++ -std=gnu++11 option to produce PIC... -fPIC -DPIC
+checking if g++ -std=gnu++11 PIC flag -fPIC -DPIC works... yes
+checking if g++ -std=gnu++11 static flag -static works... no
+checking if g++ -std=gnu++11 supports -c -o file.o... yes
+checking if g++ -std=gnu++11 supports -c -o file.o... (cached) yes
+checking whether the g++ -std=gnu++11 linker (/usr/bin/ld -m elf_x86_64) supports shared libraries... yes
+checking dynamic linker characteristics... (cached) GNU/Linux ld.so
+checking how to hardcode library paths into programs... immediate
+checking whether the -Werror option is usable... yes
+checking for simple visibility declarations... yes
+checking whether C preprocessor accepts -Wall... yes
+checking whether C preprocessor accepts -Wmissing-declarations... yes
+checking whether C preprocessor accepts -Wpointer-arith... yes
+checking whether C preprocessor accepts -Wcast-align... yes
+checking whether C preprocessor accepts -Wcast-qual... yes
+checking whether C preprocessor accepts -Wformat... yes
+checking whether C preprocessor accepts -Wformat-nonliteral... yes
+checking whether C preprocessor accepts -Wformat-security... yes
+checking whether C preprocessor accepts -Wundef... yes
+checking whether C preprocessor accepts -Wwrite-strings... yes
+checking whether C preprocessor accepts -Wextra... yes
+checking whether C preprocessor accepts -Wsign-compare... yes
+checking whether C preprocessor accepts -Wno-unused-parameter... yes
+checking whether C preprocessor accepts -fno-strict-aliasing... yes
+checking whether C preprocessor accepts -fdiagnostics-show-option... yes
+checking whether C preprocessor accepts -Wstrict-prototypes... yes
+checking whether C preprocessor accepts -Wmissing-prototypes... yes
+checking whether C preprocessor accepts -Wold-style-definition... yes
+checking whether C preprocessor accepts -Wnested-externs... yes
+checking whether to build with code coverage support... no
+checking for x86_64-redhat-linux-gnu-pkg-config... /usr/bin/x86_64-redhat-linux-gnu-pkg-config
+checking pkg-config is at least version 0.9.0... yes
+configure: WARNING: No libcmocka-1.0.0 or newer library found, cmocka tests will not be built
+checking pcap.h usability... yes
+checking pcap.h presence... yes
+checking for pcap.h... yes
+checking for pcap_lib_version in -lpcap... yes
+checking linux/if_ether.h usability... yes
+checking linux/if_ether.h presence... yes
+checking for linux/if_ether.h... yes
+checking linux/if_packet.h usability... yes
+checking linux/if_packet.h presence... yes
+checking for linux/if_packet.h... yes
+checking whether PACKET_FANOUT_QM is declared... yes
+checking whether PACKET_QDISC_BYPASS is declared... yes
+checking whether TP_STATUS_VLAN_TPID_VALID is declared... yes
+checking for linux/if_ether.h... (cached) yes
+checking for linux/if_packet.h... (cached) yes
+checking whether PACKET_FANOUT_QM is declared... (cached) yes
+checking whether PACKET_QDISC_BYPASS is declared... (cached) yes
+checking whether TP_STATUS_VLAN_TPID_VALID is declared... (cached) yes
+checking whether IPPROTO_DIVERT is declared... no
+checking for net/netmap.h... no
+checking for net/netmap_user.h... no
+checking whether NETMAP_API is declared... no
+checking linux/netfilter.h usability... yes
+checking linux/netfilter.h presence... yes
+checking for linux/netfilter.h... yes
+checking linux/netfilter/nfnetlink_queue.h usability... yes
+checking linux/netfilter/nfnetlink_queue.h presence... yes
+checking for linux/netfilter/nfnetlink_queue.h... yes
+checking libmnl/libmnl.h usability... no
+checking libmnl/libmnl.h presence... no
+checking for libmnl/libmnl.h... no
+checking for mnl_socket_open in -lmnl... no
+checking for dlopen in -ldl... yes
+checking for inttypes.h... (cached) yes
+checking for memory.h... (cached) yes
+checking netdb.h usability... yes
+checking netdb.h presence... yes
+checking for netdb.h... yes
+checking netinet/in.h usability... yes
+checking netinet/in.h presence... yes
+checking for netinet/in.h... yes
+checking for stdint.h... (cached) yes
+checking for stdlib.h... (cached) yes
+checking for string.h... (cached) yes
+checking sys/ioctl.h usability... yes
+checking sys/ioctl.h presence... yes
+checking for sys/ioctl.h... yes
+checking sys/param.h usability... yes
+checking sys/param.h presence... yes
+checking for sys/param.h... yes
+checking sys/socket.h usability... yes
+checking sys/socket.h presence... yes
+checking for sys/socket.h... yes
+checking sys/time.h usability... yes
+checking sys/time.h presence... yes
+checking for sys/time.h... yes
+checking for unistd.h... (cached) yes
+checking for inline... inline
+checking for size_t... yes
+checking for uint16_t... yes
+checking for uint32_t... yes
+checking for uint64_t... yes
+checking for uint8_t... yes
+checking for stdlib.h... (cached) yes
+checking for GNU libc compatible malloc... yes
+checking for stdlib.h... (cached) yes
+checking for unistd.h... (cached) yes
+checking for sys/param.h... (cached) yes
+checking for getpagesize... yes
+checking for working mmap... yes
+checking for gethostbyname... yes
+checking for getpagesize... (cached) yes
+checking for memset... yes
+checking for munmap... yes
+checking for socket... yes
+checking for strchr... yes
+checking for strcspn... yes
+checking for strdup... yes
+checking for strerror... yes
+checking for strrchr... yes
+checking for strstr... yes
+checking for strtoul... yes
+checking that generated files are newer than configure... done
+configure: creating ./config.status
+config.status: creating modules/afpacket/libdaq_static_afpacket.pc
+config.status: creating modules/pfring/libdaq_static_pfring.pc
+config.status: creating modules/bpf/libdaq_static_bpf.pc
+config.status: creating modules/dump/libdaq_static_dump.pc
+config.status: creating modules/fst/libdaq_static_fst.pc
+config.status: creating modules/pcap/libdaq_static_pcap.pc
+config.status: creating modules/savefile/libdaq_static_savefile.pc
+config.status: creating modules/trace/libdaq_static_trace.pc
+config.status: creating modules/gwlb/libdaq_static_gwlb.pc
+config.status: creating Makefile
+config.status: creating api/daq_version.h
+config.status: creating api/Makefile
+config.status: creating example/Makefile
+config.status: creating modules/Makefile
+config.status: creating test/Makefile
+config.status: creating libdaq.pc
+config.status: creating config.h
+config.status: executing depfiles commands
+config.status: executing libtool commands
+    libdaq 3.0.19
+    prefix:         /usr
+    sysconfdir:     /etc
+    libdir:         /usr/lib64
+    includedir:     /usr/include/daq
+    cc:             gcc
+    cppflags:       
+    am_cppflags:     -fvisibility=hidden -Wall -Wmissing-declarations -Wpointer-arith -Wcast-align -Wcast-qual -Wformat -Wformat-nonliteral -Wformat-security -Wundef -Wwrite-strings -Wextra -Wsign-compare -Wno-unused-parameter -fno-strict-aliasing -fdiagnostics-show-option
+    cflags:         -O2 -flto=auto -ffat-lto-objects -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1  -m64 -march=x86-64-v2 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection
+    am_cflags:       -Wstrict-prototypes -Wmissing-prototypes -Wold-style-definition -Wnested-externs
+    ldflags:        -Wl,-z,relro -Wl,--as-needed  -Wl,-z,now -specs=/usr/lib/rpm/redhat/redhat-hardened-ld -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1 
+    am_ldflags:     
+    libs:           
+    code_coverage_enabled:  no
+    code_coverage_cppflags: 
+    code_coverage_cflags:   
+    code_coverage_ldflags:  
+    Build AFPacket DAQ module.. : yes
+    Build BPF DAQ module....... : yes
+    Build Divert DAQ module.... : no
+    Build Dump DAQ module...... : yes
+    Build FST DAQ module....... : yes
+    Build netmap DAQ module.... : no
+    Build NFQ DAQ module....... : no
+    Build PCAP DAQ module...... : yes
+    Build Savefile DAQ module.. : yes
+    Build Trace DAQ module..... : yes
+    Build GWLB DAQ module...... : yes
+    Build PF_RING DAQ module... : yes
++ /usr/bin/sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
++ /usr/bin/sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
++ VERSION=3.0.16
++ /usr/bin/make V=1
+/usr/bin/make  all-recursive
+make[1]: Entering directory '/builddir/build/BUILD/libdaq-9999.9.9'
+Making all in api
+make[2]: Entering directory '/builddir/build/BUILD/libdaq-9999.9.9/api'
+/bin/sh ../libtool  --tag=CC   --mode=compile gcc -DHAVE_CONFIG_H -I. -I..  -fvisibility=hidden -Wall -Wmissing-declarations -Wpointer-arith -Wcast-align -Wcast-qual -Wformat -Wformat-nonliteral -Wformat-security -Wundef -Wwrite-strings -Wextra -Wsign-compare -Wno-unused-parameter -fno-strict-aliasing -fdiagnostics-show-option   -Wstrict-prototypes -Wmissing-prototypes -Wold-style-definition -Wnested-externs  -O2 -flto=auto -ffat-lto-objects -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1  -m64 -march=x86-64-v2 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -c -o libdaq_la-daq_base.lo `test -f 'daq_base.c' || echo './'`daq_base.c
+libtool: compile:  gcc -DHAVE_CONFIG_H -I. -I.. -fvisibility=hidden -Wall -Wmissing-declarations -Wpointer-arith -Wcast-align -Wcast-qual -Wformat -Wformat-nonliteral -Wformat-security -Wundef -Wwrite-strings -Wextra -Wsign-compare -Wno-unused-parameter -fno-strict-aliasing -fdiagnostics-show-option -Wstrict-prototypes -Wmissing-prototypes -Wold-style-definition -Wnested-externs -O2 -flto=auto -ffat-lto-objects -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1 -m64 -march=x86-64-v2 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -c daq_base.c  -fPIC -DPIC -o .libs/libdaq_la-daq_base.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I. -I.. -fvisibility=hidden -Wall -Wmissing-declarations -Wpointer-arith -Wcast-align -Wcast-qual -Wformat -Wformat-nonliteral -Wformat-security -Wundef -Wwrite-strings -Wextra -Wsign-compare -Wno-unused-parameter -fno-strict-aliasing -fdiagnostics-show-option -Wstrict-prototypes -Wmissing-prototypes -Wold-style-definition -Wnested-externs -O2 -flto=auto -ffat-lto-objects -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1 -m64 -march=x86-64-v2 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -c daq_base.c -o libdaq_la-daq_base.o >/dev/null 2>&1
+/bin/sh ../libtool  --tag=CC   --mode=compile gcc -DHAVE_CONFIG_H -I. -I..  -fvisibility=hidden -Wall -Wmissing-declarations -Wpointer-arith -Wcast-align -Wcast-qual -Wformat -Wformat-nonliteral -Wformat-security -Wundef -Wwrite-strings -Wextra -Wsign-compare -Wno-unused-parameter -fno-strict-aliasing -fdiagnostics-show-option   -Wstrict-prototypes -Wmissing-prototypes -Wold-style-definition -Wnested-externs  -O2 -flto=auto -ffat-lto-objects -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1  -m64 -march=x86-64-v2 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -c -o libdaq_la-daq_base_api.lo `test -f 'daq_base_api.c' || echo './'`daq_base_api.c
+libtool: compile:  gcc -DHAVE_CONFIG_H -I. -I.. -fvisibility=hidden -Wall -Wmissing-declarations -Wpointer-arith -Wcast-align -Wcast-qual -Wformat -Wformat-nonliteral -Wformat-security -Wundef -Wwrite-strings -Wextra -Wsign-compare -Wno-unused-parameter -fno-strict-aliasing -fdiagnostics-show-option -Wstrict-prototypes -Wmissing-prototypes -Wold-style-definition -Wnested-externs -O2 -flto=auto -ffat-lto-objects -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1 -m64 -march=x86-64-v2 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -c daq_base_api.c  -fPIC -DPIC -o .libs/libdaq_la-daq_base_api.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I. -I.. -fvisibility=hidden -Wall -Wmissing-declarations -Wpointer-arith -Wcast-align -Wcast-qual -Wformat -Wformat-nonliteral -Wformat-security -Wundef -Wwrite-strings -Wextra -Wsign-compare -Wno-unused-parameter -fno-strict-aliasing -fdiagnostics-show-option -Wstrict-prototypes -Wmissing-prototypes -Wold-style-definition -Wnested-externs -O2 -flto=auto -ffat-lto-objects -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1 -m64 -march=x86-64-v2 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -c daq_base_api.c -o libdaq_la-daq_base_api.o >/dev/null 2>&1
+/bin/sh ../libtool  --tag=CC   --mode=compile gcc -DHAVE_CONFIG_H -I. -I..  -fvisibility=hidden -Wall -Wmissing-declarations -Wpointer-arith -Wcast-align -Wcast-qual -Wformat -Wformat-nonliteral -Wformat-security -Wundef -Wwrite-strings -Wextra -Wsign-compare -Wno-unused-parameter -fno-strict-aliasing -fdiagnostics-show-option   -Wstrict-prototypes -Wmissing-prototypes -Wold-style-definition -Wnested-externs  -O2 -flto=auto -ffat-lto-objects -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1  -m64 -march=x86-64-v2 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -c -o libdaq_la-daq_config.lo `test -f 'daq_config.c' || echo './'`daq_config.c
+libtool: compile:  gcc -DHAVE_CONFIG_H -I. -I.. -fvisibility=hidden -Wall -Wmissing-declarations -Wpointer-arith -Wcast-align -Wcast-qual -Wformat -Wformat-nonliteral -Wformat-security -Wundef -Wwrite-strings -Wextra -Wsign-compare -Wno-unused-parameter -fno-strict-aliasing -fdiagnostics-show-option -Wstrict-prototypes -Wmissing-prototypes -Wold-style-definition -Wnested-externs -O2 -flto=auto -ffat-lto-objects -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1 -m64 -march=x86-64-v2 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -c daq_config.c  -fPIC -DPIC -o .libs/libdaq_la-daq_config.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I. -I.. -fvisibility=hidden -Wall -Wmissing-declarations -Wpointer-arith -Wcast-align -Wcast-qual -Wformat -Wformat-nonliteral -Wformat-security -Wundef -Wwrite-strings -Wextra -Wsign-compare -Wno-unused-parameter -fno-strict-aliasing -fdiagnostics-show-option -Wstrict-prototypes -Wmissing-prototypes -Wold-style-definition -Wnested-externs -O2 -flto=auto -ffat-lto-objects -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1 -m64 -march=x86-64-v2 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -c daq_config.c -o libdaq_la-daq_config.o >/dev/null 2>&1
+/bin/sh ../libtool  --tag=CC   --mode=compile gcc -DHAVE_CONFIG_H -I. -I..  -fvisibility=hidden -Wall -Wmissing-declarations -Wpointer-arith -Wcast-align -Wcast-qual -Wformat -Wformat-nonliteral -Wformat-security -Wundef -Wwrite-strings -Wextra -Wsign-compare -Wno-unused-parameter -fno-strict-aliasing -fdiagnostics-show-option   -Wstrict-prototypes -Wmissing-prototypes -Wold-style-definition -Wnested-externs  -O2 -flto=auto -ffat-lto-objects -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1  -m64 -march=x86-64-v2 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -c -o libdaq_la-daq_instance_api_defaults.lo `test -f 'daq_instance_api_defaults.c' || echo './'`daq_instance_api_defaults.c
+libtool: compile:  gcc -DHAVE_CONFIG_H -I. -I.. -fvisibility=hidden -Wall -Wmissing-declarations -Wpointer-arith -Wcast-align -Wcast-qual -Wformat -Wformat-nonliteral -Wformat-security -Wundef -Wwrite-strings -Wextra -Wsign-compare -Wno-unused-parameter -fno-strict-aliasing -fdiagnostics-show-option -Wstrict-prototypes -Wmissing-prototypes -Wold-style-definition -Wnested-externs -O2 -flto=auto -ffat-lto-objects -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1 -m64 -march=x86-64-v2 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -c daq_instance_api_defaults.c  -fPIC -DPIC -o .libs/libdaq_la-daq_instance_api_defaults.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I. -I.. -fvisibility=hidden -Wall -Wmissing-declarations -Wpointer-arith -Wcast-align -Wcast-qual -Wformat -Wformat-nonliteral -Wformat-security -Wundef -Wwrite-strings -Wextra -Wsign-compare -Wno-unused-parameter -fno-strict-aliasing -fdiagnostics-show-option -Wstrict-prototypes -Wmissing-prototypes -Wold-style-definition -Wnested-externs -O2 -flto=auto -ffat-lto-objects -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1 -m64 -march=x86-64-v2 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -c daq_instance_api_defaults.c -o libdaq_la-daq_instance_api_defaults.o >/dev/null 2>&1
+/bin/sh ../libtool  --tag=CC   --mode=compile gcc -DHAVE_CONFIG_H -I. -I..  -fvisibility=hidden -Wall -Wmissing-declarations -Wpointer-arith -Wcast-align -Wcast-qual -Wformat -Wformat-nonliteral -Wformat-security -Wundef -Wwrite-strings -Wextra -Wsign-compare -Wno-unused-parameter -fno-strict-aliasing -fdiagnostics-show-option   -Wstrict-prototypes -Wmissing-prototypes -Wold-style-definition -Wnested-externs  -O2 -flto=auto -ffat-lto-objects -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1  -m64 -march=x86-64-v2 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -c -o libdaq_la-daq_mod_ops.lo `test -f 'daq_mod_ops.c' || echo './'`daq_mod_ops.c
+libtool: compile:  gcc -DHAVE_CONFIG_H -I. -I.. -fvisibility=hidden -Wall -Wmissing-declarations -Wpointer-arith -Wcast-align -Wcast-qual -Wformat -Wformat-nonliteral -Wformat-security -Wundef -Wwrite-strings -Wextra -Wsign-compare -Wno-unused-parameter -fno-strict-aliasing -fdiagnostics-show-option -Wstrict-prototypes -Wmissing-prototypes -Wold-style-definition -Wnested-externs -O2 -flto=auto -ffat-lto-objects -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1 -m64 -march=x86-64-v2 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -c daq_mod_ops.c  -fPIC -DPIC -o .libs/libdaq_la-daq_mod_ops.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I. -I.. -fvisibility=hidden -Wall -Wmissing-declarations -Wpointer-arith -Wcast-align -Wcast-qual -Wformat -Wformat-nonliteral -Wformat-security -Wundef -Wwrite-strings -Wextra -Wsign-compare -Wno-unused-parameter -fno-strict-aliasing -fdiagnostics-show-option -Wstrict-prototypes -Wmissing-prototypes -Wold-style-definition -Wnested-externs -O2 -flto=auto -ffat-lto-objects -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1 -m64 -march=x86-64-v2 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -c daq_mod_ops.c -o libdaq_la-daq_mod_ops.o >/dev/null 2>&1
+/bin/sh ../libtool  --tag=CC   --mode=link gcc -Wstrict-prototypes -Wmissing-prototypes -Wold-style-definition -Wnested-externs  -O2 -flto=auto -ffat-lto-objects -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1  -m64 -march=x86-64-v2 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection  -version-info 3:0:0 -Wl,-z,relro -Wl,--as-needed  -Wl,-z,now -specs=/usr/lib/rpm/redhat/redhat-hardened-ld -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1  -o libdaq.la -rpath /usr/lib64 libdaq_la-daq_base.lo libdaq_la-daq_base_api.lo libdaq_la-daq_config.lo libdaq_la-daq_instance_api_defaults.lo libdaq_la-daq_mod_ops.lo -ldl 
+libtool: link: gcc -shared  -fPIC -DPIC  .libs/libdaq_la-daq_base.o .libs/libdaq_la-daq_base_api.o .libs/libdaq_la-daq_config.o .libs/libdaq_la-daq_instance_api_defaults.o .libs/libdaq_la-daq_mod_ops.o   -ldl -Wl,-z,now -specs=/usr/lib/rpm/redhat/redhat-hardened-ld -O2 -flto=auto -g -grecord-gcc-switches -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1 -m64 -march=x86-64-v2 -mtune=generic -Wl,-z -Wl,relro -Wl,--as-needed -Wl,-z -Wl,now -specs=/usr/lib/rpm/redhat/redhat-hardened-ld -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1   -Wl,-soname -Wl,libdaq.so.3 -o .libs/libdaq.so.3.0.0
+libtool: link: (cd ".libs" && rm -f "libdaq.so.3" && ln -s "libdaq.so.3.0.0" "libdaq.so.3")
+libtool: link: (cd ".libs" && rm -f "libdaq.so" && ln -s "libdaq.so.3.0.0" "libdaq.so")
+libtool: link: ar cru .libs/libdaq.a  libdaq_la-daq_base.o libdaq_la-daq_base_api.o libdaq_la-daq_config.o libdaq_la-daq_instance_api_defaults.o libdaq_la-daq_mod_ops.o
+libtool: link: ranlib .libs/libdaq.a
+libtool: link: ( cd ".libs" && rm -f "libdaq.la" && ln -s "../libdaq.la" "libdaq.la" )
+make[2]: Leaving directory '/builddir/build/BUILD/libdaq-9999.9.9/api'
+Making all in modules
+make[2]: Entering directory '/builddir/build/BUILD/libdaq-9999.9.9/modules'
+/bin/sh ../libtool  --tag=CC   --mode=compile gcc -DHAVE_CONFIG_H -I. -I..  -fvisibility=hidden -Wall -Wmissing-declarations -Wpointer-arith -Wcast-align -Wcast-qual -Wformat -Wformat-nonliteral -Wformat-security -Wundef -Wwrite-strings -Wextra -Wsign-compare -Wno-unused-parameter -fno-strict-aliasing -fdiagnostics-show-option -I../api   -Wstrict-prototypes -Wmissing-prototypes -Wold-style-definition -Wnested-externs -O2 -flto=auto -ffat-lto-objects -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1  -m64 -march=x86-64-v2 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -c -o afpacket/libdaq_static_afpacket_la-daq_afpacket.lo `test -f 'afpacket/daq_afpacket.c' || echo './'`afpacket/daq_afpacket.c
+libtool: compile:  gcc -DHAVE_CONFIG_H -I. -I.. -fvisibility=hidden -Wall -Wmissing-declarations -Wpointer-arith -Wcast-align -Wcast-qual -Wformat -Wformat-nonliteral -Wformat-security -Wundef -Wwrite-strings -Wextra -Wsign-compare -Wno-unused-parameter -fno-strict-aliasing -fdiagnostics-show-option -I../api -Wstrict-prototypes -Wmissing-prototypes -Wold-style-definition -Wnested-externs -O2 -flto=auto -ffat-lto-objects -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1 -m64 -march=x86-64-v2 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -c afpacket/daq_afpacket.c  -fPIC -DPIC -o afpacket/.libs/libdaq_static_afpacket_la-daq_afpacket.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I. -I.. -fvisibility=hidden -Wall -Wmissing-declarations -Wpointer-arith -Wcast-align -Wcast-qual -Wformat -Wformat-nonliteral -Wformat-security -Wundef -Wwrite-strings -Wextra -Wsign-compare -Wno-unused-parameter -fno-strict-aliasing -fdiagnostics-show-option -I../api -Wstrict-prototypes -Wmissing-prototypes -Wold-style-definition -Wnested-externs -O2 -flto=auto -ffat-lto-objects -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1 -m64 -march=x86-64-v2 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -c afpacket/daq_afpacket.c -o afpacket/libdaq_static_afpacket_la-daq_afpacket.o >/dev/null 2>&1
+/bin/sh ../libtool  --tag=CC   --mode=link gcc -Wstrict-prototypes -Wmissing-prototypes -Wold-style-definition -Wnested-externs -O2 -flto=auto -ffat-lto-objects -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1  -m64 -march=x86-64-v2 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -static -avoid-version -Wl,-z,relro -Wl,--as-needed  -Wl,-z,now -specs=/usr/lib/rpm/redhat/redhat-hardened-ld -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1  -o afpacket/libdaq_static_afpacket.la -rpath /usr/lib64 afpacket/libdaq_static_afpacket_la-daq_afpacket.lo  
+libtool: link: ar cru afpacket/.libs/libdaq_static_afpacket.a  afpacket/libdaq_static_afpacket_la-daq_afpacket.o
+libtool: link: ranlib afpacket/.libs/libdaq_static_afpacket.a
+libtool: link: ( cd "afpacket/.libs" && rm -f "libdaq_static_afpacket.la" && ln -s "../libdaq_static_afpacket.la" "libdaq_static_afpacket.la" )
+/bin/sh ../libtool  --tag=CC   --mode=compile gcc -DHAVE_CONFIG_H -I. -I..  -fvisibility=hidden -Wall -Wmissing-declarations -Wpointer-arith -Wcast-align -Wcast-qual -Wformat -Wformat-nonliteral -Wformat-security -Wundef -Wwrite-strings -Wextra -Wsign-compare -Wno-unused-parameter -fno-strict-aliasing -fdiagnostics-show-option -I../api   -Wstrict-prototypes -Wmissing-prototypes -Wold-style-definition -Wnested-externs -O2 -flto=auto -ffat-lto-objects -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1  -m64 -march=x86-64-v2 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -c -o bpf/libdaq_static_bpf_la-daq_bpf.lo `test -f 'bpf/daq_bpf.c' || echo './'`bpf/daq_bpf.c
+libtool: compile:  gcc -DHAVE_CONFIG_H -I. -I.. -fvisibility=hidden -Wall -Wmissing-declarations -Wpointer-arith -Wcast-align -Wcast-qual -Wformat -Wformat-nonliteral -Wformat-security -Wundef -Wwrite-strings -Wextra -Wsign-compare -Wno-unused-parameter -fno-strict-aliasing -fdiagnostics-show-option -I../api -Wstrict-prototypes -Wmissing-prototypes -Wold-style-definition -Wnested-externs -O2 -flto=auto -ffat-lto-objects -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1 -m64 -march=x86-64-v2 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -c bpf/daq_bpf.c  -fPIC -DPIC -o bpf/.libs/libdaq_static_bpf_la-daq_bpf.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I. -I.. -fvisibility=hidden -Wall -Wmissing-declarations -Wpointer-arith -Wcast-align -Wcast-qual -Wformat -Wformat-nonliteral -Wformat-security -Wundef -Wwrite-strings -Wextra -Wsign-compare -Wno-unused-parameter -fno-strict-aliasing -fdiagnostics-show-option -I../api -Wstrict-prototypes -Wmissing-prototypes -Wold-style-definition -Wnested-externs -O2 -flto=auto -ffat-lto-objects -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1 -m64 -march=x86-64-v2 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -c bpf/daq_bpf.c -o bpf/libdaq_static_bpf_la-daq_bpf.o >/dev/null 2>&1
+/bin/sh ../libtool  --tag=CC   --mode=link gcc -Wstrict-prototypes -Wmissing-prototypes -Wold-style-definition -Wnested-externs -O2 -flto=auto -ffat-lto-objects -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1  -m64 -march=x86-64-v2 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -static -avoid-version -Wl,-z,relro -Wl,--as-needed  -Wl,-z,now -specs=/usr/lib/rpm/redhat/redhat-hardened-ld -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1  -o bpf/libdaq_static_bpf.la -rpath /usr/lib64 bpf/libdaq_static_bpf_la-daq_bpf.lo  
+libtool: link: ar cru bpf/.libs/libdaq_static_bpf.a  bpf/libdaq_static_bpf_la-daq_bpf.o
+libtool: link: ranlib bpf/.libs/libdaq_static_bpf.a
+libtool: link: ( cd "bpf/.libs" && rm -f "libdaq_static_bpf.la" && ln -s "../libdaq_static_bpf.la" "libdaq_static_bpf.la" )
+/bin/sh ../libtool  --tag=CC   --mode=compile gcc -DHAVE_CONFIG_H -I. -I..  -fvisibility=hidden -Wall -Wmissing-declarations -Wpointer-arith -Wcast-align -Wcast-qual -Wformat -Wformat-nonliteral -Wformat-security -Wundef -Wwrite-strings -Wextra -Wsign-compare -Wno-unused-parameter -fno-strict-aliasing -fdiagnostics-show-option -I../api   -Wstrict-prototypes -Wmissing-prototypes -Wold-style-definition -Wnested-externs -O2 -flto=auto -ffat-lto-objects -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1  -m64 -march=x86-64-v2 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -c -o dump/libdaq_static_dump_la-daq_dump.lo `test -f 'dump/daq_dump.c' || echo './'`dump/daq_dump.c
+libtool: compile:  gcc -DHAVE_CONFIG_H -I. -I.. -fvisibility=hidden -Wall -Wmissing-declarations -Wpointer-arith -Wcast-align -Wcast-qual -Wformat -Wformat-nonliteral -Wformat-security -Wundef -Wwrite-strings -Wextra -Wsign-compare -Wno-unused-parameter -fno-strict-aliasing -fdiagnostics-show-option -I../api -Wstrict-prototypes -Wmissing-prototypes -Wold-style-definition -Wnested-externs -O2 -flto=auto -ffat-lto-objects -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1 -m64 -march=x86-64-v2 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -c dump/daq_dump.c  -fPIC -DPIC -o dump/.libs/libdaq_static_dump_la-daq_dump.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I. -I.. -fvisibility=hidden -Wall -Wmissing-declarations -Wpointer-arith -Wcast-align -Wcast-qual -Wformat -Wformat-nonliteral -Wformat-security -Wundef -Wwrite-strings -Wextra -Wsign-compare -Wno-unused-parameter -fno-strict-aliasing -fdiagnostics-show-option -I../api -Wstrict-prototypes -Wmissing-prototypes -Wold-style-definition -Wnested-externs -O2 -flto=auto -ffat-lto-objects -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1 -m64 -march=x86-64-v2 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -c dump/daq_dump.c -o dump/libdaq_static_dump_la-daq_dump.o >/dev/null 2>&1
+/bin/sh ../libtool  --tag=CC   --mode=link gcc -Wstrict-prototypes -Wmissing-prototypes -Wold-style-definition -Wnested-externs -O2 -flto=auto -ffat-lto-objects -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1  -m64 -march=x86-64-v2 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -static -avoid-version -Wl,-z,relro -Wl,--as-needed  -Wl,-z,now -specs=/usr/lib/rpm/redhat/redhat-hardened-ld -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1  -o dump/libdaq_static_dump.la -rpath /usr/lib64 dump/libdaq_static_dump_la-daq_dump.lo  
+libtool: link: ar cru dump/.libs/libdaq_static_dump.a  dump/libdaq_static_dump_la-daq_dump.o
+libtool: link: ranlib dump/.libs/libdaq_static_dump.a
+libtool: link: ( cd "dump/.libs" && rm -f "libdaq_static_dump.la" && ln -s "../libdaq_static_dump.la" "libdaq_static_dump.la" )
+/bin/sh ../libtool  --tag=CXX   --mode=compile g++ -std=gnu++11 -DHAVE_CONFIG_H -I. -I..  -fvisibility=hidden -Wall -Wmissing-declarations -Wpointer-arith -Wcast-align -Wcast-qual -Wformat -Wformat-nonliteral -Wformat-security -Wundef -Wwrite-strings -Wextra -Wsign-compare -Wno-unused-parameter -fno-strict-aliasing -fdiagnostics-show-option -I../api -I../example   -O2 -flto=auto -ffat-lto-objects -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1  -m64 -march=x86-64-v2 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -c -o fst/libdaq_static_fst_la-daq_fst.lo `test -f 'fst/daq_fst.cc' || echo './'`fst/daq_fst.cc
+libtool: compile:  g++ -std=gnu++11 -DHAVE_CONFIG_H -I. -I.. -fvisibility=hidden -Wall -Wmissing-declarations -Wpointer-arith -Wcast-align -Wcast-qual -Wformat -Wformat-nonliteral -Wformat-security -Wundef -Wwrite-strings -Wextra -Wsign-compare -Wno-unused-parameter -fno-strict-aliasing -fdiagnostics-show-option -I../api -I../example -O2 -flto=auto -ffat-lto-objects -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1 -m64 -march=x86-64-v2 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -c fst/daq_fst.cc  -fPIC -DPIC -o fst/.libs/libdaq_static_fst_la-daq_fst.o
+libtool: compile:  g++ -std=gnu++11 -DHAVE_CONFIG_H -I. -I.. -fvisibility=hidden -Wall -Wmissing-declarations -Wpointer-arith -Wcast-align -Wcast-qual -Wformat -Wformat-nonliteral -Wformat-security -Wundef -Wwrite-strings -Wextra -Wsign-compare -Wno-unused-parameter -fno-strict-aliasing -fdiagnostics-show-option -I../api -I../example -O2 -flto=auto -ffat-lto-objects -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1 -m64 -march=x86-64-v2 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -c fst/daq_fst.cc -o fst/libdaq_static_fst_la-daq_fst.o >/dev/null 2>&1
+/bin/sh ../libtool  --tag=CC   --mode=compile gcc -DHAVE_CONFIG_H -I. -I..  -fvisibility=hidden -Wall -Wmissing-declarations -Wpointer-arith -Wcast-align -Wcast-qual -Wformat -Wformat-nonliteral -Wformat-security -Wundef -Wwrite-strings -Wextra -Wsign-compare -Wno-unused-parameter -fno-strict-aliasing -fdiagnostics-show-option -I../api -I../example  -Wstrict-prototypes -Wmissing-prototypes -Wold-style-definition -Wnested-externs -O2 -flto=auto -ffat-lto-objects -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1  -m64 -march=x86-64-v2 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -c -o fst/libdaq_static_fst_la-PMurHash.lo `test -f 'fst/PMurHash.c' || echo './'`fst/PMurHash.c
+libtool: compile:  gcc -DHAVE_CONFIG_H -I. -I.. -fvisibility=hidden -Wall -Wmissing-declarations -Wpointer-arith -Wcast-align -Wcast-qual -Wformat -Wformat-nonliteral -Wformat-security -Wundef -Wwrite-strings -Wextra -Wsign-compare -Wno-unused-parameter -fno-strict-aliasing -fdiagnostics-show-option -I../api -I../example -Wstrict-prototypes -Wmissing-prototypes -Wold-style-definition -Wnested-externs -O2 -flto=auto -ffat-lto-objects -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1 -m64 -march=x86-64-v2 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -c fst/PMurHash.c  -fPIC -DPIC -o fst/.libs/libdaq_static_fst_la-PMurHash.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I. -I.. -fvisibility=hidden -Wall -Wmissing-declarations -Wpointer-arith -Wcast-align -Wcast-qual -Wformat -Wformat-nonliteral -Wformat-security -Wundef -Wwrite-strings -Wextra -Wsign-compare -Wno-unused-parameter -fno-strict-aliasing -fdiagnostics-show-option -I../api -I../example -Wstrict-prototypes -Wmissing-prototypes -Wold-style-definition -Wnested-externs -O2 -flto=auto -ffat-lto-objects -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1 -m64 -march=x86-64-v2 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -c fst/PMurHash.c -o fst/libdaq_static_fst_la-PMurHash.o >/dev/null 2>&1
+/bin/sh ../libtool  --tag=CXX   --mode=link g++ -std=gnu++11  -O2 -flto=auto -ffat-lto-objects -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1  -m64 -march=x86-64-v2 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -static -avoid-version -Wl,-z,relro -Wl,--as-needed  -Wl,-z,now -specs=/usr/lib/rpm/redhat/redhat-hardened-ld -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1  -o fst/libdaq_static_fst.la -rpath /usr/lib64 fst/libdaq_static_fst_la-daq_fst.lo fst/libdaq_static_fst_la-PMurHash.lo  
+libtool: link: ar cru fst/.libs/libdaq_static_fst.a  fst/libdaq_static_fst_la-daq_fst.o fst/libdaq_static_fst_la-PMurHash.o
+libtool: link: ranlib fst/.libs/libdaq_static_fst.a
+libtool: link: ( cd "fst/.libs" && rm -f "libdaq_static_fst.la" && ln -s "../libdaq_static_fst.la" "libdaq_static_fst.la" )
+/bin/sh ../libtool  --tag=CC   --mode=compile gcc -DHAVE_CONFIG_H -I. -I..  -fvisibility=hidden -Wall -Wmissing-declarations -Wpointer-arith -Wcast-align -Wcast-qual -Wformat -Wformat-nonliteral -Wformat-security -Wundef -Wwrite-strings -Wextra -Wsign-compare -Wno-unused-parameter -fno-strict-aliasing -fdiagnostics-show-option -I../api   -Wstrict-prototypes -Wmissing-prototypes -Wold-style-definition -Wnested-externs -O2 -flto=auto -ffat-lto-objects -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1  -m64 -march=x86-64-v2 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -c -o pcap/libdaq_static_pcap_la-daq_pcap.lo `test -f 'pcap/daq_pcap.c' || echo './'`pcap/daq_pcap.c
+libtool: compile:  gcc -DHAVE_CONFIG_H -I. -I.. -fvisibility=hidden -Wall -Wmissing-declarations -Wpointer-arith -Wcast-align -Wcast-qual -Wformat -Wformat-nonliteral -Wformat-security -Wundef -Wwrite-strings -Wextra -Wsign-compare -Wno-unused-parameter -fno-strict-aliasing -fdiagnostics-show-option -I../api -Wstrict-prototypes -Wmissing-prototypes -Wold-style-definition -Wnested-externs -O2 -flto=auto -ffat-lto-objects -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1 -m64 -march=x86-64-v2 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -c pcap/daq_pcap.c  -fPIC -DPIC -o pcap/.libs/libdaq_static_pcap_la-daq_pcap.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I. -I.. -fvisibility=hidden -Wall -Wmissing-declarations -Wpointer-arith -Wcast-align -Wcast-qual -Wformat -Wformat-nonliteral -Wformat-security -Wundef -Wwrite-strings -Wextra -Wsign-compare -Wno-unused-parameter -fno-strict-aliasing -fdiagnostics-show-option -I../api -Wstrict-prototypes -Wmissing-prototypes -Wold-style-definition -Wnested-externs -O2 -flto=auto -ffat-lto-objects -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1 -m64 -march=x86-64-v2 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -c pcap/daq_pcap.c -o pcap/libdaq_static_pcap_la-daq_pcap.o >/dev/null 2>&1
+/bin/sh ../libtool  --tag=CC   --mode=link gcc -Wstrict-prototypes -Wmissing-prototypes -Wold-style-definition -Wnested-externs -O2 -flto=auto -ffat-lto-objects -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1  -m64 -march=x86-64-v2 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -static -avoid-version -Wl,-z,relro -Wl,--as-needed  -Wl,-z,now -specs=/usr/lib/rpm/redhat/redhat-hardened-ld -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1  -o pcap/libdaq_static_pcap.la -rpath /usr/lib64 pcap/libdaq_static_pcap_la-daq_pcap.lo  
+libtool: link: ar cru pcap/.libs/libdaq_static_pcap.a  pcap/libdaq_static_pcap_la-daq_pcap.o
+libtool: link: ranlib pcap/.libs/libdaq_static_pcap.a
+libtool: link: ( cd "pcap/.libs" && rm -f "libdaq_static_pcap.la" && ln -s "../libdaq_static_pcap.la" "libdaq_static_pcap.la" )
+/bin/sh ../libtool  --tag=CC   --mode=compile gcc -DHAVE_CONFIG_H -I. -I..  -fvisibility=hidden -Wall -Wmissing-declarations -Wpointer-arith -Wcast-align -Wcast-qual -Wformat -Wformat-nonliteral -Wformat-security -Wundef -Wwrite-strings -Wextra -Wsign-compare -Wno-unused-parameter -fno-strict-aliasing -fdiagnostics-show-option -I../api  -Wstrict-prototypes -Wmissing-prototypes -Wold-style-definition -Wnested-externs -O2 -flto=auto -ffat-lto-objects -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1  -m64 -march=x86-64-v2 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -c -o savefile/libdaq_static_savefile_la-daq_savefile.lo `test -f 'savefile/daq_savefile.c' || echo './'`savefile/daq_savefile.c
+libtool: compile:  gcc -DHAVE_CONFIG_H -I. -I.. -fvisibility=hidden -Wall -Wmissing-declarations -Wpointer-arith -Wcast-align -Wcast-qual -Wformat -Wformat-nonliteral -Wformat-security -Wundef -Wwrite-strings -Wextra -Wsign-compare -Wno-unused-parameter -fno-strict-aliasing -fdiagnostics-show-option -I../api -Wstrict-prototypes -Wmissing-prototypes -Wold-style-definition -Wnested-externs -O2 -flto=auto -ffat-lto-objects -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1 -m64 -march=x86-64-v2 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -c savefile/daq_savefile.c  -fPIC -DPIC -o savefile/.libs/libdaq_static_savefile_la-daq_savefile.o
+savefile/daq_savefile.c: In function 'savefile_read_message':
+savefile/daq_savefile.c:167:43: warning: comparison of integer expressions of different signedness: 'long unsigned int' and 'off_t' {aka 'long int'} [-Wsign-compare]
+  167 |     if (sfc->file_offset + sizeof(*sfhdr) > sfc->file_size)
+      |                                           ^
+savefile/daq_savefile.c: In function 'savefile_daq_start':
+savefile/daq_savefile.c:315:24: warning: comparison of integer expressions of different signedness: 'off_t' {aka 'long int'} and 'long unsigned int' [-Wsign-compare]
+  315 |     if (sfc->file_size < sizeof(struct pcap_file_header))
+      |                        ^
+libtool: compile:  gcc -DHAVE_CONFIG_H -I. -I.. -fvisibility=hidden -Wall -Wmissing-declarations -Wpointer-arith -Wcast-align -Wcast-qual -Wformat -Wformat-nonliteral -Wformat-security -Wundef -Wwrite-strings -Wextra -Wsign-compare -Wno-unused-parameter -fno-strict-aliasing -fdiagnostics-show-option -I../api -Wstrict-prototypes -Wmissing-prototypes -Wold-style-definition -Wnested-externs -O2 -flto=auto -ffat-lto-objects -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1 -m64 -march=x86-64-v2 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -c savefile/daq_savefile.c -o savefile/libdaq_static_savefile_la-daq_savefile.o >/dev/null 2>&1
+/bin/sh ../libtool  --tag=CC   --mode=link gcc -Wstrict-prototypes -Wmissing-prototypes -Wold-style-definition -Wnested-externs -O2 -flto=auto -ffat-lto-objects -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1  -m64 -march=x86-64-v2 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -static -avoid-version -Wl,-z,relro -Wl,--as-needed  -Wl,-z,now -specs=/usr/lib/rpm/redhat/redhat-hardened-ld -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1  -o savefile/libdaq_static_savefile.la -rpath /usr/lib64 savefile/libdaq_static_savefile_la-daq_savefile.lo  
+libtool: link: ar cru savefile/.libs/libdaq_static_savefile.a  savefile/libdaq_static_savefile_la-daq_savefile.o
+libtool: link: ranlib savefile/.libs/libdaq_static_savefile.a
+libtool: link: ( cd "savefile/.libs" && rm -f "libdaq_static_savefile.la" && ln -s "../libdaq_static_savefile.la" "libdaq_static_savefile.la" )
+/bin/sh ../libtool  --tag=CC   --mode=compile gcc -DHAVE_CONFIG_H -I. -I..  -fvisibility=hidden -Wall -Wmissing-declarations -Wpointer-arith -Wcast-align -Wcast-qual -Wformat -Wformat-nonliteral -Wformat-security -Wundef -Wwrite-strings -Wextra -Wsign-compare -Wno-unused-parameter -fno-strict-aliasing -fdiagnostics-show-option -I../api  -Wstrict-prototypes -Wmissing-prototypes -Wold-style-definition -Wnested-externs -O2 -flto=auto -ffat-lto-objects -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1  -m64 -march=x86-64-v2 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -c -o trace/libdaq_static_trace_la-daq_trace.lo `test -f 'trace/daq_trace.c' || echo './'`trace/daq_trace.c
+libtool: compile:  gcc -DHAVE_CONFIG_H -I. -I.. -fvisibility=hidden -Wall -Wmissing-declarations -Wpointer-arith -Wcast-align -Wcast-qual -Wformat -Wformat-nonliteral -Wformat-security -Wundef -Wwrite-strings -Wextra -Wsign-compare -Wno-unused-parameter -fno-strict-aliasing -fdiagnostics-show-option -I../api -Wstrict-prototypes -Wmissing-prototypes -Wold-style-definition -Wnested-externs -O2 -flto=auto -ffat-lto-objects -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1 -m64 -march=x86-64-v2 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -c trace/daq_trace.c  -fPIC -DPIC -o trace/.libs/libdaq_static_trace_la-daq_trace.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I. -I.. -fvisibility=hidden -Wall -Wmissing-declarations -Wpointer-arith -Wcast-align -Wcast-qual -Wformat -Wformat-nonliteral -Wformat-security -Wundef -Wwrite-strings -Wextra -Wsign-compare -Wno-unused-parameter -fno-strict-aliasing -fdiagnostics-show-option -I../api -Wstrict-prototypes -Wmissing-prototypes -Wold-style-definition -Wnested-externs -O2 -flto=auto -ffat-lto-objects -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1 -m64 -march=x86-64-v2 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -c trace/daq_trace.c -o trace/libdaq_static_trace_la-daq_trace.o >/dev/null 2>&1
+/bin/sh ../libtool  --tag=CC   --mode=link gcc -Wstrict-prototypes -Wmissing-prototypes -Wold-style-definition -Wnested-externs -O2 -flto=auto -ffat-lto-objects -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1  -m64 -march=x86-64-v2 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -static -avoid-version -Wl,-z,relro -Wl,--as-needed  -Wl,-z,now -specs=/usr/lib/rpm/redhat/redhat-hardened-ld -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1  -o trace/libdaq_static_trace.la -rpath /usr/lib64 trace/libdaq_static_trace_la-daq_trace.lo  
+libtool: link: ar cru trace/.libs/libdaq_static_trace.a  trace/libdaq_static_trace_la-daq_trace.o
+libtool: link: ranlib trace/.libs/libdaq_static_trace.a
+libtool: link: ( cd "trace/.libs" && rm -f "libdaq_static_trace.la" && ln -s "../libdaq_static_trace.la" "libdaq_static_trace.la" )
+/bin/sh ../libtool  --tag=CXX   --mode=compile g++ -std=gnu++11 -DHAVE_CONFIG_H -I. -I..  -fvisibility=hidden -Wall -Wmissing-declarations -Wpointer-arith -Wcast-align -Wcast-qual -Wformat -Wformat-nonliteral -Wformat-security -Wundef -Wwrite-strings -Wextra -Wsign-compare -Wno-unused-parameter -fno-strict-aliasing -fdiagnostics-show-option -I../api   -O2 -flto=auto -ffat-lto-objects -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1  -m64 -march=x86-64-v2 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -c -o gwlb/libdaq_static_gwlb_la-daq_gwlb.lo `test -f 'gwlb/daq_gwlb.cc' || echo './'`gwlb/daq_gwlb.cc
+libtool: compile:  g++ -std=gnu++11 -DHAVE_CONFIG_H -I. -I.. -fvisibility=hidden -Wall -Wmissing-declarations -Wpointer-arith -Wcast-align -Wcast-qual -Wformat -Wformat-nonliteral -Wformat-security -Wundef -Wwrite-strings -Wextra -Wsign-compare -Wno-unused-parameter -fno-strict-aliasing -fdiagnostics-show-option -I../api -O2 -flto=auto -ffat-lto-objects -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1 -m64 -march=x86-64-v2 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -c gwlb/daq_gwlb.cc  -fPIC -DPIC -o gwlb/.libs/libdaq_static_gwlb_la-daq_gwlb.o
+libtool: compile:  g++ -std=gnu++11 -DHAVE_CONFIG_H -I. -I.. -fvisibility=hidden -Wall -Wmissing-declarations -Wpointer-arith -Wcast-align -Wcast-qual -Wformat -Wformat-nonliteral -Wformat-security -Wundef -Wwrite-strings -Wextra -Wsign-compare -Wno-unused-parameter -fno-strict-aliasing -fdiagnostics-show-option -I../api -O2 -flto=auto -ffat-lto-objects -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1 -m64 -march=x86-64-v2 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -c gwlb/daq_gwlb.cc -o gwlb/libdaq_static_gwlb_la-daq_gwlb.o >/dev/null 2>&1
+/bin/sh ../libtool  --tag=CXX   --mode=link g++ -std=gnu++11  -O2 -flto=auto -ffat-lto-objects -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1  -m64 -march=x86-64-v2 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -static -avoid-version -Wl,-z,relro -Wl,--as-needed  -Wl,-z,now -specs=/usr/lib/rpm/redhat/redhat-hardened-ld -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1  -o gwlb/libdaq_static_gwlb.la -rpath /usr/lib64 gwlb/libdaq_static_gwlb_la-daq_gwlb.lo  
+libtool: link: ar cru gwlb/.libs/libdaq_static_gwlb.a  gwlb/libdaq_static_gwlb_la-daq_gwlb.o
+libtool: link: ranlib gwlb/.libs/libdaq_static_gwlb.a
+libtool: link: ( cd "gwlb/.libs" && rm -f "libdaq_static_gwlb.la" && ln -s "../libdaq_static_gwlb.la" "libdaq_static_gwlb.la" )
+/bin/sh ../libtool  --tag=CC   --mode=compile gcc -DHAVE_CONFIG_H -I. -I..  -fvisibility=hidden -Wall -Wmissing-declarations -Wpointer-arith -Wcast-align -Wcast-qual -Wformat -Wformat-nonliteral -Wformat-security -Wundef -Wwrite-strings -Wextra -Wsign-compare -Wno-unused-parameter -fno-strict-aliasing -fdiagnostics-show-option -I../api -DBUILDING_SO   -Wstrict-prototypes -Wmissing-prototypes -Wold-style-definition -Wnested-externs -O2 -flto=auto -ffat-lto-objects -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1  -m64 -march=x86-64-v2 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -c -o afpacket/daq_afpacket_la-daq_afpacket.lo `test -f 'afpacket/daq_afpacket.c' || echo './'`afpacket/daq_afpacket.c
+libtool: compile:  gcc -DHAVE_CONFIG_H -I. -I.. -fvisibility=hidden -Wall -Wmissing-declarations -Wpointer-arith -Wcast-align -Wcast-qual -Wformat -Wformat-nonliteral -Wformat-security -Wundef -Wwrite-strings -Wextra -Wsign-compare -Wno-unused-parameter -fno-strict-aliasing -fdiagnostics-show-option -I../api -DBUILDING_SO -Wstrict-prototypes -Wmissing-prototypes -Wold-style-definition -Wnested-externs -O2 -flto=auto -ffat-lto-objects -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1 -m64 -march=x86-64-v2 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -c afpacket/daq_afpacket.c  -fPIC -DPIC -o afpacket/.libs/daq_afpacket_la-daq_afpacket.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I. -I.. -fvisibility=hidden -Wall -Wmissing-declarations -Wpointer-arith -Wcast-align -Wcast-qual -Wformat -Wformat-nonliteral -Wformat-security -Wundef -Wwrite-strings -Wextra -Wsign-compare -Wno-unused-parameter -fno-strict-aliasing -fdiagnostics-show-option -I../api -DBUILDING_SO -Wstrict-prototypes -Wmissing-prototypes -Wold-style-definition -Wnested-externs -O2 -flto=auto -ffat-lto-objects -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1 -m64 -march=x86-64-v2 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -c afpacket/daq_afpacket.c -o afpacket/daq_afpacket_la-daq_afpacket.o >/dev/null 2>&1
+/bin/sh ../libtool  --tag=CC   --mode=link gcc -Wstrict-prototypes -Wmissing-prototypes -Wold-style-definition -Wnested-externs -O2 -flto=auto -ffat-lto-objects -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1  -m64 -march=x86-64-v2 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -module -export-dynamic -avoid-version -shared  -Wl,-z,relro -Wl,--as-needed  -Wl,-z,now -specs=/usr/lib/rpm/redhat/redhat-hardened-ld -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1  -o afpacket/daq_afpacket.la -rpath /usr/lib64/daq afpacket/daq_afpacket_la-daq_afpacket.lo -lpcap -lpthread 
+libtool: link: gcc -shared  -fPIC -DPIC  afpacket/.libs/daq_afpacket_la-daq_afpacket.o   -lpcap -lpthread -Wl,-z,now -specs=/usr/lib/rpm/redhat/redhat-hardened-ld -O2 -flto=auto -g -grecord-gcc-switches -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1 -m64 -march=x86-64-v2 -mtune=generic -Wl,-z -Wl,relro -Wl,--as-needed -Wl,-z -Wl,now -specs=/usr/lib/rpm/redhat/redhat-hardened-ld -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1   -Wl,-soname -Wl,daq_afpacket.so -o afpacket/.libs/daq_afpacket.so
+libtool: link: ( cd "afpacket/.libs" && rm -f "daq_afpacket.la" && ln -s "../daq_afpacket.la" "daq_afpacket.la" )
+/bin/sh ../libtool  --tag=CC   --mode=compile gcc -DHAVE_CONFIG_H -I. -I..  -fvisibility=hidden -Wall -Wmissing-declarations -Wpointer-arith -Wcast-align -Wcast-qual -Wformat -Wformat-nonliteral -Wformat-security -Wundef -Wwrite-strings -Wextra -Wsign-compare -Wno-unused-parameter -fno-strict-aliasing -fdiagnostics-show-option -I../api -DBUILDING_SO  -Wstrict-prototypes -Wmissing-prototypes -Wold-style-definition -Wnested-externs -O2 -flto=auto -ffat-lto-objects -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1  -m64 -march=x86-64-v2 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -c -o pfring/daq_pfring_la-daq_pfring.lo `test -f 'pfring/daq_pfring.c' || echo './'`pfring/daq_pfring.c
+libtool: compile:  gcc -DHAVE_CONFIG_H -I. -I.. -fvisibility=hidden -Wall -Wmissing-declarations -Wpointer-arith -Wcast-align -Wcast-qual -Wformat -Wformat-nonliteral -Wformat-security -Wundef -Wwrite-strings -Wextra -Wsign-compare -Wno-unused-parameter -fno-strict-aliasing -fdiagnostics-show-option -I../api -DBUILDING_SO -Wstrict-prototypes -Wmissing-prototypes -Wold-style-definition -Wnested-externs -O2 -flto=auto -ffat-lto-objects -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1 -m64 -march=x86-64-v2 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -c pfring/daq_pfring.c  -fPIC -DPIC -o pfring/.libs/daq_pfring_la-daq_pfring.o
+pfring/daq_pfring.c: In function 'create_packet_pool':
+pfring/daq_pfring.c:149:20: warning: assignment to 'struct _pfring_pkt_desc *' from incompatible pointer type 'PfringPktDesc *' [-Wincompatible-pointer-types]
+  149 |         desc->next = pool->freelist;
+      |                    ^
+pfring/daq_pfring.c: In function 'destroy_packet_pool':
+pfring/daq_pfring.c:162:28: warning: assignment to 'struct _pfring_pkt_desc *' from incompatible pointer type 'PfringPktDesc *' [-Wincompatible-pointer-types]
+  162 |                 desc->next = pool->freelist;
+      |                            ^
+pfring/daq_pfring.c: In function 'create_bridge':
+pfring/daq_pfring.c:245:56: warning: comparison of integer expressions of different signedness: 'int' and 'uint32_t' {aka 'unsigned int'} [-Wsign-compare]
+  245 |         if (device_indices[i] < 0 || device_indices[i] >= pc->device_count) {
+      |                                                        ^~
+pfring/daq_pfring.c: In function 'pfring_daq_msg_receive':
+pfring/daq_pfring.c:529:43: warning: comparison of integer expressions of different signedness: 'int' and 'uint32_t' {aka 'unsigned int'} [-Wsign-compare]
+  529 |                 if (pc->curr_device_index == start_index) {
+      |                                           ^~
+pfring/daq_pfring.c:551:31: warning: assignment to 'PfringPktDesc *' from incompatible pointer type 'struct _pfring_pkt_desc *' [-Wincompatible-pointer-types]
+  551 |             pc->pool.freelist = desc->next;
+      |                               ^
+pfring/daq_pfring.c: In function 'pfring_daq_msg_finalize':
+pfring/daq_pfring.c:589:71: warning: pointer targets in passing argument 2 of 'pfring_send' differ in signedness [-Wpointer-sign]
+  589 |             if (pfring_send(pc->devices[device->peer_index].ring, desc->data, desc->msg.data_len, send_mode) < 0) {
+      |                                                                   ~~~~^~~~~~
+      |                                                                       |
+      |                                                                       uint8_t * {aka unsigned char *}
+In file included from pfring/daq_pfring.c:34:
+/usr/include/pfring.h:697:37: note: expected 'char *' but argument is of type 'uint8_t *' {aka 'unsigned char *'}
+  697 | int pfring_send(pfring *ring, char *pkt, u_int pkt_len, u_int8_t flush_packet);
+      |                               ~~~~~~^~~
+pfring/daq_pfring.c:597:16: warning: assignment to 'struct _pfring_pkt_desc *' from incompatible pointer type 'PfringPktDesc *' [-Wincompatible-pointer-types]
+  597 |     desc->next = pc->pool.freelist;
+      |                ^
+pfring/daq_pfring.c: In function 'pfring_daq_set_filter':
+pfring/daq_pfring.c:709:60: warning: passing argument 2 of 'pfring_set_bpf_filter' from incompatible pointer type [-Wincompatible-pointer-types]
+  709 |             if (pfring_set_bpf_filter(pc->devices[i].ring, &fcode) < 0) {
+      |                                                            ^~~~~~
+      |                                                            |
+      |                                                            struct bpf_program *
+In file included from pfring/daq_pfring.c:34:
+/usr/include/pfring.h:1058:47: note: expected 'char *' but argument is of type 'struct bpf_program *'
+ 1058 | int pfring_set_bpf_filter(pfring *ring, char *filter_buffer);
+      |                                         ~~~~~~^~~~~~~~~~~~~
+pfring/daq_pfring.c:699:10: warning: unused variable 'errbuf' [-Wunused-variable]
+  699 |     char errbuf[PCAP_ERRBUF_SIZE];
+      |          ^~~~~~
+pfring/daq_pfring.c: In function 'pfring_daq_inject':
+pfring/daq_pfring.c:822:31: warning: comparison of integer expressions of different signedness: 'int32_t' {aka 'int'} and 'uint32_t' {aka 'unsigned int'} [-Wsign-compare]
+  822 |     if (pkthdr->ingress_index >= pc->device_count)
+      |                               ^~
+pfring/daq_pfring.c:828:35: warning: passing argument 2 of 'pfring_send' discards 'const' qualifier from pointer target type [-Wdiscarded-qualifiers]
+  828 |     if (pfring_send(device->ring, data, data_len, send_mode) < 0) {
+      |                                   ^~~~
+In file included from pfring/daq_pfring.c:34:
+/usr/include/pfring.h:697:37: note: expected 'char *' but argument is of type 'const uint8_t *' {aka 'const unsigned char *'}
+  697 | int pfring_send(pfring *ring, char *pkt, u_int pkt_len, u_int8_t flush_packet);
+      |                               ~~~~~~^~~
+pfring/daq_pfring.c: In function 'pfring_daq_inject_relative':
+pfring/daq_pfring.c:853:42: warning: passing argument 2 of 'pfring_send' discards 'const' qualifier from pointer target type [-Wdiscarded-qualifiers]
+  853 |     if (pfring_send(target_device->ring, data, data_len, send_mode) < 0) {
+      |                                          ^~~~
+In file included from pfring/daq_pfring.c:34:
+/usr/include/pfring.h:697:37: note: expected 'char *' but argument is of type 'const uint8_t *' {aka 'const unsigned char *'}
+  697 | int pfring_send(pfring *ring, char *pkt, u_int pkt_len, u_int8_t flush_packet);
+      |                               ~~~~~~^~~
+pfring/daq_pfring.c:845:20: warning: unused variable 'desc' [-Wunused-variable]
+  845 |     PfringPktDesc *desc = (PfringPktDesc *)msg->priv;
+      |                    ^~~~
+pfring/daq_pfring.c: At top level:
+pfring/daq_pfring.c:874:18: warning: initialization of 'int (*)(void *)' from incompatible pointer type 'void (*)(void *)' [-Wincompatible-pointer-types]
+  874 |     .interrupt = pfring_daq_interrupt,
+      |                  ^~~~~~~~~~~~~~~~~~~~
+pfring/daq_pfring.c:874:18: note: (near initialization for 'DAQ_MODULE_DATA.interrupt')
+pfring/daq_pfring.c:875:15: warning: initialization of 'int (*)(void)' from incompatible pointer type 'int (*)(void *)' [-Wincompatible-pointer-types]
+  875 |     .unload = unload,
+      |               ^~~~~~
+pfring/daq_pfring.c:875:15: note: (near initialization for 'DAQ_MODULE_DATA.unload')
+pfring/daq_pfring.c:805:26: warning: 'verdict_translation_table' defined but not used [-Wunused-const-variable=]
+  805 | static const DAQ_Verdict verdict_translation_table[MAX_DAQ_VERDICT] = {
+      |                          ^~~~~~~~~~~~~~~~~~~~~~~~~
+pfring/daq_pfring.c:767:13: warning: 'destroy_instance' defined but not used [-Wunused-function]
+  767 | static void destroy_instance(PfringInstance *instance) {
+      |             ^~~~~~~~~~~~~~~~
+pfring/daq_pfring.c:737:24: warning: 'create_instance' defined but not used [-Wunused-function]
+  737 | static PfringInstance *create_instance(PfringContext *pc, const char *device) {
+      |                        ^~~~~~~~~~~~~~~
+In file included from /usr/include/string.h:519,
+                 from pfring/daq_pfring.c:31:
+In function 'strncpy',
+    inlined from 'add_device' at pfring/daq_pfring.c:214:5,
+    inlined from 'pfring_daq_instantiate' at pfring/daq_pfring.c:359:15:
+/usr/include/bits/string_fortified.h:95:10: warning: 'strncpy' output may be truncated copying 15 bytes from a string of length 15 [-Wstringop-truncation]
+   95 |   return __builtin___strncpy_chk (__dest, __src, __len,
+      |          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   96 |                                   __glibc_objsize (__dest));
+      |                                   ~~~~~~~~~~~~~~~~~~~~~~~~~
+libtool: compile:  gcc -DHAVE_CONFIG_H -I. -I.. -fvisibility=hidden -Wall -Wmissing-declarations -Wpointer-arith -Wcast-align -Wcast-qual -Wformat -Wformat-nonliteral -Wformat-security -Wundef -Wwrite-strings -Wextra -Wsign-compare -Wno-unused-parameter -fno-strict-aliasing -fdiagnostics-show-option -I../api -DBUILDING_SO -Wstrict-prototypes -Wmissing-prototypes -Wold-style-definition -Wnested-externs -O2 -flto=auto -ffat-lto-objects -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1 -m64 -march=x86-64-v2 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -c pfring/daq_pfring.c -o pfring/daq_pfring_la-daq_pfring.o >/dev/null 2>&1
+/bin/sh ../libtool  --tag=CC   --mode=link gcc -Wstrict-prototypes -Wmissing-prototypes -Wold-style-definition -Wnested-externs -O2 -flto=auto -ffat-lto-objects -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1  -m64 -march=x86-64-v2 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -module -export-dynamic -avoid-version -shared -Wl,-z,relro -Wl,--as-needed  -Wl,-z,now -specs=/usr/lib/rpm/redhat/redhat-hardened-ld -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1  -o pfring/daq_pfring.la -rpath /usr/lib64/daq pfring/daq_pfring_la-daq_pfring.lo  
+libtool: link: gcc -shared  -fPIC -DPIC  pfring/.libs/daq_pfring_la-daq_pfring.o   -Wl,-z,now -specs=/usr/lib/rpm/redhat/redhat-hardened-ld -O2 -flto=auto -g -grecord-gcc-switches -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1 -m64 -march=x86-64-v2 -mtune=generic -Wl,-z -Wl,relro -Wl,--as-needed -Wl,-z -Wl,now -specs=/usr/lib/rpm/redhat/redhat-hardened-ld -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1   -Wl,-soname -Wl,daq_pfring.so -o pfring/.libs/daq_pfring.so
+libtool: link: ( cd "pfring/.libs" && rm -f "daq_pfring.la" && ln -s "../daq_pfring.la" "daq_pfring.la" )
+/bin/sh ../libtool  --tag=CC   --mode=compile gcc -DHAVE_CONFIG_H -I. -I..  -fvisibility=hidden -Wall -Wmissing-declarations -Wpointer-arith -Wcast-align -Wcast-qual -Wformat -Wformat-nonliteral -Wformat-security -Wundef -Wwrite-strings -Wextra -Wsign-compare -Wno-unused-parameter -fno-strict-aliasing -fdiagnostics-show-option -I../api -DBUILDING_SO   -Wstrict-prototypes -Wmissing-prototypes -Wold-style-definition -Wnested-externs -O2 -flto=auto -ffat-lto-objects -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1  -m64 -march=x86-64-v2 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -c -o bpf/daq_bpf_la-daq_bpf.lo `test -f 'bpf/daq_bpf.c' || echo './'`bpf/daq_bpf.c
+libtool: compile:  gcc -DHAVE_CONFIG_H -I. -I.. -fvisibility=hidden -Wall -Wmissing-declarations -Wpointer-arith -Wcast-align -Wcast-qual -Wformat -Wformat-nonliteral -Wformat-security -Wundef -Wwrite-strings -Wextra -Wsign-compare -Wno-unused-parameter -fno-strict-aliasing -fdiagnostics-show-option -I../api -DBUILDING_SO -Wstrict-prototypes -Wmissing-prototypes -Wold-style-definition -Wnested-externs -O2 -flto=auto -ffat-lto-objects -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1 -m64 -march=x86-64-v2 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -c bpf/daq_bpf.c  -fPIC -DPIC -o bpf/.libs/daq_bpf_la-daq_bpf.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I. -I.. -fvisibility=hidden -Wall -Wmissing-declarations -Wpointer-arith -Wcast-align -Wcast-qual -Wformat -Wformat-nonliteral -Wformat-security -Wundef -Wwrite-strings -Wextra -Wsign-compare -Wno-unused-parameter -fno-strict-aliasing -fdiagnostics-show-option -I../api -DBUILDING_SO -Wstrict-prototypes -Wmissing-prototypes -Wold-style-definition -Wnested-externs -O2 -flto=auto -ffat-lto-objects -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1 -m64 -march=x86-64-v2 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -c bpf/daq_bpf.c -o bpf/daq_bpf_la-daq_bpf.o >/dev/null 2>&1
+/bin/sh ../libtool  --tag=CC   --mode=link gcc -Wstrict-prototypes -Wmissing-prototypes -Wold-style-definition -Wnested-externs -O2 -flto=auto -ffat-lto-objects -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1  -m64 -march=x86-64-v2 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -module -export-dynamic -avoid-version -shared  -Wl,-z,relro -Wl,--as-needed  -Wl,-z,now -specs=/usr/lib/rpm/redhat/redhat-hardened-ld -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1  -o bpf/daq_bpf.la -rpath /usr/lib64/daq bpf/daq_bpf_la-daq_bpf.lo -lpcap -lpthread 
+libtool: link: gcc -shared  -fPIC -DPIC  bpf/.libs/daq_bpf_la-daq_bpf.o   -lpcap -lpthread -Wl,-z,now -specs=/usr/lib/rpm/redhat/redhat-hardened-ld -O2 -flto=auto -g -grecord-gcc-switches -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1 -m64 -march=x86-64-v2 -mtune=generic -Wl,-z -Wl,relro -Wl,--as-needed -Wl,-z -Wl,now -specs=/usr/lib/rpm/redhat/redhat-hardened-ld -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1   -Wl,-soname -Wl,daq_bpf.so -o bpf/.libs/daq_bpf.so
+libtool: link: ( cd "bpf/.libs" && rm -f "daq_bpf.la" && ln -s "../daq_bpf.la" "daq_bpf.la" )
+/bin/sh ../libtool  --tag=CC   --mode=compile gcc -DHAVE_CONFIG_H -I. -I..  -fvisibility=hidden -Wall -Wmissing-declarations -Wpointer-arith -Wcast-align -Wcast-qual -Wformat -Wformat-nonliteral -Wformat-security -Wundef -Wwrite-strings -Wextra -Wsign-compare -Wno-unused-parameter -fno-strict-aliasing -fdiagnostics-show-option -I../api -DBUILDING_SO   -Wstrict-prototypes -Wmissing-prototypes -Wold-style-definition -Wnested-externs -O2 -flto=auto -ffat-lto-objects -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1  -m64 -march=x86-64-v2 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -c -o dump/daq_dump_la-daq_dump.lo `test -f 'dump/daq_dump.c' || echo './'`dump/daq_dump.c
+libtool: compile:  gcc -DHAVE_CONFIG_H -I. -I.. -fvisibility=hidden -Wall -Wmissing-declarations -Wpointer-arith -Wcast-align -Wcast-qual -Wformat -Wformat-nonliteral -Wformat-security -Wundef -Wwrite-strings -Wextra -Wsign-compare -Wno-unused-parameter -fno-strict-aliasing -fdiagnostics-show-option -I../api -DBUILDING_SO -Wstrict-prototypes -Wmissing-prototypes -Wold-style-definition -Wnested-externs -O2 -flto=auto -ffat-lto-objects -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1 -m64 -march=x86-64-v2 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -c dump/daq_dump.c  -fPIC -DPIC -o dump/.libs/daq_dump_la-daq_dump.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I. -I.. -fvisibility=hidden -Wall -Wmissing-declarations -Wpointer-arith -Wcast-align -Wcast-qual -Wformat -Wformat-nonliteral -Wformat-security -Wundef -Wwrite-strings -Wextra -Wsign-compare -Wno-unused-parameter -fno-strict-aliasing -fdiagnostics-show-option -I../api -DBUILDING_SO -Wstrict-prototypes -Wmissing-prototypes -Wold-style-definition -Wnested-externs -O2 -flto=auto -ffat-lto-objects -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1 -m64 -march=x86-64-v2 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -c dump/daq_dump.c -o dump/daq_dump_la-daq_dump.o >/dev/null 2>&1
+/bin/sh ../libtool  --tag=CC   --mode=link gcc -Wstrict-prototypes -Wmissing-prototypes -Wold-style-definition -Wnested-externs -O2 -flto=auto -ffat-lto-objects -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1  -m64 -march=x86-64-v2 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -module -export-dynamic -avoid-version -shared  -Wl,-z,relro -Wl,--as-needed  -Wl,-z,now -specs=/usr/lib/rpm/redhat/redhat-hardened-ld -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1  -o dump/daq_dump.la -rpath /usr/lib64/daq dump/daq_dump_la-daq_dump.lo -lpcap 
+libtool: link: gcc -shared  -fPIC -DPIC  dump/.libs/daq_dump_la-daq_dump.o   -lpcap -Wl,-z,now -specs=/usr/lib/rpm/redhat/redhat-hardened-ld -O2 -flto=auto -g -grecord-gcc-switches -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1 -m64 -march=x86-64-v2 -mtune=generic -Wl,-z -Wl,relro -Wl,--as-needed -Wl,-z -Wl,now -specs=/usr/lib/rpm/redhat/redhat-hardened-ld -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1   -Wl,-soname -Wl,daq_dump.so -o dump/.libs/daq_dump.so
+libtool: link: ( cd "dump/.libs" && rm -f "daq_dump.la" && ln -s "../daq_dump.la" "daq_dump.la" )
+/bin/sh ../libtool  --tag=CXX   --mode=compile g++ -std=gnu++11 -DHAVE_CONFIG_H -I. -I..  -fvisibility=hidden -Wall -Wmissing-declarations -Wpointer-arith -Wcast-align -Wcast-qual -Wformat -Wformat-nonliteral -Wformat-security -Wundef -Wwrite-strings -Wextra -Wsign-compare -Wno-unused-parameter -fno-strict-aliasing -fdiagnostics-show-option -I../api -I../example -DBUILDING_SO   -O2 -flto=auto -ffat-lto-objects -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1  -m64 -march=x86-64-v2 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -c -o fst/daq_fst_la-daq_fst.lo `test -f 'fst/daq_fst.cc' || echo './'`fst/daq_fst.cc
+libtool: compile:  g++ -std=gnu++11 -DHAVE_CONFIG_H -I. -I.. -fvisibility=hidden -Wall -Wmissing-declarations -Wpointer-arith -Wcast-align -Wcast-qual -Wformat -Wformat-nonliteral -Wformat-security -Wundef -Wwrite-strings -Wextra -Wsign-compare -Wno-unused-parameter -fno-strict-aliasing -fdiagnostics-show-option -I../api -I../example -DBUILDING_SO -O2 -flto=auto -ffat-lto-objects -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1 -m64 -march=x86-64-v2 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -c fst/daq_fst.cc  -fPIC -DPIC -o fst/.libs/daq_fst_la-daq_fst.o
+libtool: compile:  g++ -std=gnu++11 -DHAVE_CONFIG_H -I. -I.. -fvisibility=hidden -Wall -Wmissing-declarations -Wpointer-arith -Wcast-align -Wcast-qual -Wformat -Wformat-nonliteral -Wformat-security -Wundef -Wwrite-strings -Wextra -Wsign-compare -Wno-unused-parameter -fno-strict-aliasing -fdiagnostics-show-option -I../api -I../example -DBUILDING_SO -O2 -flto=auto -ffat-lto-objects -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1 -m64 -march=x86-64-v2 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -c fst/daq_fst.cc -o fst/daq_fst_la-daq_fst.o >/dev/null 2>&1
+/bin/sh ../libtool  --tag=CC   --mode=compile gcc -DHAVE_CONFIG_H -I. -I..  -fvisibility=hidden -Wall -Wmissing-declarations -Wpointer-arith -Wcast-align -Wcast-qual -Wformat -Wformat-nonliteral -Wformat-security -Wundef -Wwrite-strings -Wextra -Wsign-compare -Wno-unused-parameter -fno-strict-aliasing -fdiagnostics-show-option -I../api -I../example -DBUILDING_SO  -Wstrict-prototypes -Wmissing-prototypes -Wold-style-definition -Wnested-externs -O2 -flto=auto -ffat-lto-objects -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1  -m64 -march=x86-64-v2 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -c -o fst/daq_fst_la-PMurHash.lo `test -f 'fst/PMurHash.c' || echo './'`fst/PMurHash.c
+libtool: compile:  gcc -DHAVE_CONFIG_H -I. -I.. -fvisibility=hidden -Wall -Wmissing-declarations -Wpointer-arith -Wcast-align -Wcast-qual -Wformat -Wformat-nonliteral -Wformat-security -Wundef -Wwrite-strings -Wextra -Wsign-compare -Wno-unused-parameter -fno-strict-aliasing -fdiagnostics-show-option -I../api -I../example -DBUILDING_SO -Wstrict-prototypes -Wmissing-prototypes -Wold-style-definition -Wnested-externs -O2 -flto=auto -ffat-lto-objects -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1 -m64 -march=x86-64-v2 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -c fst/PMurHash.c  -fPIC -DPIC -o fst/.libs/daq_fst_la-PMurHash.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I. -I.. -fvisibility=hidden -Wall -Wmissing-declarations -Wpointer-arith -Wcast-align -Wcast-qual -Wformat -Wformat-nonliteral -Wformat-security -Wundef -Wwrite-strings -Wextra -Wsign-compare -Wno-unused-parameter -fno-strict-aliasing -fdiagnostics-show-option -I../api -I../example -DBUILDING_SO -Wstrict-prototypes -Wmissing-prototypes -Wold-style-definition -Wnested-externs -O2 -flto=auto -ffat-lto-objects -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1 -m64 -march=x86-64-v2 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -c fst/PMurHash.c -o fst/daq_fst_la-PMurHash.o >/dev/null 2>&1
+/bin/sh ../libtool  --tag=CXX   --mode=link g++ -std=gnu++11  -O2 -flto=auto -ffat-lto-objects -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1  -m64 -march=x86-64-v2 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -module -export-dynamic -avoid-version -shared -Wl,-z,relro -Wl,--as-needed  -Wl,-z,now -specs=/usr/lib/rpm/redhat/redhat-hardened-ld -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1  -o fst/daq_fst.la -rpath /usr/lib64/daq fst/daq_fst_la-daq_fst.lo fst/daq_fst_la-PMurHash.lo  
+libtool: link: g++ -std=gnu++11  -fPIC -DPIC -shared -nostdlib /usr/lib/gcc/x86_64-redhat-linux/11/../../../../lib64/crti.o /usr/lib/gcc/x86_64-redhat-linux/11/crtbeginS.o  fst/.libs/daq_fst_la-daq_fst.o fst/.libs/daq_fst_la-PMurHash.o   -L/usr/lib/gcc/x86_64-redhat-linux/11 -L/usr/lib/gcc/x86_64-redhat-linux/11/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/usr/lib/gcc/x86_64-redhat-linux/11/../../.. -lstdc++ -lm -lc -lgcc_s /usr/lib/gcc/x86_64-redhat-linux/11/crtendS.o /usr/lib/gcc/x86_64-redhat-linux/11/../../../../lib64/crtn.o -Wl,-z,now -specs=/usr/lib/rpm/redhat/redhat-hardened-ld -O2 -flto=auto -g -grecord-gcc-switches -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1 -m64 -march=x86-64-v2 -mtune=generic -Wl,-z -Wl,relro -Wl,--as-needed -Wl,-z -Wl,now -specs=/usr/lib/rpm/redhat/redhat-hardened-ld -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1   -Wl,-soname -Wl,daq_fst.so -o fst/.libs/daq_fst.so
+libtool: link: ( cd "fst/.libs" && rm -f "daq_fst.la" && ln -s "../daq_fst.la" "daq_fst.la" )
+/bin/sh ../libtool  --tag=CC   --mode=compile gcc -DHAVE_CONFIG_H -I. -I..  -fvisibility=hidden -Wall -Wmissing-declarations -Wpointer-arith -Wcast-align -Wcast-qual -Wformat -Wformat-nonliteral -Wformat-security -Wundef -Wwrite-strings -Wextra -Wsign-compare -Wno-unused-parameter -fno-strict-aliasing -fdiagnostics-show-option -I../api -DBUILDING_SO   -Wstrict-prototypes -Wmissing-prototypes -Wold-style-definition -Wnested-externs -O2 -flto=auto -ffat-lto-objects -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1  -m64 -march=x86-64-v2 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -c -o pcap/daq_pcap_la-daq_pcap.lo `test -f 'pcap/daq_pcap.c' || echo './'`pcap/daq_pcap.c
+libtool: compile:  gcc -DHAVE_CONFIG_H -I. -I.. -fvisibility=hidden -Wall -Wmissing-declarations -Wpointer-arith -Wcast-align -Wcast-qual -Wformat -Wformat-nonliteral -Wformat-security -Wundef -Wwrite-strings -Wextra -Wsign-compare -Wno-unused-parameter -fno-strict-aliasing -fdiagnostics-show-option -I../api -DBUILDING_SO -Wstrict-prototypes -Wmissing-prototypes -Wold-style-definition -Wnested-externs -O2 -flto=auto -ffat-lto-objects -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1 -m64 -march=x86-64-v2 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -c pcap/daq_pcap.c  -fPIC -DPIC -o pcap/.libs/daq_pcap_la-daq_pcap.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I. -I.. -fvisibility=hidden -Wall -Wmissing-declarations -Wpointer-arith -Wcast-align -Wcast-qual -Wformat -Wformat-nonliteral -Wformat-security -Wundef -Wwrite-strings -Wextra -Wsign-compare -Wno-unused-parameter -fno-strict-aliasing -fdiagnostics-show-option -I../api -DBUILDING_SO -Wstrict-prototypes -Wmissing-prototypes -Wold-style-definition -Wnested-externs -O2 -flto=auto -ffat-lto-objects -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1 -m64 -march=x86-64-v2 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -c pcap/daq_pcap.c -o pcap/daq_pcap_la-daq_pcap.o >/dev/null 2>&1
+/bin/sh ../libtool  --tag=CC   --mode=link gcc -Wstrict-prototypes -Wmissing-prototypes -Wold-style-definition -Wnested-externs -O2 -flto=auto -ffat-lto-objects -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1  -m64 -march=x86-64-v2 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -module -export-dynamic -avoid-version -shared  -Wl,-z,relro -Wl,--as-needed  -Wl,-z,now -specs=/usr/lib/rpm/redhat/redhat-hardened-ld -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1  -o pcap/daq_pcap.la -rpath /usr/lib64/daq pcap/daq_pcap_la-daq_pcap.lo -lpcap -lpthread 
+libtool: link: gcc -shared  -fPIC -DPIC  pcap/.libs/daq_pcap_la-daq_pcap.o   -lpcap -lpthread -Wl,-z,now -specs=/usr/lib/rpm/redhat/redhat-hardened-ld -O2 -flto=auto -g -grecord-gcc-switches -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1 -m64 -march=x86-64-v2 -mtune=generic -Wl,-z -Wl,relro -Wl,--as-needed -Wl,-z -Wl,now -specs=/usr/lib/rpm/redhat/redhat-hardened-ld -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1   -Wl,-soname -Wl,daq_pcap.so -o pcap/.libs/daq_pcap.so
+libtool: link: ( cd "pcap/.libs" && rm -f "daq_pcap.la" && ln -s "../daq_pcap.la" "daq_pcap.la" )
+/bin/sh ../libtool  --tag=CC   --mode=compile gcc -DHAVE_CONFIG_H -I. -I..  -fvisibility=hidden -Wall -Wmissing-declarations -Wpointer-arith -Wcast-align -Wcast-qual -Wformat -Wformat-nonliteral -Wformat-security -Wundef -Wwrite-strings -Wextra -Wsign-compare -Wno-unused-parameter -fno-strict-aliasing -fdiagnostics-show-option -I../api -DBUILDING_SO  -Wstrict-prototypes -Wmissing-prototypes -Wold-style-definition -Wnested-externs -O2 -flto=auto -ffat-lto-objects -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1  -m64 -march=x86-64-v2 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -c -o savefile/daq_savefile_la-daq_savefile.lo `test -f 'savefile/daq_savefile.c' || echo './'`savefile/daq_savefile.c
+libtool: compile:  gcc -DHAVE_CONFIG_H -I. -I.. -fvisibility=hidden -Wall -Wmissing-declarations -Wpointer-arith -Wcast-align -Wcast-qual -Wformat -Wformat-nonliteral -Wformat-security -Wundef -Wwrite-strings -Wextra -Wsign-compare -Wno-unused-parameter -fno-strict-aliasing -fdiagnostics-show-option -I../api -DBUILDING_SO -Wstrict-prototypes -Wmissing-prototypes -Wold-style-definition -Wnested-externs -O2 -flto=auto -ffat-lto-objects -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1 -m64 -march=x86-64-v2 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -c savefile/daq_savefile.c  -fPIC -DPIC -o savefile/.libs/daq_savefile_la-daq_savefile.o
+savefile/daq_savefile.c: In function 'savefile_read_message':
+savefile/daq_savefile.c:167:43: warning: comparison of integer expressions of different signedness: 'long unsigned int' and 'off_t' {aka 'long int'} [-Wsign-compare]
+  167 |     if (sfc->file_offset + sizeof(*sfhdr) > sfc->file_size)
+      |                                           ^
+savefile/daq_savefile.c: In function 'savefile_daq_start':
+savefile/daq_savefile.c:315:24: warning: comparison of integer expressions of different signedness: 'off_t' {aka 'long int'} and 'long unsigned int' [-Wsign-compare]
+  315 |     if (sfc->file_size < sizeof(struct pcap_file_header))
+      |                        ^
+libtool: compile:  gcc -DHAVE_CONFIG_H -I. -I.. -fvisibility=hidden -Wall -Wmissing-declarations -Wpointer-arith -Wcast-align -Wcast-qual -Wformat -Wformat-nonliteral -Wformat-security -Wundef -Wwrite-strings -Wextra -Wsign-compare -Wno-unused-parameter -fno-strict-aliasing -fdiagnostics-show-option -I../api -DBUILDING_SO -Wstrict-prototypes -Wmissing-prototypes -Wold-style-definition -Wnested-externs -O2 -flto=auto -ffat-lto-objects -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1 -m64 -march=x86-64-v2 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -c savefile/daq_savefile.c -o savefile/daq_savefile_la-daq_savefile.o >/dev/null 2>&1
+/bin/sh ../libtool  --tag=CC   --mode=link gcc -Wstrict-prototypes -Wmissing-prototypes -Wold-style-definition -Wnested-externs -O2 -flto=auto -ffat-lto-objects -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1  -m64 -march=x86-64-v2 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -module -export-dynamic -avoid-version -shared -Wl,-z,relro -Wl,--as-needed  -Wl,-z,now -specs=/usr/lib/rpm/redhat/redhat-hardened-ld -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1  -o savefile/daq_savefile.la -rpath /usr/lib64/daq savefile/daq_savefile_la-daq_savefile.lo  
+libtool: link: gcc -shared  -fPIC -DPIC  savefile/.libs/daq_savefile_la-daq_savefile.o   -Wl,-z,now -specs=/usr/lib/rpm/redhat/redhat-hardened-ld -O2 -flto=auto -g -grecord-gcc-switches -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1 -m64 -march=x86-64-v2 -mtune=generic -Wl,-z -Wl,relro -Wl,--as-needed -Wl,-z -Wl,now -specs=/usr/lib/rpm/redhat/redhat-hardened-ld -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1   -Wl,-soname -Wl,daq_savefile.so -o savefile/.libs/daq_savefile.so
+libtool: link: ( cd "savefile/.libs" && rm -f "daq_savefile.la" && ln -s "../daq_savefile.la" "daq_savefile.la" )
+/bin/sh ../libtool  --tag=CC   --mode=compile gcc -DHAVE_CONFIG_H -I. -I..  -fvisibility=hidden -Wall -Wmissing-declarations -Wpointer-arith -Wcast-align -Wcast-qual -Wformat -Wformat-nonliteral -Wformat-security -Wundef -Wwrite-strings -Wextra -Wsign-compare -Wno-unused-parameter -fno-strict-aliasing -fdiagnostics-show-option -I../api -DBUILDING_SO  -Wstrict-prototypes -Wmissing-prototypes -Wold-style-definition -Wnested-externs -O2 -flto=auto -ffat-lto-objects -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1  -m64 -march=x86-64-v2 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -c -o trace/daq_trace_la-daq_trace.lo `test -f 'trace/daq_trace.c' || echo './'`trace/daq_trace.c
+libtool: compile:  gcc -DHAVE_CONFIG_H -I. -I.. -fvisibility=hidden -Wall -Wmissing-declarations -Wpointer-arith -Wcast-align -Wcast-qual -Wformat -Wformat-nonliteral -Wformat-security -Wundef -Wwrite-strings -Wextra -Wsign-compare -Wno-unused-parameter -fno-strict-aliasing -fdiagnostics-show-option -I../api -DBUILDING_SO -Wstrict-prototypes -Wmissing-prototypes -Wold-style-definition -Wnested-externs -O2 -flto=auto -ffat-lto-objects -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1 -m64 -march=x86-64-v2 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -c trace/daq_trace.c  -fPIC -DPIC -o trace/.libs/daq_trace_la-daq_trace.o
+libtool: compile:  gcc -DHAVE_CONFIG_H -I. -I.. -fvisibility=hidden -Wall -Wmissing-declarations -Wpointer-arith -Wcast-align -Wcast-qual -Wformat -Wformat-nonliteral -Wformat-security -Wundef -Wwrite-strings -Wextra -Wsign-compare -Wno-unused-parameter -fno-strict-aliasing -fdiagnostics-show-option -I../api -DBUILDING_SO -Wstrict-prototypes -Wmissing-prototypes -Wold-style-definition -Wnested-externs -O2 -flto=auto -ffat-lto-objects -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1 -m64 -march=x86-64-v2 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -c trace/daq_trace.c -o trace/daq_trace_la-daq_trace.o >/dev/null 2>&1
+/bin/sh ../libtool  --tag=CC   --mode=link gcc -Wstrict-prototypes -Wmissing-prototypes -Wold-style-definition -Wnested-externs -O2 -flto=auto -ffat-lto-objects -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1  -m64 -march=x86-64-v2 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -module -export-dynamic -avoid-version -shared -Wl,-z,relro -Wl,--as-needed  -Wl,-z,now -specs=/usr/lib/rpm/redhat/redhat-hardened-ld -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1  -o trace/daq_trace.la -rpath /usr/lib64/daq trace/daq_trace_la-daq_trace.lo  
+libtool: link: gcc -shared  -fPIC -DPIC  trace/.libs/daq_trace_la-daq_trace.o   -Wl,-z,now -specs=/usr/lib/rpm/redhat/redhat-hardened-ld -O2 -flto=auto -g -grecord-gcc-switches -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1 -m64 -march=x86-64-v2 -mtune=generic -Wl,-z -Wl,relro -Wl,--as-needed -Wl,-z -Wl,now -specs=/usr/lib/rpm/redhat/redhat-hardened-ld -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1   -Wl,-soname -Wl,daq_trace.so -o trace/.libs/daq_trace.so
+libtool: link: ( cd "trace/.libs" && rm -f "daq_trace.la" && ln -s "../daq_trace.la" "daq_trace.la" )
+/bin/sh ../libtool  --tag=CXX   --mode=compile g++ -std=gnu++11 -DHAVE_CONFIG_H -I. -I..  -fvisibility=hidden -Wall -Wmissing-declarations -Wpointer-arith -Wcast-align -Wcast-qual -Wformat -Wformat-nonliteral -Wformat-security -Wundef -Wwrite-strings -Wextra -Wsign-compare -Wno-unused-parameter -fno-strict-aliasing -fdiagnostics-show-option -I../api -DBUILDING_SO   -O2 -flto=auto -ffat-lto-objects -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1  -m64 -march=x86-64-v2 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -c -o gwlb/daq_gwlb_la-daq_gwlb.lo `test -f 'gwlb/daq_gwlb.cc' || echo './'`gwlb/daq_gwlb.cc
+libtool: compile:  g++ -std=gnu++11 -DHAVE_CONFIG_H -I. -I.. -fvisibility=hidden -Wall -Wmissing-declarations -Wpointer-arith -Wcast-align -Wcast-qual -Wformat -Wformat-nonliteral -Wformat-security -Wundef -Wwrite-strings -Wextra -Wsign-compare -Wno-unused-parameter -fno-strict-aliasing -fdiagnostics-show-option -I../api -DBUILDING_SO -O2 -flto=auto -ffat-lto-objects -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1 -m64 -march=x86-64-v2 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -c gwlb/daq_gwlb.cc  -fPIC -DPIC -o gwlb/.libs/daq_gwlb_la-daq_gwlb.o
+libtool: compile:  g++ -std=gnu++11 -DHAVE_CONFIG_H -I. -I.. -fvisibility=hidden -Wall -Wmissing-declarations -Wpointer-arith -Wcast-align -Wcast-qual -Wformat -Wformat-nonliteral -Wformat-security -Wundef -Wwrite-strings -Wextra -Wsign-compare -Wno-unused-parameter -fno-strict-aliasing -fdiagnostics-show-option -I../api -DBUILDING_SO -O2 -flto=auto -ffat-lto-objects -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1 -m64 -march=x86-64-v2 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -c gwlb/daq_gwlb.cc -o gwlb/daq_gwlb_la-daq_gwlb.o >/dev/null 2>&1
+/bin/sh ../libtool  --tag=CXX   --mode=link g++ -std=gnu++11  -O2 -flto=auto -ffat-lto-objects -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1  -m64 -march=x86-64-v2 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -module -export-dynamic -avoid-version -shared -Wl,-z,relro -Wl,--as-needed  -Wl,-z,now -specs=/usr/lib/rpm/redhat/redhat-hardened-ld -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1  -o gwlb/daq_gwlb.la -rpath /usr/lib64/daq gwlb/daq_gwlb_la-daq_gwlb.lo  
+libtool: link: g++ -std=gnu++11  -fPIC -DPIC -shared -nostdlib /usr/lib/gcc/x86_64-redhat-linux/11/../../../../lib64/crti.o /usr/lib/gcc/x86_64-redhat-linux/11/crtbeginS.o  gwlb/.libs/daq_gwlb_la-daq_gwlb.o   -L/usr/lib/gcc/x86_64-redhat-linux/11 -L/usr/lib/gcc/x86_64-redhat-linux/11/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -L/usr/lib/gcc/x86_64-redhat-linux/11/../../.. -lstdc++ -lm -lc -lgcc_s /usr/lib/gcc/x86_64-redhat-linux/11/crtendS.o /usr/lib/gcc/x86_64-redhat-linux/11/../../../../lib64/crtn.o -Wl,-z,now -specs=/usr/lib/rpm/redhat/redhat-hardened-ld -O2 -flto=auto -g -grecord-gcc-switches -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1 -m64 -march=x86-64-v2 -mtune=generic -Wl,-z -Wl,relro -Wl,--as-needed -Wl,-z -Wl,now -specs=/usr/lib/rpm/redhat/redhat-hardened-ld -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1   -Wl,-soname -Wl,daq_gwlb.so -o gwlb/.libs/daq_gwlb.so
+libtool: link: ( cd "gwlb/.libs" && rm -f "daq_gwlb.la" && ln -s "../daq_gwlb.la" "daq_gwlb.la" )
+make[2]: Leaving directory '/builddir/build/BUILD/libdaq-9999.9.9/modules'
+Making all in example
+make[2]: Entering directory '/builddir/build/BUILD/libdaq-9999.9.9/example'
+gcc -DHAVE_CONFIG_H -I. -I..  -fvisibility=hidden -Wall -Wmissing-declarations -Wpointer-arith -Wcast-align -Wcast-qual -Wformat -Wformat-nonliteral -Wformat-security -Wundef -Wwrite-strings -Wextra -Wsign-compare -Wno-unused-parameter -fno-strict-aliasing -fdiagnostics-show-option  -Wall -I../api -O2 -flto=auto -ffat-lto-objects -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1  -m64 -march=x86-64-v2 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -c -o daqtest.o daqtest.c
+daqtest.c: In function 'replace_icmp_data':
+daqtest.c:309:12: warning: cast discards 'const' qualifier from pointer target type [-Wcast-qual]
+  309 |     icmp = (IcmpHdr *) dtp->dd.icmp;
+      |            ^
+/bin/sh ../libtool  --tag=CC   --mode=link gcc -Wall -I../api -O2 -flto=auto -ffat-lto-objects -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1  -m64 -march=x86-64-v2 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection  -Wl,-z,relro -Wl,--as-needed  -Wl,-z,now -specs=/usr/lib/rpm/redhat/redhat-hardened-ld -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1  -o daqtest daqtest.o ../api/libdaq.la -lpthread 
+libtool: link: gcc -Wall -I../api -O2 -flto=auto -ffat-lto-objects -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1 -m64 -march=x86-64-v2 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -Wl,-z -Wl,relro -Wl,--as-needed -Wl,-z -Wl,now -specs=/usr/lib/rpm/redhat/redhat-hardened-ld -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1 -o .libs/daqtest daqtest.o  ../api/.libs/libdaq.so -ldl -lpthread
+gcc -DHAVE_CONFIG_H -I. -I..  -fvisibility=hidden -Wall -Wmissing-declarations -Wpointer-arith -Wcast-align -Wcast-qual -Wformat -Wformat-nonliteral -Wformat-security -Wundef -Wwrite-strings -Wextra -Wsign-compare -Wno-unused-parameter -fno-strict-aliasing -fdiagnostics-show-option  -Wall -I../api -DUSE_STATIC_MODULES -DBUILD_AFPACKET_MODULE -DBUILD_BPF_MODULE  -DBUILD_DUMP_MODULE -DBUILD_FST_MODULE   -DBUILD_PCAP_MODULE -DBUILD_SAVEFILE_MODULE -DBUILD_TRACE_MODULE -O2 -flto=auto -ffat-lto-objects -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1  -m64 -march=x86-64-v2 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -c -o daqtest_static-daqtest.o `test -f 'daqtest.c' || echo './'`daqtest.c
+daqtest.c: In function 'replace_icmp_data':
+daqtest.c:309:12: warning: cast discards 'const' qualifier from pointer target type [-Wcast-qual]
+  309 |     icmp = (IcmpHdr *) dtp->dd.icmp;
+      |            ^
+/bin/sh ../libtool  --tag=CC   --mode=link gcc -Wall -I../api -DUSE_STATIC_MODULES -DBUILD_AFPACKET_MODULE -DBUILD_BPF_MODULE  -DBUILD_DUMP_MODULE -DBUILD_FST_MODULE   -DBUILD_PCAP_MODULE -DBUILD_SAVEFILE_MODULE -DBUILD_TRACE_MODULE -O2 -flto=auto -ffat-lto-objects -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1  -m64 -march=x86-64-v2 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -static-libtool-libs  -Wl,-z,relro -Wl,--as-needed  -Wl,-z,now -specs=/usr/lib/rpm/redhat/redhat-hardened-ld -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1  -o daqtest-static daqtest_static-daqtest.o ../api/libdaq.la -lpthread ../modules/afpacket/libdaq_static_afpacket.la -lpcap -lpthread ../modules/bpf/libdaq_static_bpf.la -lpcap -lpthread  ../modules/dump/libdaq_static_dump.la -lpcap ../modules/fst/libdaq_static_fst.la -lstdc++   ../modules/pcap/libdaq_static_pcap.la -lpcap -lpthread ../modules/savefile/libdaq_static_savefile.la ../modules/trace/libdaq_static_trace.la 
+libtool: link: gcc -Wall -I../api -DUSE_STATIC_MODULES -DBUILD_AFPACKET_MODULE -DBUILD_BPF_MODULE -DBUILD_DUMP_MODULE -DBUILD_FST_MODULE -DBUILD_PCAP_MODULE -DBUILD_SAVEFILE_MODULE -DBUILD_TRACE_MODULE -O2 -flto=auto -ffat-lto-objects -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -Wp,-D_GLIBCXX_ASSERTIONS -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -fstack-protector-strong -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1 -m64 -march=x86-64-v2 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -Wl,-z -Wl,relro -Wl,--as-needed -Wl,-z -Wl,now -specs=/usr/lib/rpm/redhat/redhat-hardened-ld -specs=/usr/lib/rpm/redhat/redhat-annobin-cc1 -o daqtest-static daqtest_static-daqtest.o  ../api/.libs/libdaq.a -ldl ../modules/afpacket/.libs/libdaq_static_afpacket.a ../modules/bpf/.libs/libdaq_static_bpf.a ../modules/dump/.libs/libdaq_static_dump.a ../modules/fst/.libs/libdaq_static_fst.a -lstdc++ ../modules/pcap/.libs/libdaq_static_pcap.a -lpcap -lpthread ../modules/savefile/.libs/libdaq_static_savefile.a ../modules/trace/.libs/libdaq_static_trace.a
+make[2]: Leaving directory '/builddir/build/BUILD/libdaq-9999.9.9/example'
+Making all in test
+make[2]: Entering directory '/builddir/build/BUILD/libdaq-9999.9.9/test'
+make[2]: Nothing to be done for 'all'.
+make[2]: Leaving directory '/builddir/build/BUILD/libdaq-9999.9.9/test'
+make[2]: Entering directory '/builddir/build/BUILD/libdaq-9999.9.9'
+make[2]: Leaving directory '/builddir/build/BUILD/libdaq-9999.9.9'
+make[1]: Leaving directory '/builddir/build/BUILD/libdaq-9999.9.9'
++ RPM_EC=0
+++ jobs -p
++ exit 0
+Executing(%install): /bin/sh -e /var/tmp/rpm-tmp.rTTm0R
++ umask 022
++ cd /builddir/build/BUILD
++ '[' /builddir/build/BUILDROOT/libdaq-9999.9.9-1.el9.rb.x86_64 '!=' / ']'
++ rm -rf /builddir/build/BUILDROOT/libdaq-9999.9.9-1.el9.rb.x86_64
+++ dirname /builddir/build/BUILDROOT/libdaq-9999.9.9-1.el9.rb.x86_64
++ mkdir -p /builddir/build/BUILDROOT
++ mkdir /builddir/build/BUILDROOT/libdaq-9999.9.9-1.el9.rb.x86_64
++ cd libdaq-9999.9.9
++ /usr/bin/make install DESTDIR=/builddir/build/BUILDROOT/libdaq-9999.9.9-1.el9.rb.x86_64 'INSTALL=/usr/bin/install -p'
+Making install in api
+make[1]: Entering directory '/builddir/build/BUILD/libdaq-9999.9.9/api'
+make[2]: Entering directory '/builddir/build/BUILD/libdaq-9999.9.9/api'
+ /usr/bin/mkdir -p '/builddir/build/BUILDROOT/libdaq-9999.9.9-1.el9.rb.x86_64/usr/lib64'
+ /bin/sh ../libtool   --mode=install /usr/bin/install -p   libdaq.la '/builddir/build/BUILDROOT/libdaq-9999.9.9-1.el9.rb.x86_64/usr/lib64'
+libtool: install: /usr/bin/install -p .libs/libdaq.so.3.0.0 /builddir/build/BUILDROOT/libdaq-9999.9.9-1.el9.rb.x86_64/usr/lib64/libdaq.so.3.0.0
+libtool: install: (cd /builddir/build/BUILDROOT/libdaq-9999.9.9-1.el9.rb.x86_64/usr/lib64 && { ln -s -f libdaq.so.3.0.0 libdaq.so.3 || { rm -f libdaq.so.3 && ln -s libdaq.so.3.0.0 libdaq.so.3; }; })
+libtool: install: (cd /builddir/build/BUILDROOT/libdaq-9999.9.9-1.el9.rb.x86_64/usr/lib64 && { ln -s -f libdaq.so.3.0.0 libdaq.so || { rm -f libdaq.so && ln -s libdaq.so.3.0.0 libdaq.so; }; })
+libtool: install: /usr/bin/install -p .libs/libdaq.lai /builddir/build/BUILDROOT/libdaq-9999.9.9-1.el9.rb.x86_64/usr/lib64/libdaq.la
+libtool: install: /usr/bin/install -p .libs/libdaq.a /builddir/build/BUILDROOT/libdaq-9999.9.9-1.el9.rb.x86_64/usr/lib64/libdaq.a
+libtool: install: chmod 644 /builddir/build/BUILDROOT/libdaq-9999.9.9-1.el9.rb.x86_64/usr/lib64/libdaq.a
+libtool: install: ranlib /builddir/build/BUILDROOT/libdaq-9999.9.9-1.el9.rb.x86_64/usr/lib64/libdaq.a
+libtool: warning: remember to run 'libtool --finish /usr/lib64'
+ /usr/bin/mkdir -p '/builddir/build/BUILDROOT/libdaq-9999.9.9-1.el9.rb.x86_64/usr/include/daq'
+ /usr/bin/install -p -m 644 daq.h daq_common.h daq_dlt.h daq_module_api.h daq_version.h '/builddir/build/BUILDROOT/libdaq-9999.9.9-1.el9.rb.x86_64/usr/include/daq'
+make[2]: Leaving directory '/builddir/build/BUILD/libdaq-9999.9.9/api'
+make[1]: Leaving directory '/builddir/build/BUILD/libdaq-9999.9.9/api'
+Making install in modules
+make[1]: Entering directory '/builddir/build/BUILD/libdaq-9999.9.9/modules'
+make[2]: Entering directory '/builddir/build/BUILD/libdaq-9999.9.9/modules'
+ /usr/bin/mkdir -p '/builddir/build/BUILDROOT/libdaq-9999.9.9-1.el9.rb.x86_64/usr/lib64'
+ /bin/sh ../libtool   --mode=install /usr/bin/install -p   afpacket/libdaq_static_afpacket.la bpf/libdaq_static_bpf.la dump/libdaq_static_dump.la fst/libdaq_static_fst.la pcap/libdaq_static_pcap.la savefile/libdaq_static_savefile.la trace/libdaq_static_trace.la gwlb/libdaq_static_gwlb.la '/builddir/build/BUILDROOT/libdaq-9999.9.9-1.el9.rb.x86_64/usr/lib64'
+libtool: install: /usr/bin/install -p afpacket/.libs/libdaq_static_afpacket.lai /builddir/build/BUILDROOT/libdaq-9999.9.9-1.el9.rb.x86_64/usr/lib64/libdaq_static_afpacket.la
+libtool: install: /usr/bin/install -p bpf/.libs/libdaq_static_bpf.lai /builddir/build/BUILDROOT/libdaq-9999.9.9-1.el9.rb.x86_64/usr/lib64/libdaq_static_bpf.la
+libtool: install: /usr/bin/install -p dump/.libs/libdaq_static_dump.lai /builddir/build/BUILDROOT/libdaq-9999.9.9-1.el9.rb.x86_64/usr/lib64/libdaq_static_dump.la
+libtool: install: /usr/bin/install -p fst/.libs/libdaq_static_fst.lai /builddir/build/BUILDROOT/libdaq-9999.9.9-1.el9.rb.x86_64/usr/lib64/libdaq_static_fst.la
+libtool: install: /usr/bin/install -p pcap/.libs/libdaq_static_pcap.lai /builddir/build/BUILDROOT/libdaq-9999.9.9-1.el9.rb.x86_64/usr/lib64/libdaq_static_pcap.la
+libtool: install: /usr/bin/install -p savefile/.libs/libdaq_static_savefile.lai /builddir/build/BUILDROOT/libdaq-9999.9.9-1.el9.rb.x86_64/usr/lib64/libdaq_static_savefile.la
+libtool: install: /usr/bin/install -p trace/.libs/libdaq_static_trace.lai /builddir/build/BUILDROOT/libdaq-9999.9.9-1.el9.rb.x86_64/usr/lib64/libdaq_static_trace.la
+libtool: install: /usr/bin/install -p gwlb/.libs/libdaq_static_gwlb.lai /builddir/build/BUILDROOT/libdaq-9999.9.9-1.el9.rb.x86_64/usr/lib64/libdaq_static_gwlb.la
+libtool: install: /usr/bin/install -p afpacket/.libs/libdaq_static_afpacket.a /builddir/build/BUILDROOT/libdaq-9999.9.9-1.el9.rb.x86_64/usr/lib64/libdaq_static_afpacket.a
+libtool: install: chmod 644 /builddir/build/BUILDROOT/libdaq-9999.9.9-1.el9.rb.x86_64/usr/lib64/libdaq_static_afpacket.a
+libtool: install: ranlib /builddir/build/BUILDROOT/libdaq-9999.9.9-1.el9.rb.x86_64/usr/lib64/libdaq_static_afpacket.a
+libtool: install: /usr/bin/install -p bpf/.libs/libdaq_static_bpf.a /builddir/build/BUILDROOT/libdaq-9999.9.9-1.el9.rb.x86_64/usr/lib64/libdaq_static_bpf.a
+libtool: install: chmod 644 /builddir/build/BUILDROOT/libdaq-9999.9.9-1.el9.rb.x86_64/usr/lib64/libdaq_static_bpf.a
+libtool: install: ranlib /builddir/build/BUILDROOT/libdaq-9999.9.9-1.el9.rb.x86_64/usr/lib64/libdaq_static_bpf.a
+libtool: install: /usr/bin/install -p dump/.libs/libdaq_static_dump.a /builddir/build/BUILDROOT/libdaq-9999.9.9-1.el9.rb.x86_64/usr/lib64/libdaq_static_dump.a
+libtool: install: chmod 644 /builddir/build/BUILDROOT/libdaq-9999.9.9-1.el9.rb.x86_64/usr/lib64/libdaq_static_dump.a
+libtool: install: ranlib /builddir/build/BUILDROOT/libdaq-9999.9.9-1.el9.rb.x86_64/usr/lib64/libdaq_static_dump.a
+libtool: install: /usr/bin/install -p fst/.libs/libdaq_static_fst.a /builddir/build/BUILDROOT/libdaq-9999.9.9-1.el9.rb.x86_64/usr/lib64/libdaq_static_fst.a
+libtool: install: chmod 644 /builddir/build/BUILDROOT/libdaq-9999.9.9-1.el9.rb.x86_64/usr/lib64/libdaq_static_fst.a
+libtool: install: ranlib /builddir/build/BUILDROOT/libdaq-9999.9.9-1.el9.rb.x86_64/usr/lib64/libdaq_static_fst.a
+libtool: install: /usr/bin/install -p pcap/.libs/libdaq_static_pcap.a /builddir/build/BUILDROOT/libdaq-9999.9.9-1.el9.rb.x86_64/usr/lib64/libdaq_static_pcap.a
+libtool: install: chmod 644 /builddir/build/BUILDROOT/libdaq-9999.9.9-1.el9.rb.x86_64/usr/lib64/libdaq_static_pcap.a
+libtool: install: ranlib /builddir/build/BUILDROOT/libdaq-9999.9.9-1.el9.rb.x86_64/usr/lib64/libdaq_static_pcap.a
+libtool: install: /usr/bin/install -p savefile/.libs/libdaq_static_savefile.a /builddir/build/BUILDROOT/libdaq-9999.9.9-1.el9.rb.x86_64/usr/lib64/libdaq_static_savefile.a
+libtool: install: chmod 644 /builddir/build/BUILDROOT/libdaq-9999.9.9-1.el9.rb.x86_64/usr/lib64/libdaq_static_savefile.a
+libtool: install: ranlib /builddir/build/BUILDROOT/libdaq-9999.9.9-1.el9.rb.x86_64/usr/lib64/libdaq_static_savefile.a
+libtool: install: /usr/bin/install -p trace/.libs/libdaq_static_trace.a /builddir/build/BUILDROOT/libdaq-9999.9.9-1.el9.rb.x86_64/usr/lib64/libdaq_static_trace.a
+libtool: install: chmod 644 /builddir/build/BUILDROOT/libdaq-9999.9.9-1.el9.rb.x86_64/usr/lib64/libdaq_static_trace.a
+libtool: install: ranlib /builddir/build/BUILDROOT/libdaq-9999.9.9-1.el9.rb.x86_64/usr/lib64/libdaq_static_trace.a
+libtool: install: /usr/bin/install -p gwlb/.libs/libdaq_static_gwlb.a /builddir/build/BUILDROOT/libdaq-9999.9.9-1.el9.rb.x86_64/usr/lib64/libdaq_static_gwlb.a
+libtool: install: chmod 644 /builddir/build/BUILDROOT/libdaq-9999.9.9-1.el9.rb.x86_64/usr/lib64/libdaq_static_gwlb.a
+libtool: install: ranlib /builddir/build/BUILDROOT/libdaq-9999.9.9-1.el9.rb.x86_64/usr/lib64/libdaq_static_gwlb.a
+libtool: warning: remember to run 'libtool --finish /usr/lib64'
+ /usr/bin/mkdir -p '/builddir/build/BUILDROOT/libdaq-9999.9.9-1.el9.rb.x86_64/usr/lib64/daq'
+ /bin/sh ../libtool   --mode=install /usr/bin/install -p   afpacket/daq_afpacket.la pfring/daq_pfring.la bpf/daq_bpf.la dump/daq_dump.la fst/daq_fst.la pcap/daq_pcap.la savefile/daq_savefile.la trace/daq_trace.la gwlb/daq_gwlb.la '/builddir/build/BUILDROOT/libdaq-9999.9.9-1.el9.rb.x86_64/usr/lib64/daq'
+libtool: install: /usr/bin/install -p afpacket/.libs/daq_afpacket.so /builddir/build/BUILDROOT/libdaq-9999.9.9-1.el9.rb.x86_64/usr/lib64/daq/daq_afpacket.so
+libtool: install: /usr/bin/install -p afpacket/.libs/daq_afpacket.lai /builddir/build/BUILDROOT/libdaq-9999.9.9-1.el9.rb.x86_64/usr/lib64/daq/daq_afpacket.la
+libtool: install: /usr/bin/install -p pfring/.libs/daq_pfring.so /builddir/build/BUILDROOT/libdaq-9999.9.9-1.el9.rb.x86_64/usr/lib64/daq/daq_pfring.so
+libtool: install: /usr/bin/install -p pfring/.libs/daq_pfring.lai /builddir/build/BUILDROOT/libdaq-9999.9.9-1.el9.rb.x86_64/usr/lib64/daq/daq_pfring.la
+libtool: install: /usr/bin/install -p bpf/.libs/daq_bpf.so /builddir/build/BUILDROOT/libdaq-9999.9.9-1.el9.rb.x86_64/usr/lib64/daq/daq_bpf.so
+libtool: install: /usr/bin/install -p bpf/.libs/daq_bpf.lai /builddir/build/BUILDROOT/libdaq-9999.9.9-1.el9.rb.x86_64/usr/lib64/daq/daq_bpf.la
+libtool: install: /usr/bin/install -p dump/.libs/daq_dump.so /builddir/build/BUILDROOT/libdaq-9999.9.9-1.el9.rb.x86_64/usr/lib64/daq/daq_dump.so
+libtool: install: /usr/bin/install -p dump/.libs/daq_dump.lai /builddir/build/BUILDROOT/libdaq-9999.9.9-1.el9.rb.x86_64/usr/lib64/daq/daq_dump.la
+libtool: install: /usr/bin/install -p fst/.libs/daq_fst.so /builddir/build/BUILDROOT/libdaq-9999.9.9-1.el9.rb.x86_64/usr/lib64/daq/daq_fst.so
+libtool: install: /usr/bin/install -p fst/.libs/daq_fst.lai /builddir/build/BUILDROOT/libdaq-9999.9.9-1.el9.rb.x86_64/usr/lib64/daq/daq_fst.la
+libtool: install: /usr/bin/install -p pcap/.libs/daq_pcap.so /builddir/build/BUILDROOT/libdaq-9999.9.9-1.el9.rb.x86_64/usr/lib64/daq/daq_pcap.so
+libtool: install: /usr/bin/install -p pcap/.libs/daq_pcap.lai /builddir/build/BUILDROOT/libdaq-9999.9.9-1.el9.rb.x86_64/usr/lib64/daq/daq_pcap.la
+libtool: install: /usr/bin/install -p savefile/.libs/daq_savefile.so /builddir/build/BUILDROOT/libdaq-9999.9.9-1.el9.rb.x86_64/usr/lib64/daq/daq_savefile.so
+libtool: install: /usr/bin/install -p savefile/.libs/daq_savefile.lai /builddir/build/BUILDROOT/libdaq-9999.9.9-1.el9.rb.x86_64/usr/lib64/daq/daq_savefile.la
+libtool: install: /usr/bin/install -p trace/.libs/daq_trace.so /builddir/build/BUILDROOT/libdaq-9999.9.9-1.el9.rb.x86_64/usr/lib64/daq/daq_trace.so
+libtool: install: /usr/bin/install -p trace/.libs/daq_trace.lai /builddir/build/BUILDROOT/libdaq-9999.9.9-1.el9.rb.x86_64/usr/lib64/daq/daq_trace.la
+libtool: install: /usr/bin/install -p gwlb/.libs/daq_gwlb.so /builddir/build/BUILDROOT/libdaq-9999.9.9-1.el9.rb.x86_64/usr/lib64/daq/daq_gwlb.so
+libtool: install: /usr/bin/install -p gwlb/.libs/daq_gwlb.lai /builddir/build/BUILDROOT/libdaq-9999.9.9-1.el9.rb.x86_64/usr/lib64/daq/daq_gwlb.la
+libtool: warning: remember to run 'libtool --finish /usr/lib64/daq'
+ /usr/bin/mkdir -p '/builddir/build/BUILDROOT/libdaq-9999.9.9-1.el9.rb.x86_64/usr/lib64/pkgconfig'
+ /usr/bin/install -p -m 644 afpacket/libdaq_static_afpacket.pc pfring/libdaq_static_pfring.pc bpf/libdaq_static_bpf.pc dump/libdaq_static_dump.pc fst/libdaq_static_fst.pc pcap/libdaq_static_pcap.pc savefile/libdaq_static_savefile.pc trace/libdaq_static_trace.pc gwlb/libdaq_static_gwlb.pc '/builddir/build/BUILDROOT/libdaq-9999.9.9-1.el9.rb.x86_64/usr/lib64/pkgconfig'
+make[2]: Leaving directory '/builddir/build/BUILD/libdaq-9999.9.9/modules'
+make[1]: Leaving directory '/builddir/build/BUILD/libdaq-9999.9.9/modules'
+Making install in example
+make[1]: Entering directory '/builddir/build/BUILD/libdaq-9999.9.9/example'
+make[2]: Entering directory '/builddir/build/BUILD/libdaq-9999.9.9/example'
+ /usr/bin/mkdir -p '/builddir/build/BUILDROOT/libdaq-9999.9.9-1.el9.rb.x86_64/usr/bin'
+  /bin/sh ../libtool   --mode=install /usr/bin/install -p daqtest daqtest-static '/builddir/build/BUILDROOT/libdaq-9999.9.9-1.el9.rb.x86_64/usr/bin'
+libtool: warning: '../api/libdaq.la' has not been installed in '/usr/lib64'
+libtool: install: /usr/bin/install -p .libs/daqtest /builddir/build/BUILDROOT/libdaq-9999.9.9-1.el9.rb.x86_64/usr/bin/daqtest
+libtool: install: /usr/bin/install -p daqtest-static /builddir/build/BUILDROOT/libdaq-9999.9.9-1.el9.rb.x86_64/usr/bin/daqtest-static
+make[2]: Nothing to be done for 'install-data-am'.
+make[2]: Leaving directory '/builddir/build/BUILD/libdaq-9999.9.9/example'
+make[1]: Leaving directory '/builddir/build/BUILD/libdaq-9999.9.9/example'
+Making install in test
+make[1]: Entering directory '/builddir/build/BUILD/libdaq-9999.9.9/test'
+make[2]: Entering directory '/builddir/build/BUILD/libdaq-9999.9.9/test'
+make[2]: Nothing to be done for 'install-exec-am'.
+make[2]: Nothing to be done for 'install-data-am'.
+make[2]: Leaving directory '/builddir/build/BUILD/libdaq-9999.9.9/test'
+make[1]: Leaving directory '/builddir/build/BUILD/libdaq-9999.9.9/test'
+make[1]: Entering directory '/builddir/build/BUILD/libdaq-9999.9.9'
+make[2]: Entering directory '/builddir/build/BUILD/libdaq-9999.9.9'
+make[2]: Nothing to be done for 'install-exec-am'.
+ /usr/bin/mkdir -p '/builddir/build/BUILDROOT/libdaq-9999.9.9-1.el9.rb.x86_64/usr/lib64/pkgconfig'
+ /usr/bin/install -p -m 644 libdaq.pc '/builddir/build/BUILDROOT/libdaq-9999.9.9-1.el9.rb.x86_64/usr/lib64/pkgconfig'
+make[2]: Leaving directory '/builddir/build/BUILD/libdaq-9999.9.9'
+make[1]: Leaving directory '/builddir/build/BUILD/libdaq-9999.9.9'
++ /usr/bin/find-debuginfo -j12 --strict-build-id -m -i --build-id-seed 9999.9.9-1.el9.rb --unique-debug-suffix -9999.9.9-1.el9.rb.x86_64 --unique-debug-src-base libdaq-9999.9.9-1.el9.rb.x86_64 --run-dwz --dwz-low-mem-die-limit 10000000 --dwz-max-die-limit 110000000 --remove-section .gnu.build.attributes -S debugsourcefiles.list /builddir/build/BUILD/libdaq-9999.9.9
+extracting debug info from /builddir/build/BUILDROOT/libdaq-9999.9.9-1.el9.rb.x86_64/usr/bin/daqtest
+extracting debug info from /builddir/build/BUILDROOT/libdaq-9999.9.9-1.el9.rb.x86_64/usr/lib64/daq/daq_fst.so
+extracting debug info from /builddir/build/BUILDROOT/libdaq-9999.9.9-1.el9.rb.x86_64/usr/lib64/daq/daq_afpacket.so
+extracting debug info from /builddir/build/BUILDROOT/libdaq-9999.9.9-1.el9.rb.x86_64/usr/bin/daqtest-static
+extracting debug info from /builddir/build/BUILDROOT/libdaq-9999.9.9-1.el9.rb.x86_64/usr/lib64/daq/daq_dump.so
+extracting debug info from /builddir/build/BUILDROOT/libdaq-9999.9.9-1.el9.rb.x86_64/usr/lib64/daq/daq_pfring.so
+extracting debug info from /builddir/build/BUILDROOT/libdaq-9999.9.9-1.el9.rb.x86_64/usr/lib64/daq/daq_gwlb.so
+extracting debug info from /builddir/build/BUILDROOT/libdaq-9999.9.9-1.el9.rb.x86_64/usr/lib64/daq/daq_pcap.so
+extracting debug info from /builddir/build/BUILDROOT/libdaq-9999.9.9-1.el9.rb.x86_64/usr/lib64/daq/daq_trace.so
+extracting debug info from /builddir/build/BUILDROOT/libdaq-9999.9.9-1.el9.rb.x86_64/usr/lib64/libdaq.so.3.0.0
+extracting debug info from /builddir/build/BUILDROOT/libdaq-9999.9.9-1.el9.rb.x86_64/usr/lib64/daq/daq_bpf.so
+extracting debug info from /builddir/build/BUILDROOT/libdaq-9999.9.9-1.el9.rb.x86_64/usr/lib64/daq/daq_savefile.so
+original debug info size: 2276kB, size after compression: 2036kB
+/usr/bin/sepdebugcrcfix: Updated 12 CRC32s, 0 CRC32s did match.
+785 blocks
++ /usr/lib/rpm/check-buildroot
++ /usr/lib/rpm/redhat/brp-ldconfig
++ /usr/lib/rpm/brp-compress
++ /usr/lib/rpm/redhat/brp-strip-lto /usr/bin/strip
++ /usr/lib/rpm/brp-strip-static-archive /usr/bin/strip
++ /usr/lib/rpm/redhat/brp-python-bytecompile '' 1 0
++ /usr/lib/rpm/brp-python-hardlink
++ /usr/lib/rpm/redhat/brp-mangle-shebangs
+*** WARNING: ./usr/lib64/libdaq.la is executable but has no shebang, removing executable bit
+*** WARNING: ./usr/lib64/libdaq_static_afpacket.la is executable but has no shebang, removing executable bit
+*** WARNING: ./usr/lib64/libdaq_static_bpf.la is executable but has no shebang, removing executable bit
+*** WARNING: ./usr/lib64/libdaq_static_dump.la is executable but has no shebang, removing executable bit
+*** WARNING: ./usr/lib64/libdaq_static_fst.la is executable but has no shebang, removing executable bit
+*** WARNING: ./usr/lib64/libdaq_static_pcap.la is executable but has no shebang, removing executable bit
+*** WARNING: ./usr/lib64/libdaq_static_savefile.la is executable but has no shebang, removing executable bit
+*** WARNING: ./usr/lib64/libdaq_static_trace.la is executable but has no shebang, removing executable bit
+*** WARNING: ./usr/lib64/libdaq_static_gwlb.la is executable but has no shebang, removing executable bit
+*** WARNING: ./usr/lib64/daq/daq_afpacket.la is executable but has no shebang, removing executable bit
+*** WARNING: ./usr/lib64/daq/daq_pfring.la is executable but has no shebang, removing executable bit
+*** WARNING: ./usr/lib64/daq/daq_bpf.la is executable but has no shebang, removing executable bit
+*** WARNING: ./usr/lib64/daq/daq_dump.la is executable but has no shebang, removing executable bit
+*** WARNING: ./usr/lib64/daq/daq_fst.la is executable but has no shebang, removing executable bit
+*** WARNING: ./usr/lib64/daq/daq_pcap.la is executable but has no shebang, removing executable bit
+*** WARNING: ./usr/lib64/daq/daq_savefile.la is executable but has no shebang, removing executable bit
+*** WARNING: ./usr/lib64/daq/daq_trace.la is executable but has no shebang, removing executable bit
+*** WARNING: ./usr/lib64/daq/daq_gwlb.la is executable but has no shebang, removing executable bit
+Processing files: libdaq-9999.9.9-1.el9.rb.x86_64
+Executing(%license): /bin/sh -e /var/tmp/rpm-tmp.tEV1F9
++ umask 022
++ cd /builddir/build/BUILD
++ cd libdaq-9999.9.9
++ LICENSEDIR=/builddir/build/BUILDROOT/libdaq-9999.9.9-1.el9.rb.x86_64/usr/share/licenses/libdaq
++ export LC_ALL=C
++ LC_ALL=C
++ export LICENSEDIR
++ /usr/bin/mkdir -p /builddir/build/BUILDROOT/libdaq-9999.9.9-1.el9.rb.x86_64/usr/share/licenses/libdaq
++ cp -pr COPYING /builddir/build/BUILDROOT/libdaq-9999.9.9-1.el9.rb.x86_64/usr/share/licenses/libdaq
++ RPM_EC=0
+++ jobs -p
++ exit 0
+Provides: libdaq = 9999.9.9-1.el9.rb libdaq(x86-64) = 9999.9.9-1.el9.rb libdaq.so.3()(64bit) libtool(/usr/lib64/daq/daq_afpacket.la) libtool(/usr/lib64/daq/daq_dump.la) libtool(/usr/lib64/daq/daq_pcap.la) libtool(/usr/lib64/libdaq.la)
+Requires(rpmlib): rpmlib(CompressedFileNames) <= 3.0.4-1 rpmlib(FileDigests) <= 4.6.0-1 rpmlib(PayloadFilesHavePrefix) <= 4.0-1
+Requires: libc.so.6()(64bit) libc.so.6(GLIBC_2.14)(64bit) libc.so.6(GLIBC_2.16)(64bit) libc.so.6(GLIBC_2.2.5)(64bit) libc.so.6(GLIBC_2.3)(64bit) libc.so.6(GLIBC_2.3.4)(64bit) libc.so.6(GLIBC_2.32)(64bit) libc.so.6(GLIBC_2.33)(64bit) libc.so.6(GLIBC_2.34)(64bit) libc.so.6(GLIBC_2.4)(64bit) libdaq.so.3()(64bit) libgcc_s.so.1()(64bit) libgcc_s.so.1(GCC_3.0)(64bit) libgcc_s.so.1(GCC_3.3.1)(64bit) libpcap.so.1()(64bit) libstdc++.so.6()(64bit) libstdc++.so.6(CXXABI_1.3)(64bit) libstdc++.so.6(GLIBCXX_3.4)(64bit) libstdc++.so.6(GLIBCXX_3.4.15)(64bit) libstdc++.so.6(GLIBCXX_3.4.18)(64bit) libstdc++.so.6(GLIBCXX_3.4.29)(64bit) rtld(GNU_HASH)
+Processing files: libdaq-modules-9999.9.9-1.el9.rb.x86_64
+Executing(%license): /bin/sh -e /var/tmp/rpm-tmp.0mS8tU
++ umask 022
++ cd /builddir/build/BUILD
++ cd libdaq-9999.9.9
++ LICENSEDIR=/builddir/build/BUILDROOT/libdaq-9999.9.9-1.el9.rb.x86_64/usr/share/licenses/libdaq-modules
++ export LC_ALL=C
++ LC_ALL=C
++ export LICENSEDIR
++ /usr/bin/mkdir -p /builddir/build/BUILDROOT/libdaq-9999.9.9-1.el9.rb.x86_64/usr/share/licenses/libdaq-modules
++ cp -pr COPYING /builddir/build/BUILDROOT/libdaq-9999.9.9-1.el9.rb.x86_64/usr/share/licenses/libdaq-modules
++ RPM_EC=0
+++ jobs -p
++ exit 0
+Provides: libdaq-modules = 9999.9.9-1.el9.rb libdaq-modules(x86-64) = 9999.9.9-1.el9.rb libtool(/usr/lib64/daq/daq_bpf.la) libtool(/usr/lib64/daq/daq_fst.la) libtool(/usr/lib64/daq/daq_gwlb.la) libtool(/usr/lib64/daq/daq_savefile.la) libtool(/usr/lib64/daq/daq_trace.la)
+Requires(rpmlib): rpmlib(CompressedFileNames) <= 3.0.4-1 rpmlib(FileDigests) <= 4.6.0-1 rpmlib(PayloadFilesHavePrefix) <= 4.0-1
+Requires: libc.so.6()(64bit) libc.so.6(GLIBC_2.14)(64bit) libc.so.6(GLIBC_2.16)(64bit) libc.so.6(GLIBC_2.2.5)(64bit) libc.so.6(GLIBC_2.3.4)(64bit) libc.so.6(GLIBC_2.32)(64bit) libc.so.6(GLIBC_2.33)(64bit) libc.so.6(GLIBC_2.4)(64bit) libgcc_s.so.1()(64bit) libgcc_s.so.1(GCC_3.0)(64bit) libgcc_s.so.1(GCC_3.3.1)(64bit) libm.so.6()(64bit) libpcap.so.1()(64bit) libstdc++.so.6()(64bit) libstdc++.so.6(CXXABI_1.3)(64bit) libstdc++.so.6(GLIBCXX_3.4)(64bit) libstdc++.so.6(GLIBCXX_3.4.15)(64bit) libstdc++.so.6(GLIBCXX_3.4.18)(64bit) libstdc++.so.6(GLIBCXX_3.4.29)(64bit) rtld(GNU_HASH)
+Processing files: libdaq-devel-9999.9.9-1.el9.rb.x86_64
+Provides: libdaq-devel = 9999.9.9-1.el9.rb libdaq-devel(x86-64) = 9999.9.9-1.el9.rb
+Requires(rpmlib): rpmlib(CompressedFileNames) <= 3.0.4-1 rpmlib(FileDigests) <= 4.6.0-1 rpmlib(PayloadFilesHavePrefix) <= 4.0-1
+Requires: libdaq.so.3()(64bit)
+Processing files: libdaq-debugsource-9999.9.9-1.el9.rb.x86_64
+Provides: libdaq-debugsource = 9999.9.9-1.el9.rb libdaq-debugsource(x86-64) = 9999.9.9-1.el9.rb
+Requires(rpmlib): rpmlib(CompressedFileNames) <= 3.0.4-1 rpmlib(FileDigests) <= 4.6.0-1 rpmlib(PayloadFilesHavePrefix) <= 4.0-1
+Processing files: libdaq-debuginfo-9999.9.9-1.el9.rb.x86_64
+Provides: debuginfo(build-id) = 61742f58172aa61a2793daf18df0691177614904 debuginfo(build-id) = 691969e3dda6a90e4559256343cab1e49e4fcd1d debuginfo(build-id) = b5ff5ecb3e4448c5478851104dd82140d45c9bb0 libdaq-debuginfo = 9999.9.9-1.el9.rb libdaq-debuginfo(x86-64) = 9999.9.9-1.el9.rb
+Requires(rpmlib): rpmlib(CompressedFileNames) <= 3.0.4-1 rpmlib(FileDigests) <= 4.6.0-1 rpmlib(PayloadFilesHavePrefix) <= 4.0-1
+Recommends: libdaq-debugsource(x86-64) = 9999.9.9-1.el9.rb
+Processing files: libdaq-modules-debuginfo-9999.9.9-1.el9.rb.x86_64
+Provides: debuginfo(build-id) = 1fda4910e35b93bde80a2790b373c87879a70b18 debuginfo(build-id) = 3d48f9f7ef0c4c00e110a49a87423495a100ba40 debuginfo(build-id) = 901bdf4d00e733f122ed06c21eb454ee858ebc42 debuginfo(build-id) = a3bbd05ac65ad83832f96d4d96fdb5032f08eafb debuginfo(build-id) = bfc145d9b48d1dfb1233ca52bb9c2caad7555df5 debuginfo(build-id) = d3ed2024bbf256215536c0039147922ee5ca19cc debuginfo(build-id) = d464ef63a2d6646e698cd0a7ef5779065d55cdce debuginfo(build-id) = efc46b0fd6ef84cc78389d4c5876095eb63e905c libdaq-modules-debuginfo = 9999.9.9-1.el9.rb libdaq-modules-debuginfo(x86-64) = 9999.9.9-1.el9.rb
+Requires(rpmlib): rpmlib(CompressedFileNames) <= 3.0.4-1 rpmlib(FileDigests) <= 4.6.0-1 rpmlib(PayloadFilesHavePrefix) <= 4.0-1
+Recommends: libdaq-debugsource(x86-64) = 9999.9.9-1.el9.rb
+Checking for unpackaged file(s): /usr/lib/rpm/check-files /builddir/build/BUILDROOT/libdaq-9999.9.9-1.el9.rb.x86_64
+warning: Installed (but unpackaged) file(s) found:
+   /usr/lib/debug/usr/lib64/daq/daq_pfring.so-9999.9.9-1.el9.rb.x86_64.debug
+   /usr/lib64/daq/daq_pfring.la
+   /usr/lib64/daq/daq_pfring.so
+   /usr/lib64/libdaq_static_afpacket.la
+   /usr/lib64/libdaq_static_bpf.la
+   /usr/lib64/libdaq_static_dump.la
+   /usr/lib64/libdaq_static_fst.la
+   /usr/lib64/libdaq_static_gwlb.la
+   /usr/lib64/libdaq_static_pcap.la
+   /usr/lib64/libdaq_static_savefile.la
+   /usr/lib64/libdaq_static_trace.la
+   /usr/lib64/pkgconfig/libdaq.pc
+   /usr/lib64/pkgconfig/libdaq_static_afpacket.pc
+   /usr/lib64/pkgconfig/libdaq_static_bpf.pc
+   /usr/lib64/pkgconfig/libdaq_static_dump.pc
+   /usr/lib64/pkgconfig/libdaq_static_fst.pc
+   /usr/lib64/pkgconfig/libdaq_static_gwlb.pc
+   /usr/lib64/pkgconfig/libdaq_static_pcap.pc
+   /usr/lib64/pkgconfig/libdaq_static_pfring.pc
+   /usr/lib64/pkgconfig/libdaq_static_savefile.pc
+   /usr/lib64/pkgconfig/libdaq_static_trace.pc
+Wrote: /builddir/build/RPMS/libdaq-devel-9999.9.9-1.el9.rb.x86_64.rpm
+Wrote: /builddir/build/RPMS/libdaq-modules-9999.9.9-1.el9.rb.x86_64.rpm
+Wrote: /builddir/build/RPMS/libdaq-9999.9.9-1.el9.rb.x86_64.rpm
+Wrote: /builddir/build/RPMS/libdaq-debugsource-9999.9.9-1.el9.rb.x86_64.rpm
+Wrote: /builddir/build/RPMS/libdaq-modules-debuginfo-9999.9.9-1.el9.rb.x86_64.rpm
+Wrote: /builddir/build/RPMS/libdaq-debuginfo-9999.9.9-1.el9.rb.x86_64.rpm
+Executing(%clean): /bin/sh -e /var/tmp/rpm-tmp.NuXQk0
++ umask 022
++ cd /builddir/build/BUILD
++ cd libdaq-9999.9.9
++ /usr/bin/rm -rf /builddir/build/BUILDROOT/libdaq-9999.9.9-1.el9.rb.x86_64
++ RPM_EC=0
+++ jobs -p
++ exit 0
+Child return code was: 0

@@ -1,0 +1,46 @@
+2025-03-24 11:13:16,865 - Mock Version: 5.9
+2025-03-24 11:13:16,869 - Start(bootstrap): chroot init
+2025-03-24 11:13:16,878 - Start(bootstrap): cleaning package manager metadata
+2025-03-24 11:13:16,881 - Finish(bootstrap): cleaning package manager metadata
+2025-03-24 11:13:17,145 - Finish(bootstrap): chroot init
+2025-03-24 11:13:17,147 - Start: chroot init
+2025-03-24 11:13:17,158 - Start: unpacking root cache
+2025-03-24 11:13:18,385 - Finish: unpacking root cache
+2025-03-24 11:13:18,387 - Start: cleaning package manager metadata
+2025-03-24 11:13:18,399 - Finish: cleaning package manager metadata
+2025-03-24 11:13:18,660 - Start: dnf4 update
+2025-03-24 11:13:38,324 - Start: creating root cache
+2025-03-24 11:13:39,928 - Finish: creating root cache
+2025-03-24 11:13:39,928 - Finish: dnf4 update
+2025-03-24 11:13:40,167 - Finish: chroot init
+2025-03-24 11:13:40,169 - Start: buildsrpm
+2025-03-24 11:13:40,171 - Start: rpmbuild -bs
+2025-03-24 11:13:40,240 - Finish: rpmbuild -bs
+2025-03-24 11:13:40,242 - Finish: buildsrpm
+2025-03-24 11:13:40,243 - Start: clean chroot
+2025-03-24 11:13:41,567 - Finish: clean chroot
+2025-03-24 11:13:41,567 - Finish: run
+2025-03-24 11:13:41,951 - Mock Version: 5.9
+2025-03-24 11:13:41,955 - Start(bootstrap): chroot init
+2025-03-24 11:13:41,963 - Start(bootstrap): cleaning package manager metadata
+2025-03-24 11:13:41,963 - Finish(bootstrap): cleaning package manager metadata
+2025-03-24 11:13:42,142 - Finish(bootstrap): chroot init
+2025-03-24 11:13:42,144 - Start: chroot init
+2025-03-24 11:13:42,151 - Start: unpacking root cache
+2025-03-24 11:13:43,202 - Finish: unpacking root cache
+2025-03-24 11:13:43,204 - Start: cleaning package manager metadata
+2025-03-24 11:13:43,205 - Finish: cleaning package manager metadata
+2025-03-24 11:13:43,453 - Start: dnf4 update
+2025-03-24 11:13:47,842 - Finish: dnf4 update
+2025-03-24 11:13:48,023 - Finish: chroot init
+2025-03-24 11:13:48,024 - Start: build phase for libdaq-9999.9.9-1.el9.rb.src.rpm
+2025-03-24 11:13:48,024 - Start: build setup for libdaq-9999.9.9-1.el9.rb.src.rpm
+2025-03-24 11:13:56,698 - Finish: build setup for libdaq-9999.9.9-1.el9.rb.src.rpm
+2025-03-24 11:13:56,699 - Start: rpmbuild libdaq-9999.9.9-1.el9.rb.src.rpm
+2025-03-24 11:13:56,700 - Start: Outputting list of installed packages
+2025-03-24 11:13:56,815 - Finish: Outputting list of installed packages
+2025-03-24 11:14:18,166 - Finish: rpmbuild libdaq-9999.9.9-1.el9.rb.src.rpm
+2025-03-24 11:14:18,169 - Finish: build phase for libdaq-9999.9.9-1.el9.rb.src.rpm
+2025-03-24 11:14:18,171 - Start: clean chroot
+2025-03-24 11:14:19,649 - Finish: clean chroot
+2025-03-24 11:14:19,649 - Finish: run
